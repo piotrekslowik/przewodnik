@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Przewodnik po .md</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg:          #f7f7f5;
+  --surface:     #ffffff;
+  --surface2:    #f0f0ee;
+  --border:      #e4e4e0;
+  --border2:     #d4d4cf;
+  --accent:      #18181b;
+  --accent2:     #4f46e5;
+  --gold:        #b45309;
+  --gold-bg:     #fef3c7;
+  --red:         #dc2626;
+  --green:       #16a34a;
+  --text:        #18181b;
+  --text-muted:  #71717a;
+  --text-dim:    #a1a1aa;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans', sans-serif; min-height: 100vh; }
+
+/* ── APP SHELL ───────────────────────────────────────────── */
+.app-header {
+  padding: 24px 48px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.brand-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--border2);
+  padding: 3px 9px;
+  border-radius: 2px;
+  background: var(--surface2);
+}
+.brand-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.brand-title span { color: var(--accent2); }
+
+/* ── TABS ────────────────────────────────────────────────── */
+.tabs { display: flex; gap: 0; }
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.16s;
+  position: relative;
+  top: 1px;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+/* ── TAB PANELS ──────────────────────────────────────────── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ══════════════════════════════════════════════════════════
+   PANEL 1 – IKONY
+══════════════════════════════════════════════════════════ */
+.icons-controls {
+  padding: 12px 48px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: var(--surface);
+}
+.filter-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+.filter-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  padding: 4px 11px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.13s;
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--accent2); color: var(--accent2); background: #eef2ff; }
+.filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+
+.controls-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pop-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.pop-toggle:hover { border-color: var(--gold); }
+.pop-toggle.on { border-color: var(--gold); background: var(--gold-bg); }
+.pop-toggle input { display: none; }
+.check-box {
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--border2);
+  border-radius: 3px;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.13s;
+  font-size: 11px; color: #fff; font-weight: 900;
+}
+.pop-toggle.on .check-box { background: var(--gold); border-color: var(--gold); }
+.check-inner { display: none; }
+.pop-toggle.on .check-inner { display: block; }
+.pop-label { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-muted); }
+.pop-toggle.on .pop-label { color: var(--gold); }
+
+.search-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  width: 180px;
+  outline: none;
+  transition: border-color 0.18s;
+}
+.search-input::placeholder { color: var(--text-dim); }
+.search-input:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px #eef2ff; }
+
+.icons-stats {
+  padding: 10px 48px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.istat strong { color: var(--text); font-weight: 600; }
+.istat-pop strong { color: var(--gold); }
+
+.icons-main { padding: 28px 48px 56px; }
+
+.pop-section-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  margin-top: 8px;
+}
+.pop-section-banner.popular { background: var(--gold-bg); border: 1px solid #fde68a; }
+.pop-section-banner.others  { background: var(--surface2); border: 1px solid var(--border); margin-top: 40px; }
+.banner-icon { font-size: 19px; }
+.banner-body { flex: 1; }
+.banner-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+.pop-section-banner.popular .banner-title { color: var(--gold); }
+.pop-section-banner.others .banner-title  { color: var(--text-muted); }
+.banner-desc { font-size: 13px; color: var(--text-muted); }
+.banner-count { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-dim); white-space: nowrap; }
+
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; margin-top: 26px; }
+.section-title { font-family: 'DM Mono', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
+.section-line  { flex: 1; height: 1px; background: var(--border); }
+.section-count { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-dim); }
+
+.icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px;
+}
+
+.icon-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px 20px;
+  cursor: pointer;
+  transition: all 0.14s;
+  position: relative;
+  overflow: hidden;
+}
+.icon-card:hover { border-color: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,0.08); }
+.icon-card.copied { border-color: var(--green); background: #f0fdf4; }
+.icon-card.is-popular { border-color: #fde68a; }
+.icon-card.is-popular:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(180,83,9,0.08); }
+
+.pop-star-badge { position:absolute; top:9px; right:9px; font-size:12px; opacity:0.4; transition:opacity 0.2s; }
+.icon-card:hover .pop-star-badge { opacity:0.9; }
+.copy-hint { position:absolute; bottom:7px; right:11px; font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); opacity:0; transition:opacity 0.2s; }
+.icon-card:hover .copy-hint { opacity:1; color:var(--text-muted); }
+
+.card-top { display:flex; align-items:flex-start; gap:11px; margin-bottom:7px; }
+.icon-emoji { font-size:26px; line-height:1; flex-shrink:0; margin-top:2px; }
+.icon-meta { flex:1; min-width:0; }
+.icon-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--text); padding-right:18px; }
+.icon-name-en { font-family:'Instrument Sans',sans-serif; font-size:12px; font-weight:400; color:#71717a; }
+.icon-desc { font-size:13px; color:var(--text-muted); line-height:1.55; margin-bottom:8px; }
+
+.tags-block { margin-bottom:8px; display:flex; flex-direction:column; gap:4px; }
+.tags-group { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+.tags-group-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); letter-spacing:0.08em; white-space:nowrap; flex-shrink:0; min-width:60px; }
+.tag { font-family:'DM Mono',monospace; font-size:12px; padding:2px 6px; border-radius:3px; letter-spacing:0.04em; }
+.tag-role    { background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; }
+.tag-context { background:#fff1f2; color:#be123c; border:1px solid #fecdd3; }
+
+.model-signal { padding-top:7px; border-top:1px solid var(--border); display:flex; align-items:flex-start; gap:6px; }
+.model-label  { font-family:'DM Mono',monospace; font-size:10px; color:var(--accent2); letter-spacing:0.08em; white-space:nowrap; padding-top:2px; flex-shrink:0; }
+.model-text   { font-size:12px; color:var(--text-muted); line-height:1.45; }
+
+/* ══════════════════════════════════════════════════════════
+   PANEL 2 – SKŁADNIA
+══════════════════════════════════════════════════════════ */
+.syntax-layout {
+  display: flex;
+  min-height: calc(100vh - 90px);
+}
+
+/* sidebar */
+.syntax-nav {
+  width: 210px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 90px);
+  overflow-y: auto;
+  background: var(--surface);
+}
+.syntax-nav-group { margin-bottom: 4px; }
+.syntax-nav-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 18px 4px;
+}
+.syntax-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.13s;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+}
+.syntax-nav-item:hover { color: var(--text); background: var(--surface2); }
+.syntax-nav-item.active { color: var(--accent2); border-left-color: var(--accent2); background: #eef2ff; font-weight: 600; }
+.nav-emoji { font-size: 15px; flex-shrink: 0; }
+
+/* content */
+.syntax-content {
+  flex: 1;
+  padding: 40px 52px 80px;
+  max-width: 860px;
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.syntax-section { margin-bottom: 56px; scroll-margin-top: 20px; }
+
+.syntax-section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.syntax-section-title .s-emoji { font-size: 21px; }
+.syntax-section-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 22px;
+  line-height: 1.6;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+}
+
+.syntax-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.syntax-block-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px 5px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.syntax-block.src .syntax-block-label  { color: var(--accent2); background: #eef2ff; }
+.syntax-block.out .syntax-block-label  { color: var(--green);   background: #f0fdf4; }
+.syntax-block.note .syntax-block-label { color: var(--gold);    background: var(--gold-bg); }
+
+.syntax-block pre {
+  padding: 14px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #374151;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--surface);
+}
+
+/* RENDERED PREVIEW */
+.md-preview {
+  padding: 14px 18px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+}
+.md-preview h1 { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; margin-bottom:8px; border-bottom:2px solid var(--border); padding-bottom:8px; color:var(--text); }
+.md-preview h2 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:6px; margin-top:14px; border-bottom:1px solid var(--border); padding-bottom:5px; color:var(--text); }
+.md-preview h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; margin-bottom:4px; margin-top:10px; color:var(--text); }
+.md-preview h4 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:4px; margin-top:8px; color:var(--text-muted); }
+.md-preview h5 { font-size:14px; font-weight:700; margin-bottom:3px; color:var(--text-muted); }
+.md-preview h6 { font-size:13px; font-weight:700; color:var(--text-dim); margin-bottom:3px; }
+.md-preview p { margin-bottom:8px; }
+.md-preview strong { font-weight:700; color:var(--text); }
+.md-preview em { font-style:italic; color:var(--text-muted); }
+.md-preview del { text-decoration:line-through; color:var(--text-dim); }
+.md-preview code { font-family:'DM Mono',monospace; font-size:13px; background:#eef2ff; color:#4338ca; padding:2px 5px; border-radius:3px; }
+.md-preview pre { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:12px 14px; overflow-x:auto; margin-bottom:8px; }
+.md-preview pre code { background:none; padding:0; font-size:14px; color:#374151; }
+.md-preview blockquote { border-left:3px solid var(--accent2); padding:8px 14px; margin:8px 0; background:#eef2ff; border-radius:0 6px 6px 0; color:var(--text-muted); font-style:italic; }
+.md-preview ul, .md-preview ol { padding-left:20px; margin-bottom:8px; }
+.md-preview li { margin-bottom:3px; }
+.md-preview ul li::marker { color: var(--accent2); }
+.md-preview ol li::marker { color: var(--accent2); font-family:'DM Mono',monospace; font-size:13px; }
+.md-preview a { color:var(--accent2); text-decoration:underline; text-underline-offset:2px; }
+.md-preview hr { border:none; border-top:1px solid var(--border); margin:12px 0; }
+.md-preview table { border-collapse:collapse; width:100%; margin-bottom:8px; font-size:14px; }
+.md-preview th { background:var(--surface2); padding:7px 12px; text-align:left; font-weight:700; border:1px solid var(--border); color:var(--text); }
+.md-preview td { padding:6px 12px; border:1px solid var(--border); color:var(--text); }
+.md-preview tr:nth-child(even) td { background:var(--surface2); }
+.md-preview .task-item { list-style:none; display:flex; align-items:center; gap:7px; }
+.md-preview .task-cb { width:13px; height:13px; border:1.5px solid var(--border2); border-radius:3px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; color:#fff; }
+.md-preview .task-cb.done { background:var(--green); border-color:var(--green); }
+.md-preview .badge { display:inline-block; height:20px; border-radius:4px; overflow:hidden; font-family:'DM Mono',monospace; font-size:12px; line-height:20px; vertical-align:middle; }
+.md-preview .badge-l { background:#52525b; padding:0 6px; color:#fff; }
+.md-preview .badge-r { background:#16a34a; padding:0 6px; color:#fff; }
+.md-preview .badge-b { background:#2563eb; }
+.md-preview .badge-r2{ background:#dc2626; }
+.md-preview .badge-y { background:#ca8a04; color:#fff; }
+
+.md-preview .gh-note    { border:1px solid #93c5fd; border-radius:6px; padding:10px 14px; background:#eff6ff; margin-bottom:8px; }
+.md-preview .gh-tip     { border:1px solid #86efac; border-radius:6px; padding:10px 14px; background:#f0fdf4; margin-bottom:8px; }
+.md-preview .gh-warning { border:1px solid #fde68a; border-radius:6px; padding:10px 14px; background:var(--gold-bg); margin-bottom:8px; }
+.md-preview .gh-caution { border:1px solid #fca5a5; border-radius:6px; padding:10px 14px; background:#fff1f2; margin-bottom:8px; }
+.md-preview .gh-label   { font-family:'DM Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.06em; margin-bottom:5px; }
+.md-preview .gh-note .gh-label    { color:#2563eb; }
+.md-preview .gh-tip .gh-label     { color:#16a34a; }
+.md-preview .gh-warning .gh-label { color:#b45309; }
+.md-preview .gh-caution .gh-label { color:#dc2626; }
+
+.md-preview .kbd { display:inline-block; background:var(--surface2); border:1px solid var(--border); border-bottom:2px solid var(--border2); border-radius:4px; padding:1px 6px; font-family:'DM Mono',monospace; font-size:13px; color:var(--text); }
+
+/* two-col example */
+.example-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+@media (max-width: 720px) { .example-pair { grid-template-columns: 1fr; } }
+
+/* copy btn */
+.copy-src-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.13s;
+  letter-spacing: 0.06em;
+}
+.copy-src-btn:hover { color: var(--accent2); }
+
+/* note / tip boxes */
+.syntax-note {
+  background: var(--gold-bg);
+  border: 1px solid #fde68a;
+  border-radius: 7px;
+  padding: 11px 15px;
+  font-size: 14px;
+  color: #78350f;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.syntax-note strong { color: var(--gold); }
+
+.syntax-tip {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 7px;
+  padding: 11px 15px;
+  font-size: 14px;
+  color: #3730a3;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.syntax-tip strong { color: var(--accent2); }
+
+/* sub-label */
+.sub-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin: 18px 0 9px;
+}
+
+/* TOAST */
+.toast {
+  position: fixed; bottom:24px; left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--text); color:#fff;
+  font-family:'DM Mono',monospace; font-size:14px; font-weight:500;
+  padding:8px 18px; border-radius:6px;
+  opacity:0; transition:all 0.2s; pointer-events:none; z-index:1000;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+@media (max-width: 900px) {
+  .app-header { padding: 18px 20px 0; }
+  .syntax-nav { display: none; }
+  .syntax-content { padding: 24px 20px 60px; }
+  .icons-controls, .icons-stats, .icons-main { padding-left:20px; padding-right:20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── APP HEADER ─────────────────────────────────────────── -->
+<div class="app-header">
+  <div class="header-top">
+    <div class="brand-tag">v2.0</div>
+    <div class="brand-title">Przewodnik po <span>.md</span></div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="icons">🎯&nbsp; Ikony</button>
+    <button class="tab-btn"        data-tab="syntax">📐&nbsp; Składnia</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 1 — IKONY
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-icons">
+  <div class="icons-controls">
+    <span class="filter-label">KATEGORIA:</span>
+    <button class="filter-btn active" data-cat="all">Wszystkie</button>
+    <button class="filter-btn" data-cat="status">Status</button>
+    <button class="filter-btn" data-cat="navigation">Nawigacja</button>
+    <button class="filter-btn" data-cat="warning">Ostrzeżenia</button>
+    <button class="filter-btn" data-cat="tech">Tech & Dev</button>
+    <button class="filter-btn" data-cat="structure">Struktura</button>
+    <button class="filter-btn" data-cat="communication">Komunikacja</button>
+    <button class="filter-btn" data-cat="workflow">Workflow</button>
+    <button class="filter-btn" data-cat="people">Ludzie</button>
+    <button class="filter-btn" data-cat="business">Biznes</button>
+    <button class="filter-btn" data-cat="gitmoji">Gitmoji</button>
+    <div class="controls-right">
+      <label class="pop-toggle" id="popToggle">
+        <input type="checkbox" id="popCheckbox">
+        <div class="check-box"><span class="check-inner">✓</span></div>
+        <span class="pop-label">⭐ tylko popularne</span>
+      </label>
+      <input class="search-input" type="text" placeholder="szukaj ikony…" id="searchInput">
+    </div>
+  </div>
+  <div class="icons-stats">
+    <div class="istat"><strong id="total-count">—</strong> łącznie</div>
+    <div class="istat istat-pop">⭐ <strong id="pop-count">—</strong> popularnych</div>
+    <div class="istat"><strong id="visible-count">—</strong> widocznych</div>
+    <div class="istat"><strong>10</strong> kategorii</div>
+  </div>
+  <div class="icons-main" id="icons-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 2 — SKŁADNIA
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-syntax">
+  <div class="syntax-layout">
+
+    <!-- sidebar nav -->
+    <nav class="syntax-nav">
+      <div class="syntax-nav-group">
+        <div class="syntax-nav-label">Podstawy</div>
+        <a class="syntax-nav-item active" href="#s-headings"   data-sec="s-headings">  <span class="nav-emoji">🔤</span>Nagłówki</a>
+        <a class="syntax-nav-item"        href="#s-text"       data-sec="s-text">       <span class="nav-emoji">✏️</span>Formatowanie tekstu</a>
+        <a class="syntax-nav-item"        href="#s-lists"      data-sec="s-lists">      <span class="nav-emoji">📋</span>Listy</a>
+        <a class="syntax-nav-item"        href="#s-links"      data-sec="s-links">      <span class="nav-emoji">🔗</span>Linki i obrazy</a>
+        <a class="syntax-nav-item"        href="#s-blockquote" data-sec="s-blockquote"> <span class="nav-emoji">💬</span>Cytaty</a>
+        <a class="syntax-nav-item"        href="#s-code"       data-sec="s-code">       <span class="nav-emoji">💻</span>Kod</a>
+        <a class="syntax-nav-item"        href="#s-table"      data-sec="s-table">      <span class="nav-emoji">📊</span>Tabele</a>
+        <a class="syntax-nav-item"        href="#s-hr"         data-sec="s-hr">         <span class="nav-emoji">➖</span>Linia pozioma</a>
+      </div>
+      <div class="syntax-nav-group">
+        <div class="syntax-nav-label">Zaawansowane</div>
+        <a class="syntax-nav-item" href="#s-tasks"    data-sec="s-tasks">    <span class="nav-emoji">☑️</span>Checklista</a>
+        <a class="syntax-nav-item" href="#s-footnotes"data-sec="s-footnotes"><span class="nav-emoji">📎</span>Przypisy</a>
+        <a class="syntax-nav-item" href="#s-alerts"   data-sec="s-alerts">   <span class="nav-emoji">🚨</span>Alerty GitHub</a>
+        <a class="syntax-nav-item" href="#s-badges"   data-sec="s-badges">   <span class="nav-emoji">🏷️</span>Odznaki</a>
+        <a class="syntax-nav-item" href="#s-mermaid"  data-sec="s-mermaid">  <span class="nav-emoji">🗺️</span>Diagramy Mermaid</a>
+        <a class="syntax-nav-item" href="#s-math"     data-sec="s-math">     <span class="nav-emoji">🧮</span>Matematyka</a>
+        <a class="syntax-nav-item" href="#s-html"     data-sec="s-html">     <span class="nav-emoji">🌐</span>HTML inline</a>
+        <a class="syntax-nav-item" href="#s-escape"   data-sec="s-escape">   <span class="nav-emoji">🔒</span>Escaping</a>
+        <a class="syntax-nav-item" href="#s-frontmatter" data-sec="s-frontmatter"><span class="nav-emoji">📄</span>Front Matter</a>
+      </div>
+      <div class="syntax-nav-group">
+        <div class="syntax-nav-label">Dobre praktyki</div>
+        <a class="syntax-nav-item" href="#s-tips" data-sec="s-tips"><span class="nav-emoji">💡</span>Wskazówki</a>
+      </div>
+    </nav>
+
+    <!-- main content -->
+    <div class="syntax-content" id="syntaxContent">
+
+      <!-- ── NAGŁÓWKI ─────────────────────────────────── -->
+      <section class="syntax-section" id="s-headings">
+        <div class="syntax-section-title"><span class="s-emoji">🔤</span>Nagłówki</div>
+        <div class="syntax-section-desc">Markdown obsługuje 6 poziomów nagłówków odpowiadających HTML <code>&lt;h1&gt;–&lt;h6&gt;</code>. Prefiks <code>#</code> — liczba znaków określa poziom. Zawsze zostaw spację po znakach <code>#</code>.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="# Nagłówek H1&#10;## Nagłówek H2&#10;### Nagłówek H3&#10;#### Nagłówek H4&#10;##### Nagłówek H5&#10;###### Nagłówek H6">kopiuj</button></div>
+            <pre># Nagłówek H1
+## Nagłówek H2
+### Nagłówek H3
+#### Nagłówek H4
+##### Nagłówek H5
+###### Nagłówek H6</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <h1>Nagłówek H1</h1>
+              <h2>Nagłówek H2</h2>
+              <h3>Nagłówek H3</h3>
+              <h4>Nagłówek H4</h4>
+              <h5>Nagłówek H5</h5>
+              <h6>Nagłówek H6</h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Alternatywna składnia (Setext) dla H1 i H2</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>Tytuł dokumentu
+===============
+
+Podtytuł
+--------</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview"><h1>Tytuł dokumentu</h1><h2>Podtytuł</h2></div>
+          </div>
+        </div>
+        <div class="syntax-note"><strong>Uwaga:</strong> H1 powinien wystąpić tylko raz w dokumencie — jest tytułem strony. Kolejne sekcje zaczynaj od H2.</div>
+      </section>
+
+      <!-- ── FORMATOWANIE TEKSTU ────────────────────── -->
+      <section class="syntax-section" id="s-text">
+        <div class="syntax-section-title"><span class="s-emoji">✏️</span>Formatowanie tekstu</div>
+        <div class="syntax-section-desc">Podstawowe style: pogrubienie, kursywa, przekreślenie, podkreślenie (HTML), indeksy oraz kod inline.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="**pogrubiony**&#10;*kursywa*&#10;***pogrubiona kursywa***&#10;~~przekreślony~~&#10;`kod inline`&#10;<u>podkreślony</u>&#10;H~2~O&#10;x^2^">kopiuj</button></div>
+            <pre>**pogrubiony**
+*kursywa*
+***pogrubiona kursywa***
+~~przekreślony~~
+`kod inline`
+&lt;u&gt;podkreślony&lt;/u&gt;
+H~2~O  (GFM / Obsidian)
+x^2^   (GFM / Obsidian)</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p><strong>pogrubiony</strong></p>
+              <p><em>kursywa</em></p>
+              <p><strong><em>pogrubiona kursywa</em></strong></p>
+              <p><del>przekreślony</del></p>
+              <p><code>kod inline</code></p>
+              <p><u>podkreślony</u></p>
+              <p>H<sub>2</sub>O</p>
+              <p>x<sup>2</sup></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Akapity i łamanie linii</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>Pierwszy akapit tekstu.
+
+Drugi akapit — pusta linia tworzy akapit.
+
+Pierwsza linia··
+Druga linia (2 spacje = &lt;br&gt;)</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p>Pierwszy akapit tekstu.</p>
+              <p>Drugi akapit — pusta linia tworzy akapit.</p>
+              <p>Pierwsza linia<br>Druga linia (2 spacje = &lt;br&gt;)</p>
+            </div>
+          </div>
+        </div>
+        <div class="syntax-tip"><strong>Tip:</strong> Możesz też używać <code>_kursywa_</code> i <code>__pogrubienie__</code> z podkreślnikami — ale gwiazdki są bardziej universalne i rzadziej powodują problemy w środku słów.</div>
+      </section>
+
+      <!-- ── LISTY ───────────────────────────────────── -->
+      <section class="syntax-section" id="s-lists">
+        <div class="syntax-section-title"><span class="s-emoji">📋</span>Listy</div>
+        <div class="syntax-section-desc">Nieuporządkowane (punktorowe), uporządkowane (numerowane), zagnieżdżone i mieszane. Wcięcie 2 lub 4 spacje tworzy poziom zagnieżdżenia.</div>
+
+        <div class="sub-label">Lista nieuporządkowana</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>- Element A
+- Element B
+  - Zagnieżdżony 1
+  - Zagnieżdżony 2
+    - Głębszy poziom
+- Element C</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <ul><li>Element A</li><li>Element B<ul><li>Zagnieżdżony 1</li><li>Zagnieżdżony 2<ul><li>Głębszy poziom</li></ul></li></ul></li><li>Element C</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Lista uporządkowana</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>1. Krok pierwszy
+2. Krok drugi
+   1. Podkrok 2a
+   2. Podkrok 2b
+3. Krok trzeci</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <ol><li>Krok pierwszy</li><li>Krok drugi<ol><li>Podkrok 2a</li><li>Podkrok 2b</li></ol></li><li>Krok trzeci</li></ol>
+            </div>
+          </div>
+        </div>
+        <div class="syntax-note"><strong>Uwaga:</strong> Liczby w liście numerowanej nie muszą być kolejne — Markdown sam je ponumeruje. Możesz pisać <code>1. 1. 1.</code> i efekt będzie taki sam.</div>
+      </section>
+
+      <!-- ── LINKI I OBRAZY ──────────────────────────── -->
+      <section class="syntax-section" id="s-links">
+        <div class="syntax-section-title"><span class="s-emoji">🔗</span>Linki i obrazy</div>
+        <div class="syntax-section-desc">Linki inline, referencyjne i automatyczne. Obrazy używają tej samej składni co linki, poprzedzone <code>!</code>.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="[tekst linku](https://example.com)&#10;[link z tooltipem](https://example.com &quot;Opis&quot;)&#10;https://example.com&#10;[referencyjny][ref1]&#10;&#10;[ref1]: https://example.com &quot;Opis&quot;">kopiuj</button></div>
+            <pre>[tekst linku](https://example.com)
+[link z tooltipem](https://example.com "Opis")
+https://example.com  (autolink)
+
+<!-- link referencyjny -->
+[referencyjny][ref1]
+
+[ref1]: https://example.com "Opis referencji"</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p><a href="#">tekst linku</a></p>
+              <p><a href="#" title="Opis">link z tooltipem</a></p>
+              <p><a href="#">https://example.com</a></p>
+              <p><a href="#">referencyjny</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Obrazy</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>![tekst alternatywny](obraz.png)
+![logo](logo.png "Tooltip obrazka")
+
+<!-- obraz jako link -->
+[![alt](thumb.png)](https://example.com)
+
+<!-- kontrola rozmiaru (HTML) -->
+&lt;img src="img.png" width="300" alt="opis"&gt;</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p style="background:var(--surface2);border:1px dashed var(--border);border-radius:6px;padding:12px;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:11px;">🖼️ [obraz.png] — tekst alternatywny</p>
+              <p style="margin-top:8px;font-size:12px;color:var(--text-muted);">Obraz jako link: kliknięcie obrazka przenosi na URL.</p>
+            </div>
+          </div>
+        </div>
+        <div class="syntax-tip"><strong>Tip:</strong> Tekst alternatywny (<code>alt</code>) jest obowiązkowy dla dostępności (a11y) i SEO. Zawsze opisuj co jest na obrazku.</div>
+      </section>
+
+      <!-- ── CYTATY ──────────────────────────────────── -->
+      <section class="syntax-section" id="s-blockquote">
+        <div class="syntax-section-title"><span class="s-emoji">💬</span>Cytaty (Blockquote)</div>
+        <div class="syntax-section-desc">Prefiks <code>&gt;</code> tworzy blok cytatu. Zagnieżdżone cytaty — wielokrotny prefiks. Wewnątrz cytatu można używać pełnego Markdown.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>> To jest cytat.
+> Może obejmować wiele linii.
+>
+> Drugi akapit cytatu.
+>
+> > Zagnieżdżony cytat
+> > drugiego poziomu.</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <blockquote>
+                <p>To jest cytat. Może obejmować wiele linii.</p>
+                <p>Drugi akapit cytatu.</p>
+                <blockquote><p>Zagnieżdżony cytat drugiego poziomu.</p></blockquote>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── KOD ────────────────────────────────────── -->
+      <section class="syntax-section" id="s-code">
+        <div class="syntax-section-title"><span class="s-emoji">💻</span>Kod</div>
+        <div class="syntax-section-desc">Kod inline (backtick) i bloki kodu (triple backtick z nazwą języka). Bloki kodu obsługują syntax highlighting na GitHub, GitLab i w większości rendererów.</div>
+
+        <div class="sub-label">Kod inline</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>Użyj `npm install` aby zainstalować.
+Zmienna `const x = 42` jest stała.</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview"><p>Użyj <code>npm install</code> aby zainstalować.</p><p>Zmienna <code>const x = 42</code> jest stała.</p></div>
+          </div>
+        </div>
+
+        <div class="sub-label">Blok kodu z podświetlaniem składni</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>```python
+def hello(name: str) -> str:
+    return f"Hello, {name}!"
+
+print(hello("World"))
+```</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview"><pre><code>def hello(name: str) -> str:
+    return f"Hello, {name}!"
+
+print(hello("World"))</code></pre></div>
+          </div>
+        </div>
+
+        <div class="sub-label">Popularne identyfikatory języków</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Języki</div>
+          <pre>javascript / js    typescript / ts    python / py
+bash / sh          sql                json
+html               css                yaml / yml
+rust               go                 java
+c / cpp            csharp             php
+markdown / md      dockerfile         diff</pre>
+        </div>
+
+        <div class="sub-label">Blok diff (zmiany)</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>```diff
+- stara linia (usunięta)
++ nowa linia (dodana)
+  linia bez zmian
+```</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview"><pre><code><span style="color:#ff9a9a">- stara linia (usunięta)</span>
+<span style="color:#3fb950">+ nowa linia (dodana)</span>
+  linia bez zmian</code></pre></div>
+          </div>
+        </div>
+        <div class="syntax-note"><strong>Uwaga:</strong> Blok kodu można też tworzyć wcięciem o 4 spacje (stara składnia), ale triple-backtick jest powszechniej stosowany i obsługuje określenie języka.</div>
+      </section>
+
+      <!-- ── TABELE ──────────────────────────────────── -->
+      <section class="syntax-section" id="s-table">
+        <div class="syntax-section-title"><span class="s-emoji">📊</span>Tabele</div>
+        <div class="syntax-section-desc">Tabele GFM (GitHub Flavored Markdown). Wyrównanie kolumn kontroluje się dwukropkiem w linii separatora.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="| Kolumna L | Kolumna C | Kolumna P |&#10;| :-------- | :-------: | --------: |&#10;| lewo      |  środek   |     prawo |&#10;| dane A    |  dane B   |    dane C |">kopiuj</button></div>
+            <pre>| Kolumna L | Kolumna C | Kolumna P |
+| :-------- | :-------: | --------: |
+| lewo      |  środek   |     prawo |
+| dane A    |  dane B   |    dane C |</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <table>
+                <tr><th style="text-align:left">Kolumna L</th><th style="text-align:center">Kolumna C</th><th style="text-align:right">Kolumna P</th></tr>
+                <tr><td style="text-align:left">lewo</td><td style="text-align:center">środek</td><td style="text-align:right">prawo</td></tr>
+                <tr><td style="text-align:left">dane A</td><td style="text-align:center">dane B</td><td style="text-align:right">dane C</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Wyrównanie kolumn</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Składnia separatora</div>
+          <pre>:----   → wyrównanie do lewej
+:----:  → wyśrodkowanie
+----:   → wyrównanie do prawej
+----    → domyślne (lewo)</pre>
+        </div>
+        <div class="syntax-tip"><strong>Tip:</strong> Wewnątrz komórek można używać formatowania inline: <code>**bold**</code>, <code>`kod`</code>, linki. Nie można zagnieżdżać bloków kodu ani list.</div>
+      </section>
+
+      <!-- ── LINIA POZIOMA ───────────────────────────── -->
+      <section class="syntax-section" id="s-hr">
+        <div class="syntax-section-title"><span class="s-emoji">➖</span>Linia pozioma</div>
+        <div class="syntax-section-desc">Linia pozioma (<code>&lt;hr&gt;</code>) — separator sekcji. Trzy lub więcej gwiazdek, minusów lub podkreślników.</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>Tekst powyżej
+
+---
+
+Tekst poniżej
+
+***
+
+Także linia pozioma
+
+___</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p>Tekst powyżej</p><hr><p>Tekst poniżej</p><hr><p>Także linia pozioma</p><hr>
+            </div>
+          </div>
+        </div>
+        <div class="syntax-note"><strong>Uwaga:</strong> <code>---</code> bezpośrednio po tekście zostanie zinterpretowane jako nagłówek H2 (składnia Setext). Zawsze zostaw pustą linię przed <code>---</code>.</div>
+      </section>
+
+      <!-- ── CHECKLISTA ──────────────────────────────── -->
+      <section class="syntax-section" id="s-tasks">
+        <div class="syntax-section-title"><span class="s-emoji">☑️</span>Checklista (Task List)</div>
+        <div class="syntax-section-desc">Rozszerzenie GFM. Interaktywne checkboxy w README i issues GitHub. Składnia: <code>- [ ]</code> i <code>- [x]</code>.</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="- [x] Zainstaluj zależności&#10;- [x] Skonfiguruj .env&#10;- [ ] Uruchom testy&#10;- [ ] Wdróż na produkcję">kopiuj</button></div>
+            <pre>- [x] Zainstaluj zależności
+- [x] Skonfiguruj .env
+- [ ] Uruchom testy
+- [ ] Wdróż na produkcję</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <ul style="list-style:none;padding-left:0;">
+                <li class="task-item"><span class="task-cb done">✓</span> Zainstaluj zależności</li>
+                <li class="task-item"><span class="task-cb done">✓</span> Skonfiguruj .env</li>
+                <li class="task-item"><span class="task-cb"></span> Uruchom testy</li>
+                <li class="task-item"><span class="task-cb"></span> Wdróż na produkcję</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PRZYPISY ────────────────────────────────── -->
+      <section class="syntax-section" id="s-footnotes">
+        <div class="syntax-section-title"><span class="s-emoji">📎</span>Przypisy (Footnotes)</div>
+        <div class="syntax-section-desc">Obsługiwane przez GitHub, Pandoc i wiele generatorów stron. Tworzą numerowane odnośniki na dole dokumentu.</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>To jest zdanie z przypisem.[^1]
+Kolejne zdanie z przypisem.[^nota]
+
+[^1]: Treść pierwszego przypisu.
+[^nota]: Przypis może zawierać
+    wiele linii (wcięcie 4 spacje).</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p>To jest zdanie z przypisem.<sup style="color:var(--accent2)">[1]</sup></p>
+              <p>Kolejne zdanie z przypisem.<sup style="color:var(--accent2)">[2]</sup></p>
+              <hr>
+              <ol style="font-size:11px;color:var(--text-muted);">
+                <li>Treść pierwszego przypisu.</li>
+                <li>Przypis może zawierać wiele linii.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── ALERTY GITHUB ───────────────────────────── -->
+      <section class="syntax-section" id="s-alerts">
+        <div class="syntax-section-title"><span class="s-emoji">🚨</span>Alerty GitHub</div>
+        <div class="syntax-section-desc">Specjalne bloki cytatów GFM renderowane jako kolorowe alerty. Obsługiwane na GitHub.com od 2023. Pięć typów.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="> [!NOTE]&#10;> Pomocna informacja dla użytkownika.&#10;&#10;> [!TIP]&#10;> Opcjonalna wskazówka.&#10;&#10;> [!WARNING]&#10;> Krytyczna informacja wymagająca uwagi.&#10;&#10;> [!CAUTION]&#10;> Negatywne konsekwencje tej akcji.">kopiuj</button></div>
+            <pre>> [!NOTE]
+> Pomocna informacja dla użytkownika.
+
+> [!TIP]
+> Opcjonalna wskazówka lub porada.
+
+> [!IMPORTANT]
+> Kluczowa informacja dla użytkownika.
+
+> [!WARNING]
+> Krytyczna informacja wymagająca uwagi.
+
+> [!CAUTION]
+> Negatywne konsekwencje tej akcji.</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <div class="gh-note"><div class="gh-label">ℹ NOTE</div><p>Pomocna informacja dla użytkownika.</p></div>
+              <div class="gh-tip"><div class="gh-label">💡 TIP</div><p>Opcjonalna wskazówka lub porada.</p></div>
+              <div class="gh-warning" style="border-color:#7b6eff;background:rgba(123,110,255,0.08)"><div class="gh-label" style="color:var(--accent2)">📌 IMPORTANT</div><p>Kluczowa informacja dla użytkownika.</p></div>
+              <div class="gh-warning"><div class="gh-label">⚠️ WARNING</div><p>Krytyczna informacja wymagająca uwagi.</p></div>
+              <div class="gh-caution"><div class="gh-label">🚨 CAUTION</div><p>Negatywne konsekwencje tej akcji.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="syntax-note"><strong>Uwaga:</strong> Alerty działają tylko na GitHub.com i wybranych rendererach. W zwykłym pandoc lub mkdocs wyświetlą się jako zwykłe cytaty.</div>
+      </section>
+
+      <!-- ── ODZNAKI ──────────────────────────────────── -->
+      <section class="syntax-section" id="s-badges">
+        <div class="syntax-section-title"><span class="s-emoji">🏷️</span>Odznaki (Badges)</div>
+        <div class="syntax-section-desc">Dynamiczne lub statyczne odznaki SVG z <a href="https://shields.io" style="color:var(--accent2)">shields.io</a>. Używane w README do prezentacji statusu, wersji, licencji, CI.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="![wersja](https://img.shields.io/badge/version-1.0.0-blue)&#10;![licencja](https://img.shields.io/badge/license-MIT-green)&#10;![Python](https://img.shields.io/badge/Python-3.11-yellow?logo=python)&#10;[![CI](https://github.com/user/repo/actions/workflows/ci.yml/badge.svg)](https://github.com/user/repo/actions)">kopiuj</button></div>
+            <pre>![wersja](https://img.shields.io/badge/version-1.0.0-blue)
+![licencja](https://img.shields.io/badge/license-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.11-yellow?logo=python)
+[![CI](https://github.com/.../badge.svg)](https://github.com/...)</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:16px 20px;">
+              <span class="badge"><span class="badge-l">version</span><span class="badge-r" style="background:#2196f3">1.0.0</span></span>
+              <span class="badge"><span class="badge-l">license</span><span class="badge-r">MIT</span></span>
+              <span class="badge"><span class="badge-l">Python</span><span class="badge-r badge-y">3.11</span></span>
+              <span class="badge"><span class="badge-l">CI</span><span class="badge-r">passing</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Struktura URL shields.io</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Wzorzec</div>
+          <pre>https://img.shields.io/badge/{label}-{message}-{color}
+
+Kolory: brightgreen green yellow orange red blue purple
+        success important critical informational inactive
+
+Parametry:
+  ?logo=python          → logo z simpleicons.org
+  ?style=flat-square    → kształt (flat, flat-square, plastic, for-the-badge)
+  ?labelColor=333       → kolor etykiety (hex)</pre>
+        </div>
+      </section>
+
+      <!-- ── MERMAID ──────────────────────────────────── -->
+      <section class="syntax-section" id="s-mermaid">
+        <div class="syntax-section-title"><span class="s-emoji">🗺️</span>Diagramy Mermaid</div>
+        <div class="syntax-section-desc">Mermaid.js renderuje diagramy z tekstu. Obsługiwany natywnie na GitHub, GitLab, Notion i wielu narzędziach dokumentacyjnych.</div>
+
+        <div class="sub-label">Flowchart</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="&#96;&#96;&#96;mermaid&#10;graph LR&#10;  A[Start] --> B{Decyzja?}&#10;  B -->|Tak| C[Akcja A]&#10;  B -->|Nie| D[Akcja B]&#10;  C --> E[Koniec]&#10;  D --> E&#10;&#96;&#96;&#96;">kopiuj</button></div>
+            <pre>```mermaid
+graph LR
+  A[Start] --> B{Decyzja?}
+  B -->|Tak| C[Akcja A]
+  B -->|Nie| D[Akcja B]
+  C --> E[Koniec]
+  D --> E
+```</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd (schemat)</div>
+            <div class="md-preview" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);line-height:2;">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <span style="border:1px solid var(--border);border-radius:4px;padding:3px 10px;">Start</span>
+                <span>→</span>
+                <span style="border:1px solid var(--border);border-radius:50%;padding:3px 10px;">Decyzja?</span>
+                <span style="color:var(--accent)">→Tak→</span>
+                <span style="border:1px solid var(--border);border-radius:4px;padding:3px 10px;">Akcja A</span>
+                <span>→</span>
+                <span style="border:1px solid var(--accent);border-radius:4px;padding:3px 10px;color:var(--accent)">Koniec</span>
+              </div>
+              <div style="margin-top:8px;color:var(--text-dim);font-size:10px;">Renderowany diagram wymaga obsługi Mermaid.js w środowisku.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Typy diagramów</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Obsługiwane typy</div>
+          <pre>graph / flowchart   → schematy blokowe (LR, TD, RL, BT)
+sequenceDiagram     → diagramy sekwencji
+classDiagram        → diagramy klas UML
+stateDiagram-v2     → maszyny stanów
+erDiagram           → entity-relationship
+gantt               → wykresy Gantta
+pie                 → wykresy kołowe
+gitGraph            → historia git</pre>
+        </div>
+      </section>
+
+      <!-- ── MATEMATYKA ──────────────────────────────── -->
+      <section class="syntax-section" id="s-math">
+        <div class="syntax-section-title"><span class="s-emoji">🧮</span>Matematyka (LaTeX / KaTeX)</div>
+        <div class="syntax-section-desc">Wzory matematyczne w notacji LaTeX. GitHub obsługuje MathJax od 2022. Inline: <code>$...$</code>, blok: <code>$$...$$</code>.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="Wzór inline: $E = mc^2$&#10;&#10;Blok wzoru:&#10;$$&#10;\sum_{i=1}^{n} x_i = \frac{n(n+1)}{2}&#10;$$">kopiuj</button></div>
+            <pre>Wzór inline: $E = mc^2$
+
+Blok wzoru:
+$$
+\sum_{i=1}^{n} x_i = \frac{n(n+1)}{2}
+$$</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p>Wzór inline: <em style="font-style:normal;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent)">E = mc²</em></p>
+              <div style="text-align:center;padding:12px;font-family:'DM Mono',monospace;font-size:13px;color:var(--accent);background:var(--surface2);border-radius:6px;margin-top:8px;">∑ xᵢ = n(n+1)/2</div>
+            </div>
+          </div>
+        </div>
+        <div class="syntax-note"><strong>Uwaga:</strong> Renderowanie LaTeX wymaga obsługi MathJax lub KaTeX. GitHub.com obsługuje natywnie. Lokalnie może wymagać pluginu (np. mkdocs-material).</div>
+      </section>
+
+      <!-- ── HTML INLINE ─────────────────────────────── -->
+      <section class="syntax-section" id="s-html">
+        <div class="syntax-section-title"><span class="s-emoji">🌐</span>HTML inline</div>
+        <div class="syntax-section-desc">W większości rendererów Markdown dopuszcza surowy HTML. Przydatne dla funkcji niedostępnych w czystym MD: kolor, rozmiar obrazka, szczegóły/podsumowanie.</div>
+
+        <div class="sub-label">Sekcja rozwijana (details/summary)</div>
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="<details>&#10;<summary>Kliknij aby rozwinąć</summary>&#10;&#10;Zawartość ukryta.&#10;Można tu użyć **Markdown**.&#10;&#10;</details>">kopiuj</button></div>
+            <pre>&lt;details&gt;
+&lt;summary&gt;Kliknij aby rozwinąć&lt;/summary&gt;
+
+Zawartość ukryta.
+Można tu użyć **Markdown**.
+
+&lt;/details&gt;</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <details style="border:1px solid var(--border);border-radius:6px;padding:8px 14px;">
+                <summary style="cursor:pointer;color:var(--accent2);">Kliknij aby rozwinąć</summary>
+                <p style="margin-top:10px;">Zawartość ukryta. Można tu użyć <strong>Markdown</strong>.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label">Inne użyteczne tagi HTML</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Przydatne tagi</div>
+          <pre>&lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;C&lt;/kbd&gt;   → skróty klawiszowe
+&lt;sub&gt;dolny&lt;/sub&gt;                → indeks dolny
+&lt;sup&gt;górny&lt;/sup&gt;                → indeks górny
+&lt;mark&gt;zaznaczony&lt;/mark&gt;         → podświetlenie (HTML5)
+&lt;br&gt;                            → łamanie linii
+&lt;center&gt;tekst&lt;/center&gt;          → wyśrodkowanie (deprecated)
+&lt;img width="300" src="..."&gt;     → kontrola rozmiaru obrazka
+&lt;!-- komentarz --&gt;              → niewidoczny komentarz</pre>
+          </div>
+
+        <div class="example-pair">
+          <div class="syntax-block src"><div class="syntax-block-label">Markdown</div><pre>Naciśnij &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;S&lt;/kbd&gt; aby zapisać.</pre></div>
+          <div class="syntax-block out"><div class="syntax-block-label">Podgląd</div><div class="md-preview"><p>Naciśnij <span class="kbd">Ctrl</span>+<span class="kbd">S</span> aby zapisać.</p></div></div>
+        </div>
+      </section>
+
+      <!-- ── ESCAPING ────────────────────────────────── -->
+      <section class="syntax-section" id="s-escape">
+        <div class="syntax-section-title"><span class="s-emoji">🔒</span>Escaping znaków specjalnych</div>
+        <div class="syntax-section-desc">Backslash <code>\</code> przed znakiem specjalnym powoduje, że jest traktowany dosłownie. Alternatywnie — encje HTML.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown</div>
+            <pre>\*nie kursywa\*
+\# nie nagłówek
+\[nie link\](url)
+\`nie kod\`
+
+&amp;amp;   → &amp;
+&amp;lt;    → &lt;
+&amp;gt;    → &gt;
+&amp;copy;  → ©
+&amp;mdash; → —</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <p>*nie kursywa*</p>
+              <p># nie nagłówek</p>
+              <p>[nie link](url)</p>
+              <p>`nie kod`</p>
+              <hr>
+              <p>&amp; &lt; &gt; © —</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Znaki wymagające escapowania</div>
+          <pre>\ ` * _ { } [ ] ( ) # + - . ! | &gt; ~</pre>
+        </div>
+      </section>
+
+      <!-- ── FRONT MATTER ────────────────────────────── -->
+      <section class="syntax-section" id="s-frontmatter">
+        <div class="syntax-section-title"><span class="s-emoji">📄</span>Front Matter (YAML)</div>
+        <div class="syntax-section-desc">Blok YAML na początku pliku — metadane dokumentu. Obsługiwany przez Jekyll, Hugo, Gatsby, Obsidian, mkdocs i inne. Musi być pierwszym elementem pliku.</div>
+
+        <div class="example-pair">
+          <div class="syntax-block src">
+            <div class="syntax-block-label">Markdown <button class="copy-src-btn" data-copy="---&#10;title: Tytuł dokumentu&#10;date: 2024-01-15&#10;author: Jan Kowalski&#10;tags: [markdown, tutorial, docs]&#10;draft: false&#10;description: Krótki opis strony&#10;---&#10;&#10;# Treść dokumentu">kopiuj</button></div>
+            <pre>---
+title: Tytuł dokumentu
+date: 2024-01-15
+author: Jan Kowalski
+tags: [markdown, tutorial, docs]
+draft: false
+description: Krótki opis strony
+---
+
+# Treść dokumentu</pre>
+          </div>
+          <div class="syntax-block out">
+            <div class="syntax-block-label">Podgląd</div>
+            <div class="md-preview">
+              <div style="border:1px solid var(--border);border-radius:6px;padding:12px 14px;background:var(--surface2);font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);margin-bottom:12px;">
+                <div style="color:var(--text-dim);margin-bottom:6px;font-size:9px;letter-spacing:0.1em;">FRONT MATTER (niewidoczny w podglądzie)</div>
+                <div><span style="color:var(--accent2)">title:</span> Tytuł dokumentu</div>
+                <div><span style="color:var(--accent2)">date:</span> 2024-01-15</div>
+                <div><span style="color:var(--accent2)">tags:</span> [markdown, tutorial, docs]</div>
+              </div>
+              <h1>Treść dokumentu</h1>
+            </div>
+          </div>
+        </div>
+        <div class="syntax-tip"><strong>Tip:</strong> Obsidian używa Front Matter do właściwości notatek. GitHub ignoruje Front Matter w podglądzie, ale używa go Jekyll i inne generatory. W samym pliku <code>.md</code> blok <code>---</code> jest wyświetlany jako linia pozioma.</div>
+      </section>
+
+      <!-- ── DOBRE PRAKTYKI ──────────────────────────── -->
+      <section class="syntax-section" id="s-tips">
+        <div class="syntax-section-title"><span class="s-emoji">💡</span>Dobre praktyki</div>
+        <div class="syntax-section-desc">Zasady pisania czytelnych i przenośnych plików Markdown.</div>
+
+        <div class="sub-label">Struktura dokumentu</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">✅ Zalecane</div>
+          <pre># Jeden H1 na dokument (tytuł)
+## H2 dla głównych sekcji
+### H3 dla podsekcji
+#### H4 oszczędnie — tylko gdy naprawdę potrzebne
+
+Puste linie między blokami (akapity, listy, bloki kodu).
+Konsekwentny styl: albo - albo * dla list (nie mieszaj).
+Linki referencyjne dla często powtarzających się URL.
+Tekst alternatywny dla każdego obrazka.</pre>
+        </div>
+
+        <div class="sub-label">Przenośność</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Kompatybilność rendererów</div>
+          <pre>CommonMark     → bazowy standard, wszędzie działa
+GFM            → GitHub: tabele, task lists, alerty, strikethrough
+Pandoc         → konwersja do PDF/DOCX/HTML, rich footnotes, math
+Obsidian       → wikilinks [[strona]], callouts, embeds
+mkdocs-material→ admonitions, tabs, annotations
+Jekyll/Hugo    → shortcodes, front matter, templating</pre>
+        </div>
+
+        <div class="sub-label">Częste błędy</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">❌ Unikaj</div>
+          <pre>❌ Brak spacji po #  →  #Nagłówek (nie działa wszędzie)
+❌ Mieszanie tabs i spacji w wcięciach list
+❌ Brak pustej linii przed blokiem kodu lub listą
+❌ Bezpośrednio po tekście --- (tworzy H2!)
+❌ Tabele bez separatora  |---|  (linia 2 jest obowiązkowa)
+❌ Obrazki bez tekstu alt  ![] zamiast ![opis]
+❌ Bardzo długie linie (>120 znaków) — trudne w review</pre>
+        </div>
+
+        <div class="sub-label">Narzędzia</div>
+        <div class="syntax-block note">
+          <div class="syntax-block-label">Przydatne narzędzia</div>
+          <pre>Walidacja:  markdownlint, remark-lint
+Formatowanie: prettier --parser markdown
+Podgląd:    VS Code (Ctrl+Shift+V), Typora, Obsidian
+Konwersja:  pandoc input.md -o output.pdf
+Tabele:     tableconvert.com, markdown tables generator
+Diagramy:   mermaid.live
+Odznaki:    shields.io, badgen.net</pre>
+        </div>
+      </section>
+
+    </div><!-- /syntax-content -->
+  </div><!-- /syntax-layout -->
+</div><!-- /tab-syntax -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════════════════════
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════
+// SYNTAX NAV — highlight active section on scroll
+// ═══════════════════════════════════════════════════════════
+const syntaxContent = document.getElementById('syntaxContent');
+const navItems = document.querySelectorAll('.syntax-nav-item');
+
+syntaxContent.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.syntax-section');
+  let current = '';
+  sections.forEach(sec => {
+    if (syntaxContent.scrollTop >= sec.offsetTop - 60) current = sec.id;
+  });
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.dataset.sec === current);
+  });
+});
+
+navItems.forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.getElementById(item.dataset.sec);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    // Also switch to syntax tab if needed
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-tab="syntax"]').classList.add('active');
+    document.getElementById('tab-syntax').classList.add('active');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════
+// COPY BUTTONS (syntax blocks)
+// ═══════════════════════════════════════════════════════════
+document.querySelectorAll('.copy-src-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const text = btn.dataset.copy.replace(/&#10;/g, '\n').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    navigator.clipboard.writeText(text).catch(() => {});
+    showToast('Skopiowano fragment!');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════
+// ICONS DATA
+// ═══════════════════════════════════════════════════════════
+const icons = [
+  { cat:"status", popular:true,  emoji:"✅", en:"Done / Success", name:"Sukces / Gotowe",       code:"✅", desc:"Pomyślnie ukończone zadanie, zaakceptowany wymóg lub pozytywny wynik testu. Najczęściej w checklistach.", roles:["done","sukces","akceptacja"], contexts:["README","changelog","checklista"], modelSignal:"Silny sygnał pozytywny — zakończenie, sukces lub potwierdzenie." },
+  { cat:"status", popular:true,  emoji:"❌", en:"Error / Rejected", name:"Błąd / Odrzucone",      code:"❌", desc:"Negacja, błąd lub brak wsparcia. Kontrast do ✅ w tabelach porównawczych.", roles:["błąd","negacja","brak"], contexts:["porównania","test failures"], modelSignal:"Silny sygnał negatywny — para z ✅ tworzy binarną oś decyzyjną." },
+  { cat:"status", popular:true,  emoji:"⚠️", en:"Warning", name:"Ostrzeżenie",           code:"⚠️", desc:"Uwaga, potencjalne ryzyko lub ważna informacja wymagająca szczególnej uwagi.", roles:["uwaga","ryzyko","caveat"], contexts:["dokumentacja","release notes"], modelSignal:"Sygnał podwyższonej uwagi — tekst obok jest informacją krytyczną." },
+  { cat:"status", popular:true,  emoji:"🚧", en:"Work in Progress", name:"W budowie / WIP",       code:"🚧", desc:"Work in progress — sekcja w trakcie implementacji. Informacja dla czytelnika i współautorów.", roles:["WIP","draft","niedokończone"], contexts:["README","wiki","roadmap"], modelSignal:"Niekompletność — zawartość może być szkicem, nie finalną specyfikacją." },
+  { cat:"status", popular:true,  emoji:"💡", en:"Tip / Idea", name:"Pomysł / Wskazówka",    code:"💡", desc:"Tip, hint lub propozycja ulepszenia. Wyróżnia opcjonalne sugestie od wymagań.", roles:["tip","sugestia","idea"], contexts:["dokumentacja","tutorial","README"], modelSignal:"Opcjonalność — zawartość przydatna, ale nieobligatoryjna." },
+  { cat:"status", popular:true,  emoji:"🔥", en:"Hot / Trending", name:"Gorące / Trending",     code:"🔥", desc:"Wyróżnienie czegoś popularnego, nowego lub bardzo ważnego.", roles:["hot","trending","ważne"], contexts:["README","changelog"], modelSignal:"Wysoka waga lub popularność — model traktuje element jako priorytetowy." },
+  { cat:"status", popular:true,  emoji:"✨", en:"Sparkles / New Feature", name:"Nowa funkcja / Magia",  code:"✨", desc:"Nowo dodana funkcja lub ulepszenie (gitmoji). Efekt 'wow' lub wyróżnienie.", roles:["feature","nowe","gitmoji"], contexts:["changelog","README"], modelSignal:"Nowość i jakość — coś wartego wyróżnienia." },
+  { cat:"status", popular:true,  emoji:"💯", en:"Hundred / Perfect", name:"Sto procent / Pełne",   code:"💯", desc:"Perfekcja lub pełna zgodność. 100% test coverage, pełne wsparcie.", roles:["perfect","100%","full"], contexts:["testy","benchmarks"], modelSignal:"Kompletność lub wartość maksymalna." },
+  { cat:"status", popular:true,  emoji:"⭐", en:"Star / Important", name:"Ważne / Gwiazdka",      code:"⭐", desc:"Gwiazdka GitHub, wyróżniony element lub kluczowa funkcja projektu.", roles:["star","ważne","featured"], contexts:["README","GitHub"], modelSignal:"Subiektywna wartość — wyróżnienie przez autora." },
+  { cat:"status", popular:false, emoji:"🔴", en:"Red Circle / Critical", name:"Krytyczny / Offline",   code:"🔴", desc:"Status krytyczny, system offline lub wysoki priorytet w skali semaforowej.", roles:["krytyczny","offline","alert"], contexts:["status pages","dashboardy"], modelSignal:"Najwyższy stopień alarmowy w skali 🔴🟡🟢." },
+  { cat:"status", popular:false, emoji:"🟡", en:"Yellow Circle / Degraded", name:"Degraded / Uwaga",      code:"🟡", desc:"Stan pośredni — degraded service lub średni priorytet.", roles:["degraded","średni","uwaga"], contexts:["status pages","priorytety"], modelSignal:"Środkowy stopień skali semaforowej." },
+  { cat:"status", popular:false, emoji:"🟢", en:"Green Circle / OK", name:"Działa / OK",           code:"🟢", desc:"System działa poprawnie, niski priorytet lub pozytywny stan.", roles:["online","OK","green"], contexts:["status pages","monitoring"], modelSignal:"Brak problemów w systemie semaforowym." },
+  { cat:"status", popular:false, emoji:"⏳", en:"Hourglass / Pending", name:"Oczekuje / Pending",    code:"⏳", desc:"Zadanie lub proces w trakcie — oczekiwanie na wynik lub zatwierdzenie.", roles:["pending","in progress","czeka"], contexts:["checklisy","CI/CD"], modelSignal:"Stan przejściowy — wynik jeszcze nieznany." },
+  { cat:"status", popular:false, emoji:"🆕", en:"New", name:"Nowość",                code:"🆕", desc:"Nowo dodana funkcja, sekcja lub element. Pomaga szybko zlokalizować zmiany.", roles:["nowe","added","new"], contexts:["changelog","release notes"], modelSignal:"Znacznik temporalny — element niedawno wprowadzony." },
+  { cat:"status", popular:false, emoji:"🌟", en:"Glowing Star", name:"Wyjątkowe / Polecane",  code:"🌟", desc:"Silniejszy akcent niż ⭐ — wyróżnienie czegoś wyjątkowego lub rekomendowanego.", roles:["polecane","top","wyjątkowe"], contexts:["README","rekomendacje"], modelSignal:"Wyższy poziom akcentu — bardziej emocjonalny niż gwiazdka." },
+  { cat:"status", popular:false, emoji:"🏆", en:"Trophy / Best", name:"Najlepszy / Lider",     code:"🏆", desc:"Trofeum — najlepsza opcja, lider benchmarku lub nagroda.", roles:["winner","best","top"], contexts:["porównania","benchmarks"], modelSignal:"Superlativum — absolutna pierwsza pozycja." },
+  { cat:"status", popular:false, emoji:"❓", en:"Question", name:"Pytanie / Niejasne",    code:"❓", desc:"Pytanie do wyjaśnienia, brakująca informacja lub niejasny status.", roles:["pytanie","niejasne","todo"], contexts:["issues","wiki"], modelSignal:"Brak informacji — model spodziewa się luki w danych." },
+  { cat:"status", popular:false, emoji:"❗", en:"Exclamation", name:"Ważne / Uwaga",         code:"❗", desc:"Wykrzyknik — ważna informacja. Bardziej bezpośredni niż ⚠️.", roles:["ważne","priorytet","alert"], contexts:["README","instrukcje"], modelSignal:"Bezpośrednie wezwanie do uwagi." },
+  { cat:"status", popular:false, emoji:"🔖", en:"Bookmark / Version Tag", name:"Zakładka / Wersja",     code:"🔖", desc:"Bookmark — release tag, oznaczenie wersji lub ważna sekcja.", roles:["version","tag","release"], contexts:["release notes","wersjonowanie"], modelSignal:"Punkt referencyjny — oznaczenie do powrotu." },
+  { cat:"status", popular:false, emoji:"🏷️", en:"Label / Tag", name:"Etykieta / Tag",        code:"🏷️", desc:"Cenówka — etykieta kategorii, tag lub taksonomia treści.", roles:["tag","label","kategoria"], contexts:["dokumentacja","taksonomia"], modelSignal:"Klasyfikacja — model szuka po nim słów kluczowych." },
+  { cat:"status", popular:false, emoji:"💎", en:"Diamond / Premium", name:"Premium / Diament",     code:"💎", desc:"Funkcja premium, tier płatny lub wyjątkowa jakość.", roles:["premium","paid","jakość"], contexts:["pricing","README"], modelSignal:"Tier ekskluzywny." },
+
+  { cat:"navigation", popular:true,  emoji:"👉", en:"Backhand Point / CTA", name:"Wskazanie / CTA",    code:"👉", desc:"Kieruje uwagę czytelnika do linku lub sekcji. Najczęstszy sposób na nieformalne CTA.", roles:["CTA","wskazanie","link"], contexts:["README","tutorial","linki"], modelSignal:"Referencja lub akcja — model spodziewa się po nim linka." },
+  { cat:"navigation", popular:true,  emoji:"📌", en:"Pushpin / Pinned", name:"Przypięte / Kluczowe",code:"📌", desc:"Pinezka — absolutnie kluczowa informacja lub TL;DR.", roles:["kluczowe","TL;DR","pin"], contexts:["wiki","notatki","README"], modelSignal:"Wysoka waga semantyczna — informacja priorytetowa." },
+  { cat:"navigation", popular:true,  emoji:"🔗", en:"Link / Chain", name:"Link / Zależność",   code:"🔗", desc:"Odsyłacz do zewnętrznego zasobu, dokumentacji lub repozytorium.", roles:["link","URL","referencja"], contexts:["README","docs","wiki"], modelSignal:"Referencja zewnętrzna — model oczekuje URL." },
+  { cat:"navigation", popular:true,  emoji:"🔍", en:"Search / Magnify", name:"Szukaj / Szczegóły", code:"🔍", desc:"Szkło powiększające — sekcja szczegółowego opisu lub analiza.", roles:["szukaj","analiza","detale"], contexts:["docs","README"], modelSignal:"Głębokość — zachęta do zagłębienia się w temat." },
+  { cat:"navigation", popular:false, emoji:"📖", en:"Open Book / Docs", name:"Dokumentacja",       code:"📖", desc:"Otwarta książka — link do pełnej dokumentacji lub sekcji zapoznania.", roles:["docs","tutorial","czytaj"], contexts:["README","getting started"], modelSignal:"Edukacyjny — odniesienie do pogłębionej wiedzy." },
+  { cat:"navigation", popular:false, emoji:"⬆️", en:"Up Arrow / Top", name:"Powrót do góry",     code:"⬆️", desc:"Konwencjonalny link 'Powrót na górę' w długich dokumentach.", roles:["powrót","top","nawigacja"], contexts:["długie README","wiki"], modelSignal:"Koniec sekcji lub hierarchiczny powrót." },
+  { cat:"navigation", popular:false, emoji:"↩️", en:"Return Arrow / Back", name:"Powrót / Wstecz",    code:"↩️", desc:"Strzałka powrotu — cofnięcie lub powrót do poprzedniego stanu.", roles:["powrót","undo","wstecz"], contexts:["instrukcje","rollback"], modelSignal:"Odwracalność — akcja cofnięcia." },
+  { cat:"navigation", popular:false, emoji:"🗺️", en:"Map / Roadmap", name:"Mapa / Roadmapa",    code:"🗺️", desc:"Mapa — roadmapa projektu, plan działania lub przegląd architektury.", roles:["roadmap","plan","overview"], contexts:["README","strategy"], modelSignal:"Planowanie — sekcja przyszłych działań." },
+  { cat:"navigation", popular:false, emoji:"📍", en:"Round Pushpin / Here", name:"Lokalizacja / Tu",    code:"📍", desc:"Pinezka lokalizacji — aktualny punkt w dokumentacji.", roles:["tu","current","pozycja"], contexts:["tutorial","docs"], modelSignal:"Kontekst pozycji — orientacja w strukturze." },
+  { cat:"navigation", popular:false, emoji:"🔎", en:"Left-Pointing Magnify", name:"Analiza / Badanie",   code:"🔎", desc:"Lupa — głęboka analiza, badanie lub śledztwo tematu.", roles:["analiza","research","szczegóły"], contexts:["raporty","wiki"], modelSignal:"Głębsza analiza niż 🔍." },
+  { cat:"navigation", popular:false, emoji:"🧭", en:"Compass / Overview", name:"Orientacja / Cel",    code:"🧭", desc:"Kompas — sekcja orientacyjna, overview lub roadmapa kierunkowa.", roles:["overview","cel","kierunek"], contexts:["README","vision"], modelSignal:"Kontekst wysokopoziomowy — cel lub misja." },
+  { cat:"navigation", popular:false, emoji:"👆", en:"Point Up / See Above", name:"Patrz wyżej",         code:"👆", desc:"Palec w górę — odesłanie do wcześniej opisanego elementu.", roles:["powyżej","see above","ref"], contexts:["docs","instrukcje"], modelSignal:"Referencja wsteczna — odsyła do wcześniejszej treści." },
+  { cat:"navigation", popular:false, emoji:"👇", en:"Point Down / See Below", name:"Patrz niżej",         code:"👇", desc:"Palec w dół — odesłanie do dalszej treści lub sekcji.", roles:["poniżej","see below","dalej"], contexts:["docs","instrukcje"], modelSignal:"Referencja do dalszej treści." },
+
+  { cat:"warning", popular:true,  emoji:"🚨", en:"Rotating Light / Alert", name:"Alert krytyczny",      code:"🚨", desc:"Krytyczne ostrzeżenie wymagające natychmiastowej uwagi. Przy breaking changes lub lukach bezpieczeństwa.", roles:["krytyczne","alert","breaking"], contexts:["security","changelog"], modelSignal:"Najsilniejszy sygnał alarmowy — zawartość bezwzględnie priorytetowa." },
+  { cat:"warning", popular:true,  emoji:"🔒", en:"Locked / Security", name:"Bezpieczeństwo",       code:"🔒", desc:"Sygnalizuje wymogi bezpieczeństwa, autentykację lub ograniczony dostęp.", roles:["security","auth","prywatność"], contexts:["security docs","API docs"], modelSignal:"Wymaganie autoryzacyjne lub ograniczenie dostępu." },
+  { cat:"warning", popular:true,  emoji:"💥", en:"Collision / Breaking", name:"Breaking change",      code:"💥", desc:"Eksplozja — gitmoji dla niekompatybilnej wstecznie zmiany wymagającej migracji.", roles:["breaking","major","semver"], contexts:["changelog","release notes"], modelSignal:"Konieczność aktualizacji kodu po stronie użytkownika." },
+  { cat:"warning", popular:true,  emoji:"🐛", en:"Bug", name:"Bug",                  code:"🐛", desc:"Robak — standardowa ikona buga. Używana w changelogach i opisach issue.", roles:["bug","błąd","defekt"], contexts:["changelog","GitHub issues"], modelSignal:"Konwencja gitmoji — naprawiony defekt lub zgłoszenie błędu." },
+  { cat:"warning", popular:false, emoji:"⛔", en:"No Entry / Forbidden", name:"Zakaz / Nie rób",      code:"⛔", desc:"Absolutny zakaz — czynność niedopuszczalna.", roles:["zakaz","stop","nie rób"], contexts:["instrukcje","bezpieczeństwo"], modelSignal:"Constraint absolutny — silniejszy sygnał niż ❌." },
+  { cat:"warning", popular:false, emoji:"☠️", en:"Skull / Danger", name:"Niebezpieczeństwo",    code:"☠️", desc:"Czaszka — ekstremalnie niebezpieczna operacja lub fatal error.", roles:["danger","fatal","destruktywne"], contexts:["CLI docs","security"], modelSignal:"Najwyższy stopień ostrzeżenia operacyjnego." },
+  { cat:"warning", popular:false, emoji:"☢️", en:"Radioactive / Legacy", name:"Legacy / Dług tech",   code:"☢️", desc:"Symbol radioaktywności — kod legacy lub bardzo ryzykowna sekcja.", roles:["legacy","tech-debt","ryzyko"], contexts:["code comments","wiki"], modelSignal:"Ostrzeżenie przed długiem technologicznym." },
+  { cat:"warning", popular:false, emoji:"🚯", en:"No Littering / Clean Code", name:"Clean code",           code:"🚯", desc:"Zakaz śmiecenia — nie zostawiaj kodu tymczasowego lub TODO comments.", roles:["clean","no-mess","standardy"], contexts:["code style","contributing"], modelSignal:"Norma jakościowa — sygnał porządku kodu." },
+  { cat:"warning", popular:false, emoji:"⚡", en:"Lightning / Hazard", name:"Uwaga / Hazard",       code:"⚡", desc:"Piorun jako ostrzeżenie — uwaga o skutkach ubocznych lub ryzykowna operacja.", roles:["uwaga","side effect","szybkie"], contexts:["docs","CLI"], modelSignal:"Dwuznaczny — może oznaczać wydajność LUB ostrzeżenie." },
+
+  { cat:"tech", popular:true,  emoji:"🚀", en:"Rocket / Deploy", name:"Deploy / Release",         code:"🚀", desc:"Rakieta — deployment, release lub launch. Konwencja gitmoji dla wdrożeń.", roles:["deploy","release","launch"], contexts:["CI/CD","changelog","README"], modelSignal:"Akcja wdrożeniowa — punkt kulminacyjny pipeline'u." },
+  { cat:"tech", popular:true,  emoji:"🔧", en:"Wrench / Fix", name:"Fix / Konfiguracja",        code:"🔧", desc:"Klucz — naprawa lub konfiguracja. W gitmoji oznacza fix lub zmianę konfiguracyjną.", roles:["fix","config","naprawa"], contexts:["changelog","setup"], modelSignal:"Modyfikacja techniczna — zmiana konfiguracji lub naprawa." },
+  { cat:"tech", popular:true,  emoji:"📦", en:"Package / Bundle", name:"Pakiet / Dependencje",      code:"📦", desc:"Paczka — zmiany w zależnościach, nowy pakiet lub bundle.", roles:["packages","deps","bundle"], contexts:["changelog","package.json"], modelSignal:"Zależności projektu — kluczowe przy analizie stosu." },
+  { cat:"tech", popular:true,  emoji:"🧪", en:"Test Tube / Tests", name:"Testy",                     code:"🧪", desc:"Probówka — sekcja dotycząca testów unit, integration lub e2e.", roles:["testy","QA","coverage"], contexts:["README","CI","changelog"], modelSignal:"Jakość kodu — testowanie i weryfikacja poprawności." },
+  { cat:"tech", popular:true,  emoji:"🐳", en:"Whale / Docker", name:"Docker / Kontenery",        code:"🐳", desc:"Wieloryb — wszystko związane z Dockerem, kontenerami lub Kubernetes.", roles:["Docker","kontenery","k8s"], contexts:["README","devops","deployment"], modelSignal:"Model jednoznacznie kojarzy z ekosystemem kontenerów." },
+  { cat:"tech", popular:true,  emoji:"🤖", en:"Robot / Automation", name:"Automatyzacja / AI",        code:"🤖", desc:"Robot — automatyzacja, boty, skrypty CI lub komponenty AI/ML.", roles:["automatyzacja","bot","AI/ML"], contexts:["CI/CD","boty","ML"], modelSignal:"Systemy autonomiczne lub AI." },
+  { cat:"tech", popular:true,  emoji:"⚙️", en:"Gear / Settings", name:"Ustawienia / Mechanizm",    code:"⚙️", desc:"Trybik — konfiguracja systemu, ustawienia aplikacji lub mechanizm działania.", roles:["settings","config","mechanizm"], contexts:["docs","README","setup"], modelSignal:"Konfigurowalność — model identyfikuje sekcję ustawień." },
+  { cat:"tech", popular:true,  emoji:"💻", en:"Laptop / Code", name:"Laptop / Kod",              code:"💻", desc:"Komputer — sekcja kodowania, implementacja lub środowisko developerskie.", roles:["kod","dev","implementacja"], contexts:["README","tutorials"], modelSignal:"Środowisko deweloperskie — kod lub terminal." },
+  { cat:"tech", popular:false, emoji:"🏗️", en:"Construction / Architecture", name:"Architektura / Infra",      code:"🏗️", desc:"Dźwig — zmiany architektoniczne, refactoring na dużą skalę lub prace infrastrukturalne.", roles:["architektura","infra","refactor"], contexts:["ADR","README","changelog"], modelSignal:"Zmiana strukturalna — nie implementacyjna, lecz projektowa." },
+  { cat:"tech", popular:false, emoji:"🔌", en:"Plug / Plugin", name:"Plugin / Integracja",       code:"🔌", desc:"Wtyczka — plugin, integracja z zewnętrznym systemem lub connector API.", roles:["plugin","integracja","API"], contexts:["docs","marketplace"], modelSignal:"Rozszerzalność — punkt integracyjny systemu." },
+  { cat:"tech", popular:false, emoji:"🗄️", en:"File Cabinet / Database", name:"Baza danych",              code:"🗄️", desc:"Szuflada — sekcja dotycząca bazy danych, schematu lub migracji.", roles:["database","DB","schema"], contexts:["docs","migrations"], modelSignal:"Warstwa trwałości — dane i przechowywanie." },
+  { cat:"tech", popular:false, emoji:"📡", en:"Satellite / API", name:"API / Sieć",               code:"📡", desc:"Antena — endpointy API, komunikacja sieciowa lub streaming.", roles:["API","sieć","endpoints"], contexts:["API docs","networking"], modelSignal:"Komunikacja zewnętrzna — model szuka specyfikacji API." },
+  { cat:"tech", popular:false, emoji:"🧬", en:"DNA / Algorithm", name:"ML / Algorytm",            code:"🧬", desc:"DNA — machine learning lub skomplikowany algorytm.", roles:["ML","AI","algorytm"], contexts:["ML docs","research"], modelSignal:"Złożoność algorytmiczna lub uczenie maszynowe." },
+  { cat:"tech", popular:false, emoji:"🛠️", en:"Hammer & Wrench / Tools", name:"Narzędzia / Tooling",      code:"🛠️", desc:"Narzędzia — zestaw narzędzi developerskich lub developer toolchain.", roles:["tools","tooling","DX"], contexts:["getting started","contributing"], modelSignal:"Toolchain developerski — lista wymaganych narzędzi." },
+  { cat:"tech", popular:false, emoji:"🧰", en:"Toolbox / SDK", name:"SDK / Utils",              code:"🧰", desc:"Skrzynka narzędziowa — kompletny zestaw utils, helpers lub SDK.", roles:["SDK","utils","helpers"], contexts:["README","libraries"], modelSignal:"Kolekcja narzędzi pomocniczych." },
+  { cat:"tech", popular:false, emoji:"💾", en:"Floppy Disk / Save", name:"Zapisz / Storage",          code:"💾", desc:"Dyskietka — operacja zapisu, persystencja danych lub storage layer.", roles:["save","storage","persystencja"], contexts:["docs","data layer"], modelSignal:"Operacja trwałości — model kojarzy z zapisem." },
+  { cat:"tech", popular:false, emoji:"🔐", en:"Locked with Key / Encrypt", name:"Szyfrowanie / Auth",        code:"🔐", desc:"Zamknięta kłódka z kluczem — szyfrowanie, tokeny lub certyfikaty.", roles:["crypto","tokens","cert"], contexts:["security docs","auth"], modelSignal:"Aktywna ochrona kryptograficzna." },
+  { cat:"tech", popular:false, emoji:"🖥️", en:"Monitor / Server", name:"Monitor / Server",         code:"🖥️", desc:"Monitor stacjonarny — serwer lub środowisko produkcyjne.", roles:["server","desktop","prod"], contexts:["infrastructure","deployment"], modelSignal:"Środowisko serwerowe lub desktopowe." },
+  { cat:"tech", popular:false, emoji:"📱", en:"Mobile Phone", name:"Mobile / Responsywność",   code:"📱", desc:"Smartfon — aplikacja mobilna, responsywność lub wsparcie mobile.", roles:["mobile","responsive","iOS/Android"], contexts:["README","docs"], modelSignal:"Platforma mobilna — model szuka informacji o wsparciu." },
+
+  { cat:"structure", popular:true,  emoji:"📁", en:"Folder", name:"Folder / Katalog",     code:"📁", desc:"Folder — opisuje strukturę katalogów w projekcie lub wskazuje ścieżkę.", roles:["folder","katalog","struktura"], contexts:["README","projekt"], modelSignal:"Hierarchia systemu plików — punkt struktury drzewa." },
+  { cat:"structure", popular:true,  emoji:"📝", en:"Memo / Note", name:"Notatka / Opis",       code:"📝", desc:"Notatnik — ogólne notatki, opisy lub komentarze robocze.", roles:["notatka","opis","draft"], contexts:["wiki","notatki"], modelSignal:"Informacja pomocnicza lub szkic." },
+  { cat:"structure", popular:true,  emoji:"📊", en:"Bar Chart / Data", name:"Dane / Wykresy",       code:"📊", desc:"Wykres słupkowy — dane, statystyki, metryki lub wyniki benchmarków.", roles:["dane","metryki","stats"], contexts:["README","raporty","benchmarks"], modelSignal:"Dane ilościowe — model spodziewa się tabel lub liczb." },
+  { cat:"structure", popular:true,  emoji:"📋", en:"Clipboard / Checklist", name:"Lista / Checklist",    code:"📋", desc:"Schowek — lista wymagań, checklist lub zestawienie kroków.", roles:["lista","checklist","requirements"], contexts:["README","CONTRIBUTING"], modelSignal:"Lista zadań lub wymagań." },
+  { cat:"structure", popular:false, emoji:"🗂️", en:"Card Index / TOC", name:"Indeks / Spis treści", code:"🗂️", desc:"Segregator — listy plików, indeksy dokumentacji lub tablice treści.", roles:["TOC","indeks","spis"], contexts:["monorepo","wiki","docs"], modelSignal:"Metastrukturalny — punkt wejścia do hierarchii." },
+  { cat:"structure", popular:false, emoji:"🔑", en:"Key / Prerequisite", name:"Wymaganie kluczowe",   code:"🔑", desc:"Klucz — wymaganie wstępne, kluczowy kontrybut lub dostęp wymagany.", roles:["prereq","wymaganie","klucz"], contexts:["getting started","prerequisites"], modelSignal:"Warunek konieczny — musi być spełniony." },
+  { cat:"structure", popular:false, emoji:"📈", en:"Chart Up / Growth", name:"Wzrost / Trendy",      code:"📈", desc:"Wykres rosnący — tendencje wzrostowe, KPI lub metryki adopcji.", roles:["wzrost","KPI","progres"], contexts:["raporty","OKR"], modelSignal:"Wartości rosnące — model spodziewa się danych pozytywnych." },
+  { cat:"structure", popular:false, emoji:"📉", en:"Chart Down / Decline", name:"Spadek / Regres",      code:"📉", desc:"Wykres malejący — tendencje spadkowe lub regresja wydajności.", roles:["spadek","regres","minus"], contexts:["postmortemy","analityka"], modelSignal:"Wartości malejące — problemy do poprawy." },
+  { cat:"structure", popular:false, emoji:"📐", en:"Triangular Ruler / Spec", name:"Projekt / Spec",       code:"📐", desc:"Ekierka — precyzyjny projekt, specyfikacja techniczna lub wymagania formalne.", roles:["spec","design","precyzja"], contexts:["ADR","RFC","docs"], modelSignal:"Formalność i precyzja — model traktuje jako spec." },
+  { cat:"structure", popular:false, emoji:"📚", en:"Books / Library", name:"Biblioteka / Zasoby",  code:"📚", desc:"Stos książek — biblioteka zasobów lub obszerna dokumentacja.", roles:["biblioteka","resources","literatura"], contexts:["README","docs"], modelSignal:"Kolekcja zasobów — referencje bibliograficzne." },
+  { cat:"structure", popular:false, emoji:"📄", en:"Page / File", name:"Plik / Dokument",      code:"📄", desc:"Kartka papieru — plik do pobrania, dokument lub zasób tekstowy.", roles:["plik","dokument","asset"], contexts:["README","downloads"], modelSignal:"Zasób do pobrania lub przeczytania." },
+  { cat:"structure", popular:false, emoji:"📑", en:"Pages / Sections", name:"Strony / Sekcje",      code:"📑", desc:"Zakładkowane strony — długi dokument z sekcjami lub strony raportu.", roles:["strony","sekcje","pagination"], contexts:["długie docs","raporty"], modelSignal:"Wielostronicowość — obszerny dokument." },
+
+  { cat:"communication", popular:true,  emoji:"💬", en:"Speech Bubble / Discussion", name:"Dyskusja / FAQ",            code:"💬", desc:"Dymek — sekcja dyskusyjna, komentarze, FAQ lub miejsce na feedback.", roles:["dyskusja","FAQ","feedback"], contexts:["CONTRIBUTING","GitHub"], modelSignal:"Dialogowy — zaproszenie do interakcji lub sekcja Q&A." },
+  { cat:"communication", popular:true,  emoji:"📣", en:"Megaphone / Announcement", name:"Ogłoszenie",                code:"📣", desc:"Megafon — ważne ogłoszenie lub release announcement.", roles:["ogłoszenie","broadcast","announcement"], contexts:["changelogi","blogi"], modelSignal:"Komunikacja jednokierunkowa — ważna informacja szeroko dystrybuowana." },
+  { cat:"communication", popular:true,  emoji:"🤝", en:"Handshake / Contributing", name:"Współpraca / Contributing", code:"🤝", desc:"Uścisk dłoni — CONTRIBUTING, podziękowania lub zaproszenie do współpracy.", roles:["contributing","kolaboracja","open source"], contexts:["CONTRIBUTING.md","README"], modelSignal:"Społecznościowy — informacja o procesie współpracy." },
+  { cat:"communication", popular:true,  emoji:"🙏", en:"Folded Hands / Thanks", name:"Podziękowania",             code:"🙏", desc:"Złożone dłonie — acknowledgements, podziękowania dla autorów lub sponsorów.", roles:["podziękowania","credits","acks"], contexts:["README","CREDITS.md"], modelSignal:"Atrybucja — lista źródeł lub osób zasługujących na uznanie." },
+  { cat:"communication", popular:true,  emoji:"📜", en:"Scroll / License", name:"Licencja",                  code:"📜", desc:"Zwój — informacja o licencji projektu lub warunkach użytkowania.", roles:["licencja","license","legal"], contexts:["README","LICENSE.md"], modelSignal:"Prawny — warunki dystrybucji i użycia kodu." },
+  { cat:"communication", popular:false, emoji:"📧", en:"Email / Contact", name:"Kontakt / Email",            code:"📧", desc:"Koperta — dane kontaktowe, adres email lub sekcja support.", roles:["kontakt","email","support"], contexts:["README","SUPPORT.md"], modelSignal:"Dane do komunikacji — model oczekuje adresu email." },
+  { cat:"communication", popular:false, emoji:"🌐", en:"Globe / Website", name:"Strona / Globalnie",         code:"🌐", desc:"Glob — strona internetowa projektu, dokumentacja online lub zasięg globalny.", roles:["website","global","sieć"], contexts:["README","links"], modelSignal:"Zewnętrzna obecność online — model szuka URL." },
+  { cat:"communication", popular:false, emoji:"🗣️", en:"Speaking Head / Talk", name:"Prezentacja / Talk",        code:"🗣️", desc:"Mówca — prezentacja, demo day, konferencja lub wystąpienie.", roles:["prezentacja","talk","demo"], contexts:["README","events"], modelSignal:"Komunikacja publiczna — opis wystąpienia." },
+  { cat:"communication", popular:false, emoji:"📢", en:"Loudspeaker / Broadcast", name:"Broadcast / Push",          code:"📢", desc:"Głośnik — ogłoszenie bez interakcji lub push notification.", roles:["broadcast","push","alert"], contexts:["changelogi","status"], modelSignal:"Jednostronny sygnał — informacja bez oczekiwania odpowiedzi." },
+  { cat:"communication", popular:false, emoji:"📸", en:"Camera Flash / Screenshot", name:"Screenshot / Demo",         code:"📸", desc:"Aparat — zrzut ekranu, demo wizualne lub podgląd interfejsu.", roles:["screenshot","demo","preview"], contexts:["README","docs"], modelSignal:"Dowód wizualny — model spodziewa się obrazka." },
+
+  { cat:"workflow", popular:true,  emoji:"🔄", en:"Counterclockwise / Refresh", name:"Aktualizacja / Refresh",  code:"🔄", desc:"Strzałki kołowe — odświeżenie danych, aktualizacja stanu lub cykliczny proces.", roles:["update","refresh","cykl"], contexts:["CI/CD","docs","API"], modelSignal:"Cykliczność lub odświeżenie — informacja o częstotliwości." },
+  { cat:"workflow", popular:true,  emoji:"🎯", en:"Bullseye / Target", name:"Cel / Target",             code:"🎯", desc:"Tarcza — konkretny cel, goal projektu lub wymagany rezultat.", roles:["cel","target","goal"], contexts:["README","strategy","OKR"], modelSignal:"Klarowny cel — definicja sukcesu lub KPI." },
+  { cat:"workflow", popular:false, emoji:"♻️", en:"Recycling / Reuse", name:"Recykling / Reużycie",    code:"♻️", desc:"Symbol recyklingu — reużycie kodu lub zasada DRY.", roles:["reuse","DRY","refactor"], contexts:["code style","patterns"], modelSignal:"Zasada DRY — ponowne użycie bez duplikacji." },
+  { cat:"workflow", popular:false, emoji:"▶️", en:"Play Button / Run", name:"Uruchom / Start",         code:"▶️", desc:"Play button — uruchomienie procesu lub polecenie CLI.", roles:["run","start","execute"], contexts:["README","CLI docs","tutorial"], modelSignal:"Akcja uruchomienia — model oczekuje polecenia." },
+  { cat:"workflow", popular:false, emoji:"🧩", en:"Puzzle Piece / Module", name:"Moduł / Puzzle",          code:"🧩", desc:"Puzzel — moduł do złożenia, plugin lub kawałek większego systemu.", roles:["moduł","puzzle","integracja"], contexts:["architecture","plugins"], modelSignal:"Kompozycja — element układanki, nie samodzielny." },
+  { cat:"workflow", popular:false, emoji:"🏁", en:"Chequered Flag / Finish", name:"Ukończono / Finish",      code:"🏁", desc:"Flaga szachownicy — etap ukończony, sprint zamknięty lub wersja wypuszczona.", roles:["done","sprint","finish"], contexts:["changelog","project mgmt"], modelSignal:"Zakończenie etapu — punkt kontrolny w procesie." },
+  { cat:"workflow", popular:false, emoji:"🔀", en:"Shuffle / Merge", name:"Merge / Mix",             code:"🔀", desc:"Strzałki krzyżujące — merge request lub scalanie gałęzi.", roles:["merge","shuffle","blend"], contexts:["git","data pipelines"], modelSignal:"Łączenie strumieni lub gałęzi." },
+  { cat:"workflow", popular:false, emoji:"⏱️", en:"Stopwatch / Timer", name:"Timer / Czas",            code:"⏱️", desc:"Stoper — czas wykonania, limity czasowe lub benchmarki.", roles:["czas","timer","benchmark"], contexts:["performance","CI"], modelSignal:"Pomiar czasu — model szuka wartości ms/s." },
+  { cat:"workflow", popular:false, emoji:"📅", en:"Calendar / Schedule", name:"Data / Harmonogram",      code:"📅", desc:"Kalendarz — data releasu, harmonogram lub deadline.", roles:["data","termin","harmonogram"], contexts:["roadmap","changelog"], modelSignal:"Informacja temporalna — model szuka konkretnej daty." },
+
+  { cat:"people", popular:false, emoji:"👨‍💻", en:"Man Technologist / Dev", name:"Deweloper",             code:"👨‍💻", desc:"Programista — sekcja dla developerów lub wymagania zespołu.", roles:["developer","dev","autor"], contexts:["README","CONTRIBUTING"], modelSignal:"Adresowanie do deweloperów — tekst techniczny." },
+  { cat:"people", popular:false, emoji:"👥",   en:"Busts / Team", name:"Zespół / Użytkownicy", code:"👥", desc:"Dwie sylwetki — zespół, społeczność użytkowników lub opis grupy docelowej.", roles:["team","community","users"], contexts:["README","about"], modelSignal:"Zbiorowy odbiorca — opis grupy docelowej." },
+  { cat:"people", popular:false, emoji:"👑",   en:"Crown / Maintainer", name:"Maintainer / Lider",   code:"👑", desc:"Korona — główny maintainer, lider techniczny lub właściciel projektu.", roles:["maintainer","lead","owner"], contexts:["README","CODEOWNERS"], modelSignal:"Hierarchia — osoba decyzyjna w projekcie." },
+  { cat:"people", popular:false, emoji:"🧑‍🎓", en:"Student / Education", name:"Nauka / Edukacja",     code:"🧑‍🎓", desc:"Student — projekt edukacyjny lub sekcja learning resources.", roles:["edukacja","learning","studenci"], contexts:["README","tutorials"], modelSignal:"Kontekst dydaktyczny — materiały do nauki." },
+  { cat:"people", popular:false, emoji:"🌍",   en:"Earth / Global", name:"Globalny / i18n",       code:"🌍", desc:"Kula ziemska — obsługa wielu języków lub internacjonalizacja.", roles:["i18n","global","multi-lang"], contexts:["README","lokalizacja"], modelSignal:"Internacjonalizacja — model szuka obsługiwanych języków." },
+  { cat:"people", popular:false, emoji:"🤵",   en:"Suit / Enterprise", name:"Enterprise / Formalny", code:"🤵", desc:"Garnitur — kontekst enterprise lub profesjonalna usługa.", roles:["enterprise","formal","pro"], contexts:["pricing","README"], modelSignal:"Kontekst korporacyjny — tier enterprise." },
+
+  { cat:"business", popular:false, emoji:"💰", en:"Money Bag / Cost", name:"Koszt / Cennik",        code:"💰", desc:"Woreczek z pieniędzmi — sekcja cen, kosztów lub ROI.", roles:["cena","cost","ROI"], contexts:["README","pricing"], modelSignal:"Informacja finansowa — model szuka kwot lub planów." },
+  { cat:"business", popular:false, emoji:"💳", en:"Credit Card / Payment", name:"Płatność / Sponsoring", code:"💳", desc:"Karta płatnicza — metody płatności lub sponsoring projektu.", roles:["płatność","sponsor","billing"], contexts:["README","FUNDING"], modelSignal:"Transakcja — model szuka informacji o płatnościach." },
+  { cat:"business", popular:false, emoji:"🏢", en:"Office Building / Company", name:"Firma / Enterprise",    code:"🏢", desc:"Budynek biurowy — sekcja enterprise lub wsparcie korporacyjne.", roles:["enterprise","firma","corporate"], contexts:["pricing","README"], modelSignal:"Kontekst korporacyjny." },
+  { cat:"business", popular:false, emoji:"🎁", en:"Gift / Free", name:"Darmowe / Bonus",       code:"🎁", desc:"Prezent — darmowa funkcja, bonus lub open-source tier.", roles:["free","bonus","gratis"], contexts:["pricing","README"], modelSignal:"Wartość nieodpłatna — benefit bez kosztu." },
+  { cat:"business", popular:false, emoji:"🏅", en:"Medal / Award", name:"Certyfikat / Nagroda",  code:"🏅", desc:"Medal — certyfikacja, nagroda branżowa lub formalne uznanie jakości.", roles:["certyfikat","award","jakość"], contexts:["README","about"], modelSignal:"Zewnętrzna walidacja — formalne uznanie." },
+  { cat:"business", popular:false, emoji:"💼", en:"Briefcase / Professional", name:"Praca / Profesjonalne", code:"💼", desc:"Teczka — kontekst zawodowy lub professional tier.", roles:["praca","biznes","professional"], contexts:["README","pricing"], modelSignal:"Kontekst zawodowy — profesjonalne zastosowanie." },
+
+  // ─── GITMOJI — z gitmoji.dev ──────────────────────────────
+  { cat:"gitmoji", popular:true,  emoji:"🎉", en:"Party Popper / Celebration", name:"Start projektu / Celebration", code:"🎉", desc:"Tada — pierwsze commity, nowy projekt lub świętowanie kamienia milowego. Jeden z najczęstszych emoji w README i historii commitów.", roles:["init","start","celebration"], contexts:["README","changelog","commit"], modelSignal:"Początek — model identyfikuje jako punkt startowy projektu lub ogłoszenie sukcesu." },
+  { cat:"gitmoji", popular:true,  emoji:"🎨", en:"Artist Palette / Format", name:"Formatowanie / Struktura kodu", code:"🎨", desc:"Paleta — poprawa struktury, formatowania lub czytelności kodu bez zmiany zachowania. Gitmoji: 'Improve structure/format of the code'.", roles:["format","struktura","refactor"], contexts:["changelog","commit","code review"], modelSignal:"Zmiana kosmetyczna — nie wpływa na funkcjonalność, poprawia czytelność." },
+  { cat:"gitmoji", popular:true,  emoji:"💄", en:"Lipstick / UI Style", name:"UI / Style",                   code:"💄", desc:"Szminka — zmiany w interfejsie użytkownika, plikach CSS/SCSS lub warstwie wizualnej. Gitmoji: 'Add or update the UI and style files'.", roles:["UI","style","CSS"], contexts:["changelog","frontend docs"], modelSignal:"Warstwa prezentacji — model kojarzy z CSS, designem lub zmianami wizualnymi." },
+  { cat:"gitmoji", popular:true,  emoji:"🚑", en:"Ambulance / Hotfix", name:"Hotfix krytyczny",             code:"🚑", desc:"Ambulans — krytyczna naprawa wymagająca natychmiastowego wdrożenia na produkcję. Silniejszy od 🐛. Gitmoji: 'Critical hotfix'.", roles:["hotfix","critical","produkcja"], contexts:["changelog","incident","release"], modelSignal:"Najwyższy priorytet naprawy — wdrożenie poza normalnym cyklem release." },
+  { cat:"gitmoji", popular:true,  emoji:"✏️", en:"Pencil / Typo Fix", name:"Literówka / Korekta tekstu",  code:"✏️", desc:"Ołówek — naprawa literówek, błędów ortograficznych lub korekta dokumentacji. Gitmoji: 'Fix typos'.", roles:["typo","korekta","dokumentacja"], contexts:["changelog","docs","README"], modelSignal:"Zmiana niemerytoryczna — korekta językowa bez wpływu na kod." },
+  { cat:"gitmoji", popular:false, emoji:"⏪", en:"Rewind / Revert", name:"Revert / Cofnięcie zmian",     code:"⏪", desc:"Przewijanie wstecz — cofnięcie poprzedniego commita lub zestawu zmian. Gitmoji: 'Revert changes'.", roles:["revert","cofnięcie","undo"], contexts:["git","changelog"], modelSignal:"Odwrócenie stanu — model traktuje jako rollback do poprzedniej wersji." },
+  { cat:"gitmoji", popular:false, emoji:"🚚", en:"Truck / Move Files", name:"Przeniesienie plików",         code:"🚚", desc:"Ciężarówka — przenoszenie, zmiana nazwy lub reorganizacja plików i ścieżek. Gitmoji: 'Move or rename resources'.", roles:["move","rename","reorganizacja"], contexts:["changelog","refactoring"], modelSignal:"Zmiana struktury repozytorium — bez zmiany logiki." },
+  { cat:"gitmoji", popular:false, emoji:"♿", en:"Wheelchair / Accessibility", name:"Dostępność / A11y",            code:"♿", desc:"Wózek inwalidzki — poprawa dostępności (accessibility), ARIA, kontrastu, nawigacji klawiaturą. Gitmoji: 'Improve accessibility'.", roles:["a11y","dostępność","ARIA"], contexts:["changelog","frontend docs"], modelSignal:"Standard dostępności — model szuka informacji o wsparciu dla osób z niepełnosprawnościami." },
+  { cat:"gitmoji", popular:false, emoji:"🗑️", en:"Wastebasket / Deprecate", name:"Deprecacja / Usunięcie",      code:"🗑️", desc:"Kosz — oznaczenie kodu jako przestarzałego do przyszłego usunięcia lub bezpośrednie usunięcie. Gitmoji: 'Deprecate code that needs to be cleaned up'.", roles:["deprecated","usunięcie","cleanup"], contexts:["changelog","API docs"], modelSignal:"Koniec życia elementu — model traktuje jako ostrzeżenie przed usunięciem." },
+  { cat:"gitmoji", popular:false, emoji:"🩹", en:"Bandage / Minor Fix", name:"Mała naprawa / Minor fix",     code:"🩹", desc:"Plaster — drobna, nieistotna naprawa która nie jest krytycznym bugiem. Gitmoji: 'Simple fix for a non-critical issue'.", roles:["minor fix","drobna","patch"], contexts:["changelog","patch release"], modelSignal:"Niski priorytet naprawy — zmiana kosmetyczna lub nieistotna." },
+  { cat:"gitmoji", popular:false, emoji:"💩", en:"Poop / Tech Debt", name:"Zły kod / Dług techniczny",    code:"💩", desc:"Kupa — kod wymagający późniejszej poprawy, tymczasowe rozwiązanie lub jawne oznaczenie długu technicznego. Gitmoji: 'Write bad code that needs to be improved'.", roles:["tech debt","hack","WIP"], contexts:["changelog","code review"], modelSignal:"Dług techniczny — model traktuje jako obszar wymagający refaktoryzacji." },
+  { cat:"gitmoji", popular:false, emoji:"👷", en:"Construction Worker / CI", name:"CI / Build system",            code:"👷", desc:"Robotnik budowlany — zmiany w systemie CI/CD, konfiguracji pipeline lub narzędziach budowania. Gitmoji: 'Add or update CI build system'.", roles:["CI","build","pipeline"], contexts:["changelog","devops"], modelSignal:"Infrastruktura CI — model szuka opisu pipeline'u lub systemu buildowania." },
+  { cat:"gitmoji", popular:false, emoji:"💚", en:"Green Heart / CI Fix", name:"Naprawa CI / Green build",     code:"💚", desc:"Zielone serce — naprawa statusu CI, powrót do zielonego builda po czerwonym. Gitmoji: 'Fix CI Build'.", roles:["CI fix","green","build"], contexts:["changelog","CI/CD"], modelSignal:"Status CI — model kojarzy z powrotem do poprawnego stanu pipeline'u." },
+  { cat:"gitmoji", popular:false, emoji:"⬇️", en:"Down Arrow / Downgrade", name:"Downgrade dependencji",       code:"⬇️", desc:"Strzałka w dół — obniżenie wersji zależności do poprzedniej, stabilniejszej wersji. Gitmoji: 'Downgrade dependencies'.", roles:["downgrade","zależności","wersja"], contexts:["changelog","package.json"], modelSignal:"Obniżenie wersji — odwrotność ⬆️, często przy problemach z kompatybilnością." },
+  { cat:"gitmoji", popular:false, emoji:"➕", en:"Plus / Add Dep", name:"Dodanie zależności",           code:"➕", desc:"Plus — dodanie nowej biblioteki lub zależności do projektu. Gitmoji: 'Add a dependency'.", roles:["add dep","nowa lib","install"], contexts:["changelog","package.json"], modelSignal:"Nowa zależność — model szuka nazwy dodawanego pakietu." },
+  { cat:"gitmoji", popular:false, emoji:"➖", en:"Minus / Remove Dep", name:"Usunięcie zależności",         code:"➖", desc:"Minus — usunięcie zbędnej biblioteki lub zależności z projektu. Gitmoji: 'Remove a dependency'.", roles:["remove dep","odinstalowanie","cleanup"], contexts:["changelog","package.json"], modelSignal:"Redukcja zależności — model identyfikuje jako uproszczenie stosu." },
+  { cat:"gitmoji", popular:false, emoji:"🔨", en:"Hammer / Dev Scripts", name:"Skrypty developerskie",        code:"🔨", desc:"Młotek — dodanie lub aktualizacja skryptów developerskich (npm scripts, Makefile, itp.). Gitmoji: 'Add or update development scripts'.", roles:["scripts","Makefile","dev tools"], contexts:["changelog","contributing"], modelSignal:"Narzędzia deweloperskie — model szuka opisów komend do uruchomienia." },
+  { cat:"gitmoji", popular:false, emoji:"🔊", en:"Speaker / Add Logs", name:"Dodaj logi",                  code:"🔊", desc:"Głośnik — dodanie lub rozbudowanie logowania w aplikacji. Gitmoji: 'Add or update logs'.", roles:["logging","debug","verbose"], contexts:["changelog","debugging"], modelSignal:"Rozszerzenie logowania — model kojarzy z diagnozą i debugowaniem." },
+  { cat:"gitmoji", popular:false, emoji:"🔇", en:"Muted Speaker / Remove Logs", name:"Usuń logi",                   code:"🔇", desc:"Wyciszony głośnik — usunięcie zbędnych logów z kodu produkcyjnego. Gitmoji: 'Remove logs'.", roles:["remove logs","cleanup","silent"], contexts:["changelog","produkcja"], modelSignal:"Oczyszczenie logowania — model traktuje jako przygotowanie do releasu." },
+  { cat:"gitmoji", popular:false, emoji:"⚗️", en:"Alembic / Experiments", name:"Eksperymenty",                code:"⚗️", desc:"Kolba — zmiany eksperymentalne, proof-of-concept lub testowanie nowych podejść. Gitmoji: 'Perform experiments'.", roles:["eksperyment","POC","research"], contexts:["changelog","R&D","prototyp"], modelSignal:"Niepewny wynik — model traktuje jako zawartość eksperymentalną, nieprodukcyjną." },
+  { cat:"gitmoji", popular:false, emoji:"🌱", en:"Seedling / Seed Files", name:"Seed / Setup środowiska",     code:"🌱", desc:"Kiełek — pliki seed bazy danych, inicjalizacja środowiska lub dane startowe. Gitmoji: 'Add or update seed files'.", roles:["seed","setup","init data"], contexts:["changelog","database","dev setup"], modelSignal:"Dane inicjalizacyjne — model szuka opisów danych startowych lub setupu." },
+  { cat:"gitmoji", popular:false, emoji:"🚩", en:"Flag / Feature Flag", name:"Feature flags",               code:"🚩", desc:"Flaga — dodanie, aktualizacja lub usunięcie feature flag umożliwiających stopniowe wdrożenie funkcji. Gitmoji: 'Add, update, or remove feature flags'.", roles:["feature flag","toggle","rollout"], contexts:["changelog","deployment"], modelSignal:"Kontrola wdrożenia — model kojarzy z mechanizmem stopniowego aktywowania funkcji." },
+  { cat:"gitmoji", popular:false, emoji:"🥅", en:"Goal Net / Error Handling", name:"Łapanie błędów / Error handling",code:"🥅", desc:"Bramka — dodanie lub poprawa obsługi błędów i wyjątków w kodzie. Gitmoji: 'Catch errors'.", roles:["error handling","catch","wyjątki"], contexts:["changelog","kod"], modelSignal:"Obsługa błędów — model identyfikuje jako poprawę odporności systemu." },
+  { cat:"gitmoji", popular:false, emoji:"💫", en:"Dizzy / Animations", name:"Animacje / Transitions",      code:"💫", desc:"Gwiazda ze smugą — dodanie lub poprawa animacji i przejść w UI. Gitmoji: 'Add or update animations and transitions'.", roles:["animacje","transitions","UX"], contexts:["changelog","frontend"], modelSignal:"Warstwa animacji — model kojarzy z interaktywnością wizualną." },
+  { cat:"gitmoji", popular:false, emoji:"👔", en:"Necktie / Business Logic", name:"Logika biznesowa",            code:"👔", desc:"Krawat — zmiany w logice biznesowej, regułach domenowych lub procesach aplikacji. Gitmoji: 'Add or update business logic'.", roles:["business logic","domain","reguły"], contexts:["changelog","architektura"], modelSignal:"Warstwa domenowa — model traktuje jako opis reguł biznesowych systemu." },
+  { cat:"gitmoji", popular:false, emoji:"🧵", en:"Thread / Concurrency", name:"Wielowątkowość / Async",      code:"🧵", desc:"Nitka — kod związany z wielowątkowością, concurrency lub programowaniem asynchronicznym. Gitmoji: 'Add or update code related to multithreading or concurrency'.", roles:["async","threading","concurrency"], contexts:["changelog","performance"], modelSignal:"Współbieżność — model szuka opisu mechanizmów równoległego przetwarzania." },
+  { cat:"gitmoji", popular:false, emoji:"🦺", en:"Safety Vest / Validation", name:"Walidacja / Safety",          code:"🦺", desc:"Kamizelka ochronna — dodanie lub aktualizacja walidacji danych, schematów lub mechanizmów bezpieczeństwa. Gitmoji: 'Add or update code related to validation'.", roles:["walidacja","schema","safety"], contexts:["changelog","API","formularze"], modelSignal:"Bezpieczeństwo danych — model kojarzy z walidacją wejścia i schematami." },
+  { cat:"gitmoji", popular:false, emoji:"🧐", en:"Monocle Face / Inspection", name:"Inspekcja / Code review",     code:"🧐", desc:"Monokl — analiza danych, inspekcja kodu lub dokładne badanie problemu. Gitmoji: 'Data exploration/inspection'.", roles:["inspekcja","analiza","review"], contexts:["changelog","data science"], modelSignal:"Dociekliwość — model traktuje jako sygnał szczegółowej weryfikacji." },
+  { cat:"gitmoji", popular:false, emoji:"🔁", en:"Repeat / Retry", name:"Pętla / Retry",              code:"🔁", desc:"Powtórzenie — mechanizm retry, pętle, ponowne wykonanie lub cykliczne operacje w kodzie.", roles:["retry","loop","repeat"], contexts:["changelog","workflow","CI"], modelSignal:"Powtarzalność — model szuka opisu mechanizmu ponownych prób lub pętli." },
+
+  // ─── SPOZA GITMOJI — potwierdzone w dokumentacjach ─────────
+  { cat:"gitmoji", popular:false, emoji:"🛡️", en:"Shield / Security Policy", name:"Bezpieczeństwo / Shield",    code:"🛡️", desc:"Tarcza — polityka bezpieczeństwa, badge statusu ochrony lub sekcja security w README. Szeroko stosowane w nagłówkach plików SECURITY.md.", roles:["security","shield","ochrona"], contexts:["README","SECURITY.md","badges"], modelSignal:"Ochrona systemu — model identyfikuje jako sekcję polityki bezpieczeństwa." },
+  { cat:"gitmoji", popular:false, emoji:"🧹", en:"Broom / Cleanup", name:"Cleanup / Porządkowanie",    code:"🧹", desc:"Miotła — porządkowanie kodu, usuwanie martwego kodu lub housekeeping projektu. Powszechne w changelogach jako 'Chores'.", roles:["cleanup","chores","housekeeping"], contexts:["changelog","refactoring"], modelSignal:"Porządkowanie — zmiany bez wpływu na funkcjonalność, poprawa jakości bazy." },
+  { cat:"gitmoji", popular:false, emoji:"🪝", en:"Hook", name:"Hooks",                      code:"🪝", desc:"Hak — webhooki, Git hooks, React hooks lub inne mechanizmy 'hook' w systemie. Powszechne w dokumentacji frameworków webowych.", roles:["hooks","webhook","lifecycle"], contexts:["docs","React","API"], modelSignal:"Mechanizm przechwytywania — model kojarzy z hookami cyklu życia lub webhookami." },
+  { cat:"gitmoji", popular:false, emoji:"🎛️", en:"Control Knobs / Dashboard", name:"Dashboard / Kontrolki",     code:"🎛️", desc:"Panel sterowania — dashboard aplikacji, panel administracyjny lub sekcja ustawień zaawansowanych.", roles:["dashboard","admin","controls"], contexts:["README","docs","UI"], modelSignal:"Interfejs zarządczy — model kojarzy z panelem administracyjnym lub konfiguracją." },
+  { cat:"gitmoji", popular:false, emoji:"💸", en:"Money Wings / Sponsorship", name:"Sponsoring / Finanse infra", code:"💸", desc:"Latające pieniądze — infrastruktura płatności, sponsoring projektu lub integracje finansowe. Gitmoji: 'Add sponsorships or money related infrastructure'.", roles:["sponsoring","finanse","billing"], contexts:["README","FUNDING","changelog"], modelSignal:"Infrastruktura finansowa — model szuka opisu mechanizmów płatności lub sponsoringu." },
+];
+
+// ── ICONS INIT ──────────────────────────────────────────────
+const popularCount = icons.filter(i => i.popular).length;
+document.getElementById('total-count').textContent   = icons.length;
+document.getElementById('pop-count').textContent     = popularCount;
+document.getElementById('visible-count').textContent = icons.length;
+
+const categories = {
+  status:"Status & Priorytety", navigation:"Nawigacja & Referencje",
+  warning:"Ostrzeżenia & Alerty", tech:"Tech & Dev",
+  structure:"Struktura dokumentu", communication:"Komunikacja & Społeczność",
+  workflow:"Workflow & Procesy", people:"Ludzie & Zespół", business:"Biznes & Finanse",
+  gitmoji:"Gitmoji — changelog & commits",
+};
+
+let currentCat='all', onlyPopular=false, currentSearch='';
+const iconsContainer = document.getElementById('icons-container');
+const toast          = document.getElementById('toast');
+const popToggleEl    = document.getElementById('popToggle');
+const searchInput    = document.getElementById('searchInput');
+
+function renderIcons(filtered) {
+  iconsContainer.innerHTML = '';
+  document.getElementById('visible-count').textContent = filtered.length;
+  if (!filtered.length) { iconsContainer.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--text-dim);font-family:\'DM Mono\',monospace;font-size:13px;">Brak wyników</div>'; return; }
+
+  renderGroups(filtered);
+}
+
+function renderGroups(items) {
+  const grouped={};
+  items.forEach(i=>{if(!grouped[i.cat])grouped[i.cat]=[];grouped[i.cat].push(i);});
+  Object.entries(grouped).forEach(([cat,list])=>{
+    const sec=document.createElement('div');
+    sec.innerHTML=`<div class="section-header"><div class="section-title">${categories[cat]||cat}</div><div class="section-line"></div><div class="section-count">${list.length}</div></div><div class="icons-grid"></div>`;
+    iconsContainer.appendChild(sec);
+    const grid=sec.querySelector('.icons-grid');
+    list.forEach(icon=>{
+      const card=document.createElement('div');
+      card.className=`icon-card${icon.popular?' is-popular':''}`;
+      card.innerHTML=`
+        ${icon.popular?'<span class="pop-star-badge">⭐</span>':''}
+        <span class="copy-hint">kliknij → kopiuj</span>
+        <div class="card-top"><div class="icon-emoji">${icon.emoji}</div><div class="icon-meta"><div class="icon-name">${icon.name}${icon.en ? ` <span class="icon-name-en">(${icon.en})</span>` : ''}</div></div></div>
+        <div class="icon-desc">${icon.desc}</div>
+        <div class="tags-block">
+          <div class="tags-group"><span class="tags-group-label">Użyj w…</span>${icon.contexts.map(c=>`<span class="tag tag-context">${c}</span>`).join('')}</div>
+          <div class="tags-group"><span class="tags-group-label">Kontekst</span>${icon.roles.map(r=>`<span class="tag tag-role">${r}</span>`).join('')}</div>
+        </div>
+        <div class="model-signal"><div class="model-label">MODEL→</div><div class="model-text">${icon.modelSignal}</div></div>`;
+      card.addEventListener('click',()=>{
+        navigator.clipboard.writeText(icon.emoji).catch(()=>{});
+        card.classList.add('copied'); setTimeout(()=>card.classList.remove('copied'),700);
+        showToast(`Skopiowano ${icon.emoji}`);
+      });
+      grid.appendChild(card);
+    });
+  });
+}
+
+function showToast(msg) {
+  toast.textContent=msg; toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),1800);
+}
+
+function applyFilters() {
+  let f=icons;
+  if(currentCat!=='all') f=f.filter(i=>i.cat===currentCat);
+  if(onlyPopular)        f=f.filter(i=>i.popular);
+  if(currentSearch)      f=f.filter(i=>
+    i.name.toLowerCase().includes(currentSearch)||
+    i.desc.toLowerCase().includes(currentSearch)||
+    i.roles.some(r=>r.toLowerCase().includes(currentSearch))||
+    i.emoji.includes(currentSearch)
+  );
+  renderIcons(f);
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); currentCat=btn.dataset.cat; applyFilters();
+  });
+});
+
+document.getElementById('popCheckbox').addEventListener('change', function() {
+  onlyPopular=this.checked;
+  popToggleEl.classList.toggle('on',onlyPopular);
+  applyFilters();
+});
+
+searchInput.addEventListener('input',e=>{currentSearch=e.target.value.toLowerCase();applyFilters();});
+
+applyFilters();
+</script>
+</body>
+</html>
