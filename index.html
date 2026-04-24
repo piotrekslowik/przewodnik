@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Przewodnik Product Buildera</title>
+<title>AI Product Builder</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap');
+
 
 :root {
   --bg:          #f7f7f5;
@@ -25,7 +25,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans', sans-serif; min-height: 100vh; }
+body { background: var(--bg); color: var(--text); font-family: Arial, sans-serif; min-height: 100vh; }
 
 /* ── APP SHELL ───────────────────────────────────────────── */
 .app-header {
@@ -40,7 +40,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   margin-bottom: 20px;
 }
 .brand-tag {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 12px;
   color: var(--text-muted);
   letter-spacing: 0.14em;
@@ -51,7 +51,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   background: var(--surface2);
 }
 .brand-title {
-  font-family: 'Syne', sans-serif;
+  font-family: Arial, sans-serif;
   font-size: clamp(20px, 2.5vw, 30px);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -66,7 +66,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   border: none;
   border-bottom: 2px solid transparent;
   padding: 10px 20px;
-  font-family: 'Syne', sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 15px;
   font-weight: 700;
   color: var(--text-muted);
@@ -96,7 +96,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   background: var(--surface);
 }
 .filter-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 12px;
   color: var(--text-dim);
   letter-spacing: 0.1em;
@@ -107,7 +107,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   background: var(--surface2);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 12px;
   padding: 4px 11px;
   border-radius: 4px;
@@ -154,14 +154,14 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .pop-toggle.on .check-box { background: var(--gold); border-color: var(--gold); }
 .check-inner { display: none; }
 .pop-toggle.on .check-inner { display: block; }
-.pop-label { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-muted); }
+.pop-label { font-family: 'Courier New', monospace; font-size: 12px; color: var(--text-muted); }
 .pop-toggle.on .pop-label { color: var(--gold); }
 
 .search-input {
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 13px;
   padding: 5px 12px;
   border-radius: 4px;
@@ -178,7 +178,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   border-bottom: 1px solid var(--border);
   display: flex;
   gap: 24px;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 13px;
   color: var(--text-muted);
   flex-wrap: wrap;
@@ -201,16 +201,16 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .pop-section-banner.others  { background: var(--surface2); border: 1px solid var(--border); margin-top: 40px; }
 .banner-icon { font-size: 19px; }
 .banner-body { flex: 1; }
-.banner-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+.banner-title { font-family: Arial, sans-serif; font-size: 15px; font-weight: 700; }
 .pop-section-banner.popular .banner-title { color: var(--gold); }
 .pop-section-banner.others .banner-title  { color: var(--text-muted); }
 .banner-desc { font-size: 13px; color: var(--text-muted); }
-.banner-count { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-dim); white-space: nowrap; }
+.banner-count { font-family: 'Courier New', monospace; font-size: 13px; color: var(--text-dim); white-space: nowrap; }
 
 .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; margin-top: 26px; }
-.section-title { font-family: 'DM Mono', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
+.section-title { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
 .section-line  { flex: 1; height: 1px; background: var(--border); }
-.section-count { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-dim); }
+.section-count { font-family: 'Courier New', monospace; font-size: 12px; color: var(--text-dim); }
 
 .icons-grid {
   display: grid;
@@ -235,25 +235,25 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 
 .pop-star-badge { position:absolute; top:9px; right:9px; font-size:12px; opacity:0.4; transition:opacity 0.2s; }
 .icon-card:hover .pop-star-badge { opacity:0.9; }
-.copy-hint { position:absolute; bottom:7px; right:11px; font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); opacity:0; transition:opacity 0.2s; }
+.copy-hint { position:absolute; bottom:7px; right:11px; font-family:'Courier New',monospace; font-size:10px; color:var(--text-dim); opacity:0; transition:opacity 0.2s; }
 .icon-card:hover .copy-hint { opacity:1; color:var(--text-muted); }
 
 .card-top { display:flex; align-items:flex-start; gap:11px; margin-bottom:7px; }
 .icon-emoji { font-size:26px; line-height:1; flex-shrink:0; margin-top:2px; }
 .icon-meta { flex:1; min-width:0; }
-.icon-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--text); padding-right:18px; }
-.icon-name-en { font-family:'Instrument Sans',sans-serif; font-size:12px; font-weight:400; color:#71717a; }
+.icon-name { font-family:Arial,sans-serif; font-size:14px; font-weight:700; color:var(--text); padding-right:18px; }
+.icon-name-en { font-family:Arial,sans-serif; font-size:12px; font-weight:400; color:#71717a; }
 .icon-desc { font-size:13px; color:var(--text-muted); line-height:1.55; margin-bottom:8px; }
 
 .tags-block { margin-bottom:8px; display:flex; flex-direction:column; gap:4px; }
 .tags-group { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
-.tags-group-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); letter-spacing:0.08em; white-space:nowrap; flex-shrink:0; min-width:60px; }
-.tag { font-family:'DM Mono',monospace; font-size:12px; padding:2px 6px; border-radius:3px; letter-spacing:0.04em; }
+.tags-group-label { font-family:'Courier New',monospace; font-size:10px; color:var(--text-dim); letter-spacing:0.08em; white-space:nowrap; flex-shrink:0; min-width:60px; }
+.tag { font-family:'Courier New',monospace; font-size:12px; padding:2px 6px; border-radius:3px; letter-spacing:0.04em; }
 .tag-role    { background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; }
 .tag-context { background:#fff1f2; color:#be123c; border:1px solid #fecdd3; }
 
 .model-signal { padding-top:7px; border-top:1px solid var(--border); display:flex; align-items:flex-start; gap:6px; }
-.model-label  { font-family:'DM Mono',monospace; font-size:10px; color:var(--accent2); letter-spacing:0.08em; white-space:nowrap; padding-top:2px; flex-shrink:0; }
+.model-label  { font-family:'Courier New',monospace; font-size:10px; color:var(--accent2); letter-spacing:0.08em; white-space:nowrap; padding-top:2px; flex-shrink:0; }
 .model-text   { font-size:12px; color:var(--text-muted); line-height:1.45; }
 
 /* ══════════════════════════════════════════════════════════
@@ -278,7 +278,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 }
 .syntax-nav-group { margin-bottom: 4px; }
 .syntax-nav-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 11px;
   color: var(--text-dim);
   letter-spacing: 0.12em;
@@ -313,7 +313,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .syntax-section { margin-bottom: 56px; scroll-margin-top: 20px; }
 
 .syntax-section-title {
-  font-family: 'Syne', sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 23px;
   font-weight: 800;
   letter-spacing: -0.01em;
@@ -341,7 +341,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   margin-bottom: 12px;
 }
 .syntax-block-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -357,7 +357,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 
 .syntax-block pre {
   padding: 14px 16px;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 14px;
   line-height: 1.7;
   color: #374151;
@@ -374,24 +374,24 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   line-height: 1.75;
   color: var(--text);
 }
-.md-preview h1 { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; margin-bottom:8px; border-bottom:2px solid var(--border); padding-bottom:8px; color:var(--text); }
-.md-preview h2 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:6px; margin-top:14px; border-bottom:1px solid var(--border); padding-bottom:5px; color:var(--text); }
-.md-preview h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; margin-bottom:4px; margin-top:10px; color:var(--text); }
-.md-preview h4 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:4px; margin-top:8px; color:var(--text-muted); }
+.md-preview h1 { font-family:Arial,sans-serif; font-size:26px; font-weight:800; margin-bottom:8px; border-bottom:2px solid var(--border); padding-bottom:8px; color:var(--text); }
+.md-preview h2 { font-family:Arial,sans-serif; font-size:20px; font-weight:700; margin-bottom:6px; margin-top:14px; border-bottom:1px solid var(--border); padding-bottom:5px; color:var(--text); }
+.md-preview h3 { font-family:Arial,sans-serif; font-size:17px; font-weight:700; margin-bottom:4px; margin-top:10px; color:var(--text); }
+.md-preview h4 { font-family:Arial,sans-serif; font-size:15px; font-weight:700; margin-bottom:4px; margin-top:8px; color:var(--text-muted); }
 .md-preview h5 { font-size:14px; font-weight:700; margin-bottom:3px; color:var(--text-muted); }
 .md-preview h6 { font-size:13px; font-weight:700; color:var(--text-dim); margin-bottom:3px; }
 .md-preview p { margin-bottom:8px; }
 .md-preview strong { font-weight:700; color:var(--text); }
 .md-preview em { font-style:italic; color:var(--text-muted); }
 .md-preview del { text-decoration:line-through; color:var(--text-dim); }
-.md-preview code { font-family:'DM Mono',monospace; font-size:13px; background:#eef2ff; color:#4338ca; padding:2px 5px; border-radius:3px; }
+.md-preview code { font-family:'Courier New',monospace; font-size:13px; background:#eef2ff; color:#4338ca; padding:2px 5px; border-radius:3px; }
 .md-preview pre { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:12px 14px; overflow-x:auto; margin-bottom:8px; }
 .md-preview pre code { background:none; padding:0; font-size:14px; color:#374151; }
 .md-preview blockquote { border-left:3px solid var(--accent2); padding:8px 14px; margin:8px 0; background:#eef2ff; border-radius:0 6px 6px 0; color:var(--text-muted); font-style:italic; }
 .md-preview ul, .md-preview ol { padding-left:20px; margin-bottom:8px; }
 .md-preview li { margin-bottom:3px; }
 .md-preview ul li::marker { color: var(--accent2); }
-.md-preview ol li::marker { color: var(--accent2); font-family:'DM Mono',monospace; font-size:13px; }
+.md-preview ol li::marker { color: var(--accent2); font-family:'Courier New',monospace; font-size:13px; }
 .md-preview a { color:var(--accent2); text-decoration:underline; text-underline-offset:2px; }
 .md-preview hr { border:none; border-top:1px solid var(--border); margin:12px 0; }
 .md-preview table { border-collapse:collapse; width:100%; margin-bottom:8px; font-size:14px; }
@@ -401,7 +401,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .md-preview .task-item { list-style:none; display:flex; align-items:center; gap:7px; }
 .md-preview .task-cb { width:13px; height:13px; border:1.5px solid var(--border2); border-radius:3px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; color:#fff; }
 .md-preview .task-cb.done { background:var(--green); border-color:var(--green); }
-.md-preview .badge { display:inline-block; height:20px; border-radius:4px; overflow:hidden; font-family:'DM Mono',monospace; font-size:12px; line-height:20px; vertical-align:middle; }
+.md-preview .badge { display:inline-block; height:20px; border-radius:4px; overflow:hidden; font-family:'Courier New',monospace; font-size:12px; line-height:20px; vertical-align:middle; }
 .md-preview .badge-l { background:#52525b; padding:0 6px; color:#fff; }
 .md-preview .badge-r { background:#16a34a; padding:0 6px; color:#fff; }
 .md-preview .badge-b { background:#2563eb; }
@@ -412,13 +412,13 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .md-preview .gh-tip     { border:1px solid #86efac; border-radius:6px; padding:10px 14px; background:#f0fdf4; margin-bottom:8px; }
 .md-preview .gh-warning { border:1px solid #fde68a; border-radius:6px; padding:10px 14px; background:var(--gold-bg); margin-bottom:8px; }
 .md-preview .gh-caution { border:1px solid #fca5a5; border-radius:6px; padding:10px 14px; background:#fff1f2; margin-bottom:8px; }
-.md-preview .gh-label   { font-family:'DM Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.06em; margin-bottom:5px; }
+.md-preview .gh-label   { font-family:'Courier New',monospace; font-size:12px; font-weight:700; letter-spacing:0.06em; margin-bottom:5px; }
 .md-preview .gh-note .gh-label    { color:#2563eb; }
 .md-preview .gh-tip .gh-label     { color:#16a34a; }
 .md-preview .gh-warning .gh-label { color:#b45309; }
 .md-preview .gh-caution .gh-label { color:#dc2626; }
 
-.md-preview .kbd { display:inline-block; background:var(--surface2); border:1px solid var(--border); border-bottom:2px solid var(--border2); border-radius:4px; padding:1px 6px; font-family:'DM Mono',monospace; font-size:13px; color:var(--text); }
+.md-preview .kbd { display:inline-block; background:var(--surface2); border:1px solid var(--border); border-bottom:2px solid var(--border2); border-radius:4px; padding:1px 6px; font-family:'Courier New',monospace; font-size:13px; color:var(--text); }
 
 /* two-col example */
 .example-pair {
@@ -431,7 +431,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 
 /* copy btn */
 .copy-src-btn {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 11px;
   color: var(--text-dim);
   background: none;
@@ -469,7 +469,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 
 /* sub-label */
 .sub-label {
-  font-family: 'Syne', sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 15px;
   font-weight: 700;
   color: var(--text-muted);
@@ -481,7 +481,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   position: fixed; bottom:24px; left:50%;
   transform:translateX(-50%) translateY(20px);
   background:var(--text); color:#fff;
-  font-family:'DM Mono',monospace; font-size:14px; font-weight:500;
+  font-family:'Courier New',monospace; font-size:14px; font-weight:500;
   padding:8px 18px; border-radius:6px;
   opacity:0; transition:all 0.2s; pointer-events:none; z-index:1000;
 }
@@ -502,7 +502,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   padding:24px 0; position:sticky; top:0; height:calc(100vh - 90px);
   overflow-y:auto; background:var(--surface);
 }
-.guide-nav-label { font-family:'DM Mono',monospace; font-size:11px; color:var(--text-dim); letter-spacing:0.12em; text-transform:uppercase; padding:8px 18px 4px; }
+.guide-nav-label { font-family:'Courier New',monospace; font-size:11px; color:var(--text-dim); letter-spacing:0.12em; text-transform:uppercase; padding:8px 18px 4px; }
 .guide-nav-item {
   display:flex; align-items:center; gap:9px; padding:7px 18px; font-size:13px;
   color:var(--text-muted); cursor:pointer; transition:all 0.13s;
@@ -511,48 +511,48 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .guide-nav-item:hover { color:var(--text); background:var(--surface2); }
 .guide-nav-item.active { color:var(--accent2); border-left-color:var(--accent2); background:#eef2ff; font-weight:600; }
 .guide-nav-stage {
-  font-family:'DM Mono',monospace; font-size:10px; font-weight:700;
+  font-family:'Courier New',monospace; font-size:10px; font-weight:700;
   padding:2px 6px; border-radius:3px; flex-shrink:0;
 }
 .guide-content { flex:1; padding:40px 52px 80px; overflow-y:auto; background:var(--bg); }
 .guide-section { margin-bottom:56px; scroll-margin-top:20px; }
 .guide-stage-header { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
-.guide-stage-pill { font-family:'DM Mono',monospace; font-size:10px; font-weight:700; padding:3px 9px; border-radius:4px; letter-spacing:0.08em; }
-.guide-section-title { font-family:'Syne',sans-serif; font-size:21px; font-weight:800; letter-spacing:-0.01em; color:var(--text); }
+.guide-stage-pill { font-family:'Courier New',monospace; font-size:10px; font-weight:700; padding:3px 9px; border-radius:4px; letter-spacing:0.08em; }
+.guide-section-title { font-family:Arial,sans-serif; font-size:21px; font-weight:800; letter-spacing:-0.01em; color:var(--text); }
 .guide-section-desc { font-size:14px; color:var(--text-muted); line-height:1.6; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:14px; }
-.guide-artifacts { font-family:'DM Mono',monospace; font-size:11px; color:var(--text-dim); margin-bottom:20px; }
+.guide-artifacts { font-family:'Courier New',monospace; font-size:11px; color:var(--text-dim); margin-bottom:20px; }
 
 /* PROMPT CARDS */
 .prompt-card { border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:12px; background:var(--surface); }
 .prompt-card-header { display:flex; align-items:center; gap:10px; padding:8px 14px; border-bottom:1px solid var(--border); background:#eef2ff; }
-.prompt-label { font-family:'DM Mono',monospace; font-size:10px; font-weight:700; color:var(--accent2); letter-spacing:0.08em; }
+.prompt-label { font-family:'Courier New',monospace; font-size:10px; font-weight:700; color:var(--accent2); letter-spacing:0.08em; }
 .prompt-use { font-size:12px; color:var(--text-muted); flex:1; }
-.prompt-copy-btn { margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); background:none; border:none; cursor:pointer; transition:color 0.13s; }
+.prompt-copy-btn { margin-left:auto; font-family:'Courier New',monospace; font-size:10px; color:var(--text-dim); background:none; border:none; cursor:pointer; transition:color 0.13s; }
 .prompt-copy-btn:hover { color:var(--accent2); }
-.prompt-body { padding:14px 16px; font-family:'DM Mono',monospace; font-size:12px; line-height:1.7; color:#374151; white-space:pre-wrap; }
+.prompt-body { padding:14px 16px; font-family:'Courier New',monospace; font-size:12px; line-height:1.7; color:#374151; white-space:pre-wrap; }
 
 /* ══════════════════════════════════════════════════════════
    PROMPTBOOK
 ══════════════════════════════════════════════════════════ */
 .pb-layout { display:flex; flex-direction:column; }
 .pb-controls { padding:12px 48px; border-bottom:1px solid var(--border); display:flex; gap:6px; flex-wrap:wrap; align-items:center; background:var(--surface); }
-.pb-filter-btn { background:var(--surface2); border:1px solid var(--border); color:var(--text-muted); font-family:'DM Mono',monospace; font-size:10px; padding:4px 11px; border-radius:4px; cursor:pointer; transition:all 0.13s; white-space:nowrap; }
+.pb-filter-btn { background:var(--surface2); border:1px solid var(--border); color:var(--text-muted); font-family:'Courier New',monospace; font-size:10px; padding:4px 11px; border-radius:4px; cursor:pointer; transition:all 0.13s; white-space:nowrap; }
 .pb-filter-btn:hover { border-color:var(--accent2); color:var(--accent2); background:#eef2ff; }
 .pb-filter-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:700; }
-.pb-stats { padding:10px 48px; background:var(--surface2); border-bottom:1px solid var(--border); display:flex; gap:24px; font-family:'DM Mono',monospace; font-size:11px; color:var(--text-muted); }
+.pb-stats { padding:10px 48px; background:var(--surface2); border-bottom:1px solid var(--border); display:flex; gap:24px; font-family:'Courier New',monospace; font-size:11px; color:var(--text-muted); }
 .pb-grid { padding:28px 48px 60px; display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:12px; }
 .pb-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; transition:all 0.14s; }
 .pb-card:hover { border-color:var(--accent2); box-shadow:0 4px 16px rgba(79,70,229,0.08); }
 .pb-card-header { padding:12px 16px 10px; border-bottom:1px solid var(--border); }
-.pb-card-cat { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); margin-bottom:4px; }
-.pb-card-title { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.pb-card-cat { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); margin-bottom:4px; }
+.pb-card-title { font-family:Arial,sans-serif; font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
 .pb-card-desc { font-size:12px; color:var(--text-muted); line-height:1.4; }
-.pb-card-body { padding:12px 16px; font-family:'DM Mono',monospace; font-size:11px; line-height:1.65; color:#374151; white-space:pre-wrap; border-bottom:1px solid var(--border); max-height:140px; overflow:hidden; position:relative; }
+.pb-card-body { padding:12px 16px; font-family:'Courier New',monospace; font-size:11px; line-height:1.65; color:#374151; white-space:pre-wrap; border-bottom:1px solid var(--border); max-height:140px; overflow:hidden; position:relative; }
 .pb-card-body::after { content:''; position:absolute; bottom:0; left:0; right:0; height:32px; background:linear-gradient(transparent,var(--surface)); }
 .pb-card-footer { display:flex; align-items:center; justify-content:space-between; padding:8px 16px; }
-.pb-card-copy { font-family:'DM Mono',monospace; font-size:10px; color:var(--accent2); background:none; border:1px solid #c7d2fe; border-radius:4px; padding:4px 12px; cursor:pointer; transition:all 0.13s; }
+.pb-card-copy { font-family:'Courier New',monospace; font-size:10px; color:var(--accent2); background:none; border:1px solid #c7d2fe; border-radius:4px; padding:4px 12px; cursor:pointer; transition:all 0.13s; }
 .pb-card-copy:hover { background:#eef2ff; }
-.pb-card-tag { font-family:'DM Mono',monospace; font-size:9px; padding:2px 7px; border-radius:3px; background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; }
+.pb-card-tag { font-family:'Courier New',monospace; font-size:9px; padding:2px 7px; border-radius:3px; background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; }
 
 /* ══════════════════════════════════════════════════════════
    SZABLONY
@@ -568,7 +568,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .ctx-card { border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--surface); }
 .ctx-card-header { display:flex; align-items:flex-start; gap:14px; padding:16px 18px 12px; border-bottom:1px solid var(--border); }
 .ctx-emoji { font-size:28px; flex-shrink:0; line-height:1; }
-.ctx-name { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.ctx-name { font-family:Arial,sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:3px; }
 .ctx-desc { font-size:12px; color:var(--text-muted); line-height:1.4; }
 
 /* ══════════════════════════════════════════════════════════
@@ -580,9 +580,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .limit-warn   { background:#fef9c3; border-color:#fde68a; }
 .limit-caution{ background:#f0f9ff; border-color:#bae6fd; }
 .limit-icon { font-size:20px; margin-bottom:8px; }
-.limit-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.limit-title { font-family:Arial,sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
 .limit-body { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:10px; }
-.limit-rule { font-size:12px; color:var(--text); font-family:'DM Mono',monospace; background:rgba(255,255,255,0.6); padding:8px 12px; border-radius:5px; }
+.limit-rule { font-size:12px; color:var(--text); font-family:'Courier New',monospace; background:rgba(255,255,255,0.6); padding:8px 12px; border-radius:5px; }
 
 @media(max-width:900px){
   .guide-layout,.tpl-layout{flex-direction:column;}
@@ -608,7 +608,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   border-bottom: 1px solid var(--border);
 }
 .start-hero-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -616,7 +616,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   margin-bottom: 18px;
 }
 .start-hero-title {
-  font-family: 'Syne', sans-serif;
+  font-family: Arial, sans-serif;
   font-size: clamp(28px, 4vw, 46px);
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -681,7 +681,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 .start-card-warning:hover::before { background: #f59e0b; }
 
 .start-card-number {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 11px;
   font-weight: 500;
   color: var(--text-dim);
@@ -691,7 +691,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 
 .start-card-content { flex: 1; }
 .start-card-title {
-  font-family: 'Syne', sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 16px;
   font-weight: 800;
   color: var(--text);
@@ -710,7 +710,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   gap: 5px;
 }
 .start-tag {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 10px;
   padding: 3px 8px;
   border-radius: 4px;
@@ -770,7 +770,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 <div class="app-header">
   <div class="header-top">
     <div class="brand-tag">v2.0</div>
-    <div class="brand-title">Przewodnik <span>Product Buildera</span></div>
+    <div class="brand-title">AI Product <span>Builder</span></div>
   </div>
   <div class="tabs">
     <button class="tab-btn active" data-tab="start">🏠&nbsp; Start</button>
@@ -792,7 +792,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 
   <div class="start-hero">
     <div class="start-hero-label">Narzędzie dla product designerów</div>
-    <h2 class="start-hero-title">Wszystko czego potrzebujesz<br>do pracy z AI i&nbsp;Markdown</h2>
+    <h2 class="start-hero-title">Wszystko czego potrzebujesz<br>do pracy z AI</h2>
     <p class="start-hero-desc">7 sekcji. Gotowe do użycia od razu — prompty do skopiowania, szablony plików, przewodniki i uczciwa lista tego, kiedy AI Ci nie pomoże.</p>
   </div>
 
@@ -1183,7 +1183,7 @@ https://example.com  (autolink)
           <div class="syntax-block out">
             <div class="syntax-block-label">Podgląd</div>
             <div class="md-preview">
-              <p style="background:var(--surface2);border:1px dashed var(--border);border-radius:6px;padding:12px;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:11px;">🖼️ [obraz.png] — tekst alternatywny</p>
+              <p style="background:var(--surface2);border:1px dashed var(--border);border-radius:6px;padding:12px;color:var(--text-dim);font-family:'Courier New',monospace;font-size:11px;">🖼️ [obraz.png] — tekst alternatywny</p>
               <p style="margin-top:8px;font-size:12px;color:var(--text-muted);">Obraz jako link: kliknięcie obrazka przenosi na URL.</p>
             </div>
           </div>
@@ -1505,7 +1505,7 @@ graph LR
           </div>
           <div class="syntax-block out">
             <div class="syntax-block-label">Podgląd (schemat)</div>
-            <div class="md-preview" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);line-height:2;">
+            <div class="md-preview" style="font-family:'Courier New',monospace;font-size:11px;color:var(--text-muted);line-height:2;">
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                 <span style="border:1px solid var(--border);border-radius:4px;padding:3px 10px;">Start</span>
                 <span>→</span>
@@ -1552,8 +1552,8 @@ $$</pre>
           <div class="syntax-block out">
             <div class="syntax-block-label">Podgląd</div>
             <div class="md-preview">
-              <p>Wzór inline: <em style="font-style:normal;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent)">E = mc²</em></p>
-              <div style="text-align:center;padding:12px;font-family:'DM Mono',monospace;font-size:13px;color:var(--accent);background:var(--surface2);border-radius:6px;margin-top:8px;">∑ xᵢ = n(n+1)/2</div>
+              <p>Wzór inline: <em style="font-style:normal;font-family:'Courier New',monospace;font-size:12px;color:var(--accent)">E = mc²</em></p>
+              <div style="text-align:center;padding:12px;font-family:'Courier New',monospace;font-size:13px;color:var(--accent);background:var(--surface2);border-radius:6px;margin-top:8px;">∑ xᵢ = n(n+1)/2</div>
             </div>
           </div>
         </div>
@@ -1667,7 +1667,7 @@ description: Krótki opis strony
           <div class="syntax-block out">
             <div class="syntax-block-label">Podgląd</div>
             <div class="md-preview">
-              <div style="border:1px solid var(--border);border-radius:6px;padding:12px 14px;background:var(--surface2);font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);margin-bottom:12px;">
+              <div style="border:1px solid var(--border);border-radius:6px;padding:12px 14px;background:var(--surface2);font-family:'Courier New',monospace;font-size:11px;color:var(--text-muted);margin-bottom:12px;">
                 <div style="color:var(--text-dim);margin-bottom:6px;font-size:9px;letter-spacing:0.1em;">FRONT MATTER (niewidoczny w podglądzie)</div>
                 <div><span style="color:var(--accent2)">title:</span> Tytuł dokumentu</div>
                 <div><span style="color:var(--accent2)">date:</span> 2024-01-15</div>
@@ -3279,7 +3279,7 @@ const searchInput    = document.getElementById('searchInput');
 function renderIcons(filtered) {
   iconsContainer.innerHTML = '';
   document.getElementById('visible-count').textContent = filtered.length;
-  if (!filtered.length) { iconsContainer.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--text-dim);font-family:\'DM Mono\',monospace;font-size:13px;">Brak wyników</div>'; return; }
+  if (!filtered.length) { iconsContainer.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--text-dim);font-family:\'Courier New\',monospace;font-size:13px;">Brak wyników</div>'; return; }
 
   renderGroups(filtered);
 }
@@ -3676,7 +3676,7 @@ function renderPromptbook(filtered) {
   document.getElementById('pb-visible').textContent = filtered.length;
   container.innerHTML = '';
   if (!filtered.length) {
-    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-dim);font-family:\'DM Mono\',monospace;font-size:13px;">Brak wyników</div>';
+    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-dim);font-family:\'Courier New\',monospace;font-size:13px;">Brak wyników</div>';
     return;
   }
   filtered.forEach(p => {
