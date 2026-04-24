@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Przewodnik Product Buildera</title>
+<title>Przewodnik po .md</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap');
 
@@ -493,6 +493,275 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
   .syntax-content { padding: 24px 20px 60px; }
   .icons-controls, .icons-stats, .icons-main { padding-left:20px; padding-right:20px; }
 }
+/* ══════════════════════════════════════════════════════════
+   SHARED GUIDE LAYOUT (AI w procesie + Szablony)
+══════════════════════════════════════════════════════════ */
+.guide-layout { display:flex; min-height:calc(100vh - 90px); }
+.guide-nav {
+  width:210px; flex-shrink:0; border-right:1px solid var(--border);
+  padding:24px 0; position:sticky; top:0; height:calc(100vh - 90px);
+  overflow-y:auto; background:var(--surface);
+}
+.guide-nav-label { font-family:'DM Mono',monospace; font-size:11px; color:var(--text-dim); letter-spacing:0.12em; text-transform:uppercase; padding:8px 18px 4px; }
+.guide-nav-item {
+  display:flex; align-items:center; gap:9px; padding:7px 18px; font-size:13px;
+  color:var(--text-muted); cursor:pointer; transition:all 0.13s;
+  border-left:2px solid transparent; text-decoration:none;
+}
+.guide-nav-item:hover { color:var(--text); background:var(--surface2); }
+.guide-nav-item.active { color:var(--accent2); border-left-color:var(--accent2); background:#eef2ff; font-weight:600; }
+.guide-nav-stage {
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:700;
+  padding:2px 6px; border-radius:3px; flex-shrink:0;
+}
+.guide-content { flex:1; padding:40px 52px 80px; overflow-y:auto; background:var(--bg); }
+.guide-section { margin-bottom:56px; scroll-margin-top:20px; }
+.guide-stage-header { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+.guide-stage-pill { font-family:'DM Mono',monospace; font-size:10px; font-weight:700; padding:3px 9px; border-radius:4px; letter-spacing:0.08em; }
+.guide-section-title { font-family:'Syne',sans-serif; font-size:21px; font-weight:800; letter-spacing:-0.01em; color:var(--text); }
+.guide-section-desc { font-size:14px; color:var(--text-muted); line-height:1.6; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:14px; }
+.guide-artifacts { font-family:'DM Mono',monospace; font-size:11px; color:var(--text-dim); margin-bottom:20px; }
+
+/* PROMPT CARDS */
+.prompt-card { border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:12px; background:var(--surface); }
+.prompt-card-header { display:flex; align-items:center; gap:10px; padding:8px 14px; border-bottom:1px solid var(--border); background:#eef2ff; }
+.prompt-label { font-family:'DM Mono',monospace; font-size:10px; font-weight:700; color:var(--accent2); letter-spacing:0.08em; }
+.prompt-use { font-size:12px; color:var(--text-muted); flex:1; }
+.prompt-copy-btn { margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); background:none; border:none; cursor:pointer; transition:color 0.13s; }
+.prompt-copy-btn:hover { color:var(--accent2); }
+.prompt-body { padding:14px 16px; font-family:'DM Mono',monospace; font-size:12px; line-height:1.7; color:#374151; white-space:pre-wrap; }
+
+/* ══════════════════════════════════════════════════════════
+   PROMPTBOOK
+══════════════════════════════════════════════════════════ */
+.pb-layout { display:flex; flex-direction:column; }
+.pb-controls { padding:12px 48px; border-bottom:1px solid var(--border); display:flex; gap:6px; flex-wrap:wrap; align-items:center; background:var(--surface); }
+.pb-filter-btn { background:var(--surface2); border:1px solid var(--border); color:var(--text-muted); font-family:'DM Mono',monospace; font-size:10px; padding:4px 11px; border-radius:4px; cursor:pointer; transition:all 0.13s; white-space:nowrap; }
+.pb-filter-btn:hover { border-color:var(--accent2); color:var(--accent2); background:#eef2ff; }
+.pb-filter-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:700; }
+.pb-stats { padding:10px 48px; background:var(--surface2); border-bottom:1px solid var(--border); display:flex; gap:24px; font-family:'DM Mono',monospace; font-size:11px; color:var(--text-muted); }
+.pb-grid { padding:28px 48px 60px; display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:12px; }
+.pb-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; transition:all 0.14s; }
+.pb-card:hover { border-color:var(--accent2); box-shadow:0 4px 16px rgba(79,70,229,0.08); }
+.pb-card-header { padding:12px 16px 10px; border-bottom:1px solid var(--border); }
+.pb-card-cat { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); margin-bottom:4px; }
+.pb-card-title { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.pb-card-desc { font-size:12px; color:var(--text-muted); line-height:1.4; }
+.pb-card-body { padding:12px 16px; font-family:'DM Mono',monospace; font-size:11px; line-height:1.65; color:#374151; white-space:pre-wrap; border-bottom:1px solid var(--border); max-height:140px; overflow:hidden; position:relative; }
+.pb-card-body::after { content:''; position:absolute; bottom:0; left:0; right:0; height:32px; background:linear-gradient(transparent,var(--surface)); }
+.pb-card-footer { display:flex; align-items:center; justify-content:space-between; padding:8px 16px; }
+.pb-card-copy { font-family:'DM Mono',monospace; font-size:10px; color:var(--accent2); background:none; border:1px solid #c7d2fe; border-radius:4px; padding:4px 12px; cursor:pointer; transition:all 0.13s; }
+.pb-card-copy:hover { background:#eef2ff; }
+.pb-card-tag { font-family:'DM Mono',monospace; font-size:9px; padding:2px 7px; border-radius:3px; background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; }
+
+/* ══════════════════════════════════════════════════════════
+   SZABLONY
+══════════════════════════════════════════════════════════ */
+.tpl-layout { display:flex; min-height:calc(100vh - 90px); }
+.tpl-nav { width:210px; flex-shrink:0; border-right:1px solid var(--border); padding:24px 0; position:sticky; top:0; height:calc(100vh - 90px); overflow-y:auto; background:var(--surface); }
+.tpl-content { flex:1; padding:40px 52px 80px; overflow-y:auto; background:var(--bg); max-width:900px; }
+
+/* ══════════════════════════════════════════════════════════
+   KONTEKSTY
+══════════════════════════════════════════════════════════ */
+.ctx-grid { display:grid; grid-template-columns:1fr; gap:16px; }
+.ctx-card { border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--surface); }
+.ctx-card-header { display:flex; align-items:flex-start; gap:14px; padding:16px 18px 12px; border-bottom:1px solid var(--border); }
+.ctx-emoji { font-size:28px; flex-shrink:0; line-height:1; }
+.ctx-name { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.ctx-desc { font-size:12px; color:var(--text-muted); line-height:1.4; }
+
+/* ══════════════════════════════════════════════════════════
+   KIEDY NIE AI
+══════════════════════════════════════════════════════════ */
+.limits-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+.limit-card { border-radius:8px; padding:18px 20px; border:1px solid; }
+.limit-hard   { background:#fff1f2; border-color:#fca5a5; }
+.limit-warn   { background:#fef9c3; border-color:#fde68a; }
+.limit-caution{ background:#f0f9ff; border-color:#bae6fd; }
+.limit-icon { font-size:20px; margin-bottom:8px; }
+.limit-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.limit-body { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:10px; }
+.limit-rule { font-size:12px; color:var(--text); font-family:'DM Mono',monospace; background:rgba(255,255,255,0.6); padding:8px 12px; border-radius:5px; }
+
+@media(max-width:900px){
+  .guide-layout,.tpl-layout{flex-direction:column;}
+  .guide-nav,.tpl-nav{display:none;}
+  .guide-content,.tpl-content{padding:24px 20px 60px;}
+  .pb-controls,.pb-grid,.pb-stats{padding-left:20px;padding-right:20px;}
+  .pb-grid{grid-template-columns:1fr;}
+  .ctx-grid{grid-template-columns:1fr;}
+}
+/* ══════════════════════════════════════════════════════════
+   START PAGE
+══════════════════════════════════════════════════════════ */
+.start-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 48px 80px;
+}
+
+.start-hero {
+  text-align: center;
+  margin-bottom: 56px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+.start-hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+.start-hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.start-hero-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* CARDS GRID */
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 48px;
+}
+
+.start-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+.start-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--border);
+  transition: background 0.18s;
+}
+.start-card:hover {
+  border-color: var(--accent2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(79,70,229,0.1);
+}
+.start-card:hover::before { background: var(--accent2); }
+
+.start-card-featured::before { background: var(--accent2); }
+.start-card-featured {
+  border-color: #c7d2fe;
+  background: #fafafe;
+}
+.start-card-featured:hover { box-shadow: 0 8px 28px rgba(79,70,229,0.15); }
+
+.start-card-warning::before { background: #f59e0b; }
+.start-card-warning { border-color: #fde68a; background: #fffef5; }
+.start-card-warning:hover { border-color: #f59e0b; box-shadow: 0 8px 24px rgba(245,158,11,0.12); }
+.start-card-warning:hover::before { background: #f59e0b; }
+
+.start-card-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+.start-card-icon { font-size: 28px; line-height: 1; }
+
+.start-card-content { flex: 1; }
+.start-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.start-card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.start-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.start-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--surface2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.start-card-featured .start-tag { background: #eef2ff; border-color: #c7d2fe; color: #4338ca; }
+.start-card-warning .start-tag  { background: var(--gold-bg); border-color: #fde68a; color: var(--gold); }
+
+.start-card-arrow {
+  font-size: 18px;
+  color: var(--text-dim);
+  align-self: flex-end;
+  transition: all 0.18s;
+  line-height: 1;
+}
+.start-card:hover .start-card-arrow { color: var(--accent2); transform: translateX(3px); }
+.start-card-warning:hover .start-card-arrow { color: #f59e0b; }
+
+/* FOOTER RULES */
+.start-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+.start-footer-rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.start-footer-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.start-footer-rule strong { color: var(--text); font-weight: 600; }
+.start-footer-rule em { color: var(--accent2); font-style: normal; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .start-page { padding: 32px 20px 60px; }
+  .start-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .start-grid { grid-template-columns: repeat(2, 1fr); }
+}
 </style>
 </head>
 <body>
@@ -501,18 +770,159 @@ body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans'
 <div class="app-header">
   <div class="header-top">
     <div class="brand-tag">v2.0</div>
-    <div class="brand-title">Przewodnik Product Buildera</div>
+    <div class="brand-title">Przewodnik po <span>.md</span></div>
   </div>
   <div class="tabs">
-    <button class="tab-btn active" data-tab="icons">🎯&nbsp; Ikony</button>
-    <button class="tab-btn"        data-tab="syntax">📐&nbsp; Składnia .md</button>
+    <button class="tab-btn active" data-tab="start">🏠&nbsp; Start</button>
+    <button class="tab-btn" data-tab="icons">🎯&nbsp; Ikony</button>
+    <button class="tab-btn" data-tab="syntax">📐&nbsp; Składnia</button>
+    <button class="tab-btn" data-tab="process">🔄&nbsp; AI w procesie</button>
+    <button class="tab-btn" data-tab="promptbook">💬&nbsp; Promptbook</button>
+    <button class="tab-btn" data-tab="templates">📋&nbsp; Szablony .md</button>
+    <button class="tab-btn" data-tab="contexts">🧠&nbsp; Konteksty systemowe</button>
+    <button class="tab-btn" data-tab="limits">⚠️&nbsp; Kiedy nie AI</button>
   </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
+     TAB 0 — START
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-start">
+<div class="start-page">
+
+  <div class="start-hero">
+    <div class="start-hero-label">Narzędzie dla product designerów</div>
+    <h2 class="start-hero-title">Wszystko czego potrzebujesz<br>do pracy z AI i&nbsp;Markdown</h2>
+    <p class="start-hero-desc">7 sekcji. Gotowe do użycia od razu — prompty do skopiowania, szablony plików, przewodniki i uczciwa lista tego, kiedy AI Ci nie pomoże.</p>
+  </div>
+
+  <div class="start-grid">
+
+    <div class="start-card" data-goto="icons">
+      <div class="start-card-number">01</div>
+      <div class="start-card-icon">🎯</div>
+      <div class="start-card-content">
+        <div class="start-card-title">Ikony</div>
+        <div class="start-card-desc">Ponad 150 emoji stosowanych w plikach Markdown — z opisem roli, kontekstem użycia i sygnałem semantycznym dla modeli AI. Filtruj, szukaj, kopiuj jednym kliknięciem.</div>
+        <div class="start-card-tags">
+          <span class="start-tag">150+ ikon</span>
+          <span class="start-tag">10 kategorii</span>
+          <span class="start-tag">sygnał dla modelu</span>
+        </div>
+      </div>
+      <div class="start-card-arrow">→</div>
+    </div>
+
+    <div class="start-card" data-goto="syntax">
+      <div class="start-card-number">02</div>
+      <div class="start-card-icon">📐</div>
+      <div class="start-card-content">
+        <div class="start-card-title">Składnia Markdown</div>
+        <div class="start-card-desc">Kompletny przewodnik po składni .md z podglądem na żywo — od nagłówków po diagramy Mermaid, alerty GitHub i wzory LaTeX. Każdy element: kod ↔ podgląd obok siebie.</div>
+        <div class="start-card-tags">
+          <span class="start-tag">17 sekcji</span>
+          <span class="start-tag">podgląd live</span>
+          <span class="start-tag">dobre praktyki</span>
+        </div>
+      </div>
+      <div class="start-card-arrow">→</div>
+    </div>
+
+    <div class="start-card start-card-featured" data-goto="process">
+      <div class="start-card-number">03</div>
+      <div class="start-card-icon">🔄</div>
+      <div class="start-card-content">
+        <div class="start-card-title">AI w procesie projektowym</div>
+        <div class="start-card-desc">Mapa całego cyklu designu — od Discovery po utrzymanie produkcyjne. Każdy z 9 etapów ma opis, listę artefaktów i gotowe prompty do skopiowania. Najbardziej kompleksowa sekcja narzędzia.</div>
+        <div class="start-card-tags">
+          <span class="start-tag">9 etapów</span>
+          <span class="start-tag">28 promptów</span>
+          <span class="start-tag">od Discovery po Maintenance</span>
+        </div>
+      </div>
+      <div class="start-card-arrow">→</div>
+    </div>
+
+    <div class="start-card" data-goto="promptbook">
+      <div class="start-card-number">04</div>
+      <div class="start-card-icon">💬</div>
+      <div class="start-card-content">
+        <div class="start-card-title">Promptbook</div>
+        <div class="start-card-desc">Biblioteka promptów skategoryzowana po typie zadania — niezależna od etapu procesu. Szybki dostęp gdy jesteś w środku projektu i potrzebujesz konkretnego narzędzia tu i teraz.</div>
+        <div class="start-card-tags">
+          <span class="start-tag">21 promptów</span>
+          <span class="start-tag">7 kategorii</span>
+          <span class="start-tag">wyszukiwarka</span>
+        </div>
+      </div>
+      <div class="start-card-arrow">→</div>
+    </div>
+
+    <div class="start-card" data-goto="templates">
+      <div class="start-card-number">05</div>
+      <div class="start-card-icon">📋</div>
+      <div class="start-card-content">
+        <div class="start-card-title">Szablony .md</div>
+        <div class="start-card-desc">8 gotowych do skopiowania plików Markdown z placeholderami. Product Brief, User Story, Research Report, Decision Log, Handoff Doc, Retrospektywa, Postmortem, OKR. Kopiujesz, uzupełniasz, używasz.</div>
+        <div class="start-card-tags">
+          <span class="start-tag">8 szablonów</span>
+          <span class="start-tag">gotowe do użycia</span>
+          <span class="start-tag">z placeholderami</span>
+        </div>
+      </div>
+      <div class="start-card-arrow">→</div>
+    </div>
+
+    <div class="start-card" data-goto="contexts">
+      <div class="start-card-number">06</div>
+      <div class="start-card-icon">🧠</div>
+      <div class="start-card-content">
+        <div class="start-card-title">Konteksty systemowe</div>
+        <div class="start-card-desc">Gotowe system prompty do Claude Projects i Custom Instructions. Każdy nadaje AI konkretną rolę: Senior Designer, User Researcher, Tech Lead, Stakeholder, Accessibility Specialist, UX Writer.</div>
+        <div class="start-card-tags">
+          <span class="start-tag">6 person AI</span>
+          <span class="start-tag">Claude Projects</span>
+          <span class="start-tag">Custom Instructions</span>
+        </div>
+      </div>
+      <div class="start-card-arrow">→</div>
+    </div>
+
+    <div class="start-card start-card-warning" data-goto="limits">
+      <div class="start-card-number">07</div>
+      <div class="start-card-icon">⚠️</div>
+      <div class="start-card-content">
+        <div class="start-card-title">Kiedy nie używać AI</div>
+        <div class="start-card-desc">Uczciwa, nieupiększona lista ograniczeń i ryzyk — bez marketingu. Kiedy AI kłamie pewnie, gdzie wprowadza bias, kiedy lepiej zadzwonić do prawdziwego użytkownika. Czytaj zanim zaczniesz.</div>
+        <div class="start-card-tags">
+          <span class="start-tag">8 ograniczeń</span>
+          <span class="start-tag">3 poziomy ryzyka</span>
+          <span class="start-tag">konkretne zasady</span>
+        </div>
+      </div>
+      <div class="start-card-arrow">→</div>
+    </div>
+
+  </div>
+
+  <div class="start-footer">
+    <div class="start-footer-rule">
+      <span class="start-footer-icon">💡</span>
+      <div><strong>Jak używać tego narzędzia?</strong> Zacznij od sekcji <em>AI w procesie</em> jeśli jesteś na początku projektu. Sięgaj po <em>Promptbook</em> w trakcie. Sprawdzaj <em>Kiedy nie AI</em> zanim podejmiesz ważną decyzję opartą na odpowiedzi modelu.</div>
+    </div>
+    <div class="start-footer-rule">
+      <span class="start-footer-icon">🔄</span>
+      <div><strong>Narzędzie jest żywe.</strong> Prompty, szablony i sekcje będą rozbudowywane. Jeśli czegoś brakuje — to dobry moment żeby dodać to do backlogu.</div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-start -->
+
+<!-- ══════════════════════════════════════════════════════════
      TAB 1 — IKONY
 ══════════════════════════════════════════════════════════ -->
-<div class="tab-panel active" id="tab-icons">
+<div class="tab-panel" id="tab-icons">
   <div class="icons-controls">
     <span class="filter-label">KATEGORIA:</span>
     <button class="filter-btn active" data-cat="all">Wszystkie</button>
@@ -1329,7 +1739,1293 @@ Odznaki:    shields.io, badgen.net</pre>
   </div><!-- /syntax-layout -->
 </div><!-- /tab-syntax -->
 
-<div class="toast" id="toast"></div>
+<!-- ══════════════════════════════════════════════════════════
+     TAB 3 — AI W PROCESIE PROJEKTOWYM
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-process">
+<div class="guide-layout">
+<nav class="guide-nav">
+  <div class="guide-nav-label">Etapy procesu</div>
+  <a class="guide-nav-item active" href="#p-discovery"   data-psec="p-discovery">  <span class="guide-nav-stage" style="background:#ede9fe;color:#7c3aed">01</span>Discovery</a>
+  <a class="guide-nav-item"        href="#p-research"    data-psec="p-research">   <span class="guide-nav-stage" style="background:#dbeafe;color:#1d4ed8">02</span>Research</a>
+  <a class="guide-nav-item"        href="#p-define"      data-psec="p-define">     <span class="guide-nav-stage" style="background:#dcfce7;color:#15803d">03</span>Definicja</a>
+  <a class="guide-nav-item"        href="#p-ideation"    data-psec="p-ideation">   <span class="guide-nav-stage" style="background:#fef9c3;color:#a16207">04</span>Ideacja</a>
+  <a class="guide-nav-item"        href="#p-prototype"   data-psec="p-prototype">  <span class="guide-nav-stage" style="background:#ffedd5;color:#c2410c">05</span>Prototypowanie</a>
+  <a class="guide-nav-item"        href="#p-testing"     data-psec="p-testing">    <span class="guide-nav-stage" style="background:#fce7f3;color:#be185d">06</span>Testowanie</a>
+  <a class="guide-nav-item"        href="#p-handoff"     data-psec="p-handoff">    <span class="guide-nav-stage" style="background:#e0f2fe;color:#0369a1">07</span>Handoff</a>
+  <a class="guide-nav-item"        href="#p-release"     data-psec="p-release">    <span class="guide-nav-stage" style="background:#f0fdf4;color:#166534">08</span>Release</a>
+  <a class="guide-nav-item"        href="#p-maintain"    data-psec="p-maintain">   <span class="guide-nav-stage" style="background:#f1f5f9;color:#475569">09</span>Utrzymanie</a>
+</nav>
+
+<div class="guide-content" id="processContent">
+
+  <!-- 01 DISCOVERY -->
+  <section class="guide-section" id="p-discovery">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#ede9fe;color:#7c3aed">Etap 01</div>
+      <div class="guide-section-title">Discovery</div>
+    </div>
+    <p class="guide-section-desc">Wstępne rozpoznanie — zrozumienie kontekstu biznesowego, zebranie założeń i zidentyfikowanie obszarów niewiedzy. AI pomaga szybko ustrukturyzować chaos na początku projektu.</p>
+    <div class="guide-artifacts">📄 Brief · 🗺️ Mapa założeń · ❓ Lista pytań badawczych · 📋 Scope projektu</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Analiza briefu</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Przeanalizuj poniższy brief projektowy. Zidentyfikuj:
+1. Główny problem biznesowy (1–2 zdania)
+2. Założenia, które są faktem vs. założenia, które wymagają weryfikacji
+3. Grupę docelową — co wiemy, czego nie wiemy
+4. Ryzyka i obszary niejasności
+5. Pytania, które koniecznie zadałby doświadczony badacz UX przed startem projektu
+
+Brief: [WKLEJ BRIEF]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Mapa założeń</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Na podstawie poniższych notatek ze spotkania kickoff stwórz mapę założeń projektu w formacie tabeli Markdown. Kolumny: Założenie | Kategoria (biznesowe / użytkownik / techniczne) | Pewność (wysoka / średnia / niska) | Sposób weryfikacji.
+
+Notatki: [WKLEJ NOTATKI]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Scope projektu</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Pomóż mi sformułować zakres projektu (scope). Na podstawie opisu stwórz:
+- In scope: lista rzeczy, które robimy
+- Out of scope: lista rzeczy, które świadomie pomijamy
+- Otwarte decyzje: rzeczy do ustalenia z klientem
+
+Opis projektu: [OPIS]</div>
+    </div>
+  </section>
+
+  <!-- 02 RESEARCH -->
+  <section class="guide-section" id="p-research">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#dbeafe;color:#1d4ed8">Etap 02</div>
+      <div class="guide-section-title">Research</div>
+    </div>
+    <p class="guide-section-desc">Badania użytkowników, analiza konkurencji, desk research. AI nie zastępuje rozmów z użytkownikami, ale radykalnie przyspiesza przygotowanie, analizę i syntezę.</p>
+    <div class="guide-artifacts">🎤 Scenariusz wywiadu · 📊 Synteza badań · 👤 Persony · 🗺️ Customer Journey Map</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Scenariusz wywiadu</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Stwórz scenariusz wywiadu pogłębionego (IDI) z użytkownikiem. Cel badania: [CEL]. Grupa docelowa: [OPIS GRUPY].
+
+Scenariusz powinien zawierać:
+- Rozgrzewkę (3–4 pytania otwierające)
+- Sekcję główną (8–10 pytań pogłębiających, bez pytań sugestywnych)
+- Pytania o obejścia (workarounds) i frustracje
+- Zamknięcie
+Każde pytanie opatrz wskazówką dla moderatora w nawiasie.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Synteza wywiadów</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Poniżej masz transkrypcje [N] wywiadów z użytkownikami. Przeprowadź syntezę:
+1. Zidentyfikuj powtarzające się tematy (minimum 3 wystąpienia)
+2. Wypisz kluczowe cytaty ilustrujące każdy temat
+3. Wskaż napięcia i sprzeczności między respondentami
+4. Sformułuj 3–5 kluczowych insightów w formacie: "Użytkownicy [zachowanie], ponieważ [przyczyna], co oznacza, że [implikacja dla designu]"
+
+Transkrypcje: [WKLEJ TRANSKRYPCJE]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Analiza konkurencji</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Przeprowadź analizę konkurencji dla produktu: [OPIS PRODUKTU]. Obszar: [RYNEK/KATEGORIA].
+
+Dla każdego konkurenta oceń: propozycja wartości, główne funkcje, model biznesowy, mocne strony UX, słabe strony UX, do jakiego segmentu użytkowników celuje.
+
+Na końcu wskaż luki rynkowe i możliwości diferenciacji.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Persona</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Na podstawie poniższych insightów badawczych stwórz [N] person w formacie Markdown. Każda persona powinna zawierać: imię i wiek, kontekst życiowy, główny cel w relacji z produktem, frustracje, obejścia których używa dziś, cytat charakteryzujący sposób myślenia, poziom cyfrowej dojrzałości.
+
+Unikaj stereotypów. Oprzyj każdy element na konkretnych danych z badań.
+
+Insighty: [WKLEJ INSIGHTY]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Benchmarking funkcjonalny (cross-branżowy)</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Przeprowadź benchmarking funkcjonalny dla poniższej funkcjonalności.
+
+Funkcjonalność: [OPISZ MECHANIZM — np. "formularz rezerwacji terminu", "onboarding nowego użytkownika", "wyszukiwarka z filtrowaniem", "koszyk zakupowy", "powiadomienia o statusie"]
+
+## Zasada analizy
+Szukaj SZEROKO — nie analizuj tylko bezpośredniej konkurencji ani jednej branży. Klucz to mechanizm, nie kontekst biznesowy. Ten sam problem (np. "umów wizytę") jest rozwiązywany w dziesiątkach różnych branż.
+
+## Branże i konteksty do przeszukania
+
+Zaproponuj i przeanalizuj min. 8 różnych kontekstów z różnych branż, np.:
+
+Sektor usług osobistych: barber/salon (Booksy, Fresha), spa i masaże (Mindbody), fotograf, trener personalny
+Sektor zdrowia: przychodnia/lekarz (Docplanner, Zocdoc), dentysta, fizjoterapeuta, weterynarz
+Sektor finansowy: bank (spotkanie z doradcą), ubezpieczenia, notariusz
+Transport i mobilność: test drive, serwis samochodowy, wypożyczalnia sprzętu
+Edukacja i coaching: korepetycje (Superprof), szkolenia korporacyjne, konsultacje z coachem
+Gastronomia i rozrywka: rezerwacja stolika (OpenTable, TheFork), escape room, kino
+Sektor publiczny: urząd (e-rząd, Obywatel), konsulat, biblioteka
+B2B / enterprise: demo produktu SaaS, konsultacja prawna, spotkanie z rekruterem
+
+## Format analizy dla każdego przypadku
+
+1. Produkt / usługa — nazwa, URL jeśli znany
+2. Mechanizm wejścia — jak użytkownik inicjuje akcję (CTA, flow, punkt wejścia)
+3. Kroki procesu — liczba kroków, co jest wymagane na każdym etapie
+4. Dane zbierane — jakich informacji wymaga system i dlaczego
+5. Obsługa konfliktów — brak dostępności, podwójna rezerwacja, anulowanie
+6. Potwierdzenie i przypomnienia — jak system komunikuje status
+7. Wyróżnik UX — co robią lepiej lub inaczej niż standard
+8. Słabość — co jest problematyczne lub nieoczywiste
+
+## Synteza
+
+Wspólne wzorce — konwencje których użytkownicy oczekują
+Nieoczywiste rozwiązania — z jednej branży, które mogą przenieść się do [TWÓJ KONTEKST]
+Luki — czego żaden z przebadanych produktów nie robi dobrze
+Rekomendacje — top 3 insighty do zastosowania w projektowanym rozwiązaniu
+
+Twój kontekst projektowy: [OPISZ PRODUKT I UŻYTKOWNIKA]</div>
+    </div>
+  </section>
+  <section class="guide-section" id="p-define">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#dcfce7;color:#15803d">Etap 03</div>
+      <div class="guide-section-title">Definicja problemu</div>
+    </div>
+    <p class="guide-section-desc">Przekształcenie insightów w sformułowanie problemu i wymagania projektowe. AI pomaga znaleźć sprzeczności w wymaganiach i przełożyć język biznesowy na język użytkownika.</p>
+    <div class="guide-artifacts">📌 Problem statement · 📋 How Might We · 📝 User stories · 🎯 Kryteria sukcesu</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Problem statement</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Na podstawie poniższych insightów badawczych sformułuj problem statement w 3 różnych ujęciach:
+1. Z perspektywy użytkownika (format: "Użytkownik potrzebuje [potrzeba], ponieważ [kontekst], ale [bariera]")
+2. Z perspektywy biznesowej (jaki problem rynkowy rozwiązujemy)
+3. Systemowym (co w obecnym systemie/procesie nie działa)
+
+Następnie zaproponuj jedno syntetyczne sformułowanie łączące wszystkie perspektywy.
+
+Insighty: [INSIGHTY]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Weryfikacja wymagań</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Przeanalizuj poniższą listę wymagań projektowych. Wskaż:
+1. Wymagania wzajemnie sprzeczne
+2. Wymagania niejasne lub niemierzalne
+3. Wymagania, które brzmią jak rozwiązanie, nie jak problem
+4. Brakujące wymagania (typowe dla tego typu produktu)
+5. Zaproponuj przeformułowanie każdego problematycznego punktu
+
+Wymagania: [WYMAGANIA]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">How Might We</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Na podstawie poniższego problemu sformułuj 10 pytań "How Might We" (HMW). Zadbaj o różnorodność — część pytań powinna być bardzo wąska (konkretny punkt bólu), część szeroka (systemowa zmiana). Unikaj pytań, które już sugerują konkretne rozwiązanie.
+
+Problem: [PROBLEM STATEMENT]</div>
+    </div>
+  </section>
+
+  <!-- 04 IDEACJA -->
+  <section class="guide-section" id="p-ideation">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#fef9c3;color:#a16207">Etap 04</div>
+      <div class="guide-section-title">Ideacja</div>
+    </div>
+    <p class="guide-section-desc">Generowanie i ocena pomysłów. AI świetnie sprawdza się jako "myślący partner" — generuje alternatywy, wskazuje nieoczywiste rozwiązania, pomaga ocenić pomysły przed inwestycją w prototyp.</p>
+    <div class="guide-artifacts">💡 Pomysły · 📊 Macierz priorytetów · 🗺️ Mapa koncepcji · 📋 Decision log</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Generowanie pomysłów</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Działaj jako kreatywny partner w sesji ideacji. Problem do rozwiązania: [PROBLEM].
+
+Wygeneruj 15 pomysłów w 3 grupach:
+- "Oczywiste" (5 pomysłów) — to co zrobi każdy
+- "Ciekawe" (5 pomysłów) — mniej oczywiste, ale realne
+- "Odważne" (5 pomysłów) — kontrowersyjne, ale mogłyby zmienić grę
+
+Dla każdego pomysłu: nazwa (2–3 słowa), opis (1 zdanie), główna zaleta, główne ryzyko.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Ocena pomysłów</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Oceń poniższe pomysły według 4 kryteriów. Dla każdego pomysłu przyznaj punkty 1–5 w kategoriach:
+- Wpływ na użytkownika (jak bardzo rozwiązuje problem)
+- Wykonalność techniczna (jak trudne do zbudowania)
+- Zgodność z biznesem (czy pasuje do modelu i strategii)
+- Oryginalność (czy wyróżnia nas na tle konkurencji)
+
+Stwórz tabelę Markdown i wskaż top 3 pomysły z uzasadnieniem.
+
+Pomysły: [POMYSŁY]
+Kontekst biznesowy: [KONTEKST]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Krytyk pomysłu</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Działaj jako doświadczony, sceptyczny product manager. Przeanalizuj poniższy pomysł i zadaj mi najtrudniejsze pytania — takie, które rozbijają złe pomysły zanim staną się drogie.
+
+Szukaj: ukrytych założeń, edge cases, problemów ze skalą, ryzyk prawnych lub etycznych, alternatyw których nie rozważyłem.
+
+Pomysł: [POMYSŁ]</div>
+    </div>
+  </section>
+
+  <!-- 05 PROTOTYPOWANIE -->
+  <section class="guide-section" id="p-prototype">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#ffedd5;color:#c2410c">Etap 05</div>
+      <div class="guide-section-title">Prototypowanie</div>
+    </div>
+    <p class="guide-section-desc">Tworzenie i iteracja prototypów. AI pomaga opisać interakcje, wygenerować treści zastępcze, przeanalizować flow pod kątem edge cases i napisać specyfikację komponentów.</p>
+    <div class="guide-artifacts">🖼️ Wireframe opisy · 📝 Content placeholders · 🔄 Flow map · 📋 Spec komponentów</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Opis interakcji</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Opisz szczegółowo interakcję dla poniższego ekranu/widoku. Uwzględnij:
+- Stan domyślny (default state)
+- Stany ładowania (loading states)
+- Stany błędów (error states) — minimum 3 scenariusze
+- Stany puste (empty states)
+- Zachowanie na urządzeniach mobilnych
+- Dostępność (co powie screen reader, fokus klawiaturowy)
+
+Widok: [OPIS WIDOKU]
+Kontekst produktu: [KONTEKST]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Edge cases</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Przeanalizuj poniższy user flow pod kątem edge cases i scenariuszy brzegowych. Dla każdego punktu decyzyjnego wskaż co się stanie gdy:
+- Użytkownik ma złe/brakujące dane
+- Połączenie internetowe jest wolne lub zrywa się
+- Użytkownik wraca do poprzedniego kroku
+- Sesja wygasa w środku procesu
+- Dane zmieniają się w trakcie wypełniania formularza
+
+Flow: [OPIS FLOW]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Treści UX</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Napisz treści UX (UX copy) dla poniższych elementów interfejsu. Ton: [TON — np. profesjonalny i bezpośredni / przyjazny i nieformalny / rzeczowy i empatyczny].
+
+Dla każdego elementu podaj 3 warianty (krótki / standardowy / rozbudowany):
+- Nagłówek strony
+- Opis / podnagłówek
+- Etykiety przycisków CTA
+- Komunikaty błędów (walidacja formularza)
+- Empty state (gdy brak danych)
+- Komunikat sukcesu
+
+Kontekst produktu: [KONTEKST]</div>
+    </div>
+  </section>
+
+  <!-- 06 TESTOWANIE -->
+  <section class="guide-section" id="p-testing">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#fce7f3;color:#be185d">Etap 06</div>
+      <div class="guide-section-title">Testowanie użytkowników</div>
+    </div>
+    <p class="guide-section-desc">Testy użyteczności i walidacja rozwiązania. AI nie zastępuje obserwacji prawdziwych użytkowników, ale pomaga w przygotowaniu, analizie i komunikacji wyników.</p>
+    <div class="guide-artifacts">📋 Plan testu · 🎤 Scenariusz zadań · 📊 Raport · 📌 Lista rekomendacji</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Plan testu użyteczności</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Stwórz plan testu użyteczności dla poniższego prototypu. Plan powinien zawierać:
+- Cel testu (czego chcemy się dowiedzieć)
+- Pytania badawcze (3–5)
+- Kryteria rekrutacji uczestników
+- Metodę (moderowany / niemoderowany, zdalny / stacjonarny)
+- Scenariusze zadań (5–7 zadań z instrukcją dla moderatora)
+- Metryki sukcesu dla każdego zadania
+- Harmonogram sesji
+
+Prototyp: [OPIS PROTOTYPU]
+Kluczowe ryzyka do weryfikacji: [RYZYKA]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Analiza notatek z testów</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Poniżej masz surowe notatki z [N] sesji testów użyteczności. Przeprowadź analizę:
+
+1. Zidentyfikuj problemy użyteczności i pogrupuj według częstości
+2. Oceń severity każdego problemu (krytyczny / poważny / kosmetyczny)
+3. Znajdź powtarzające się cytaty i momenty zaskoczenia
+4. Oddziel problemy prototypu od problemów finalnego produktu
+5. Stwórz priorytetowaną listę rekomendacji projektowych
+
+Notatki: [NOTATKI]</div>
+    </div>
+  </section>
+
+  <!-- 07 HANDOFF -->
+  <section class="guide-section" id="p-handoff">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#e0f2fe;color:#0369a1">Etap 07</div>
+      <div class="guide-section-title">Handoff do developmentu</div>
+    </div>
+    <p class="guide-section-desc">Przekazanie projektu zespołowi deweloperów. AI pomaga przygotować szczegółową specyfikację, przewidzieć pytania developerów i uniknąć utraty decyzji projektowych w tłumaczeniu.</p>
+    <div class="guide-artifacts">📄 Spec techniczna · 📋 Acceptance criteria · 🗂️ Component inventory · ❓ Q&A log</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Specyfikacja komponentu</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Napisz specyfikację techniczną komponentu dla developera frontendowego. Komponent: [NAZWA].
+
+Uwzględnij: opis funkcji, listę props/parametrów (nazwa, typ, domyślna wartość, wymagane/opcjonalne), wszystkie stany wizualne, zachowanie na różnych rozdzielczościach, interakcje i animacje (z timingiem), dostępność (ARIA, klawiatura, screen reader), edge cases i znane ograniczenia.
+
+Kontekst designu: [OPIS Z FIGMY LUB PROTOTYPU]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Acceptance criteria</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Na podstawie poniższej user story napisz acceptance criteria w formacie Given-When-Then. Uwzględnij:
+- Scenariusz główny (happy path)
+- Minimum 3 scenariusze alternatywne
+- Scenariusze błędów
+- Wymagania dotyczące wydajności (jeśli istotne)
+- Wymagania dostępności
+
+User story: [USER STORY]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Pytania developerów</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Działaj jako doświadczony frontend developer. Przejrzyj poniższy opis designu i zadaj wszystkie pytania, które zadałbyś designerowi przed rozpoczęciem implementacji. Skupiaj się na brakujących informacjach, niejasnych zachowaniach i decyzjach, które będą miały wpływ na architekturę.
+
+Opis designu: [OPIS]</div>
+    </div>
+  </section>
+
+  <!-- 08 RELEASE -->
+  <section class="guide-section" id="p-release">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#f0fdf4;color:#166534">Etap 08</div>
+      <div class="guide-section-title">Release</div>
+    </div>
+    <p class="guide-section-desc">Wdrożenie i komunikacja. AI pomaga przygotować release notes, komunikaty do użytkowników i plan monitorowania po wdrożeniu.</p>
+    <div class="guide-artifacts">📣 Release notes · 📧 Komunikat do użytkowników · 📊 Plan monitorowania · 🚩 Feature flags</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Release notes</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Napisz release notes dla wersji [NUMER] produktu [NAZWA]. Ton: [TON].
+
+Na podstawie poniższej listy zmian technicznych napisz release notes zrozumiałe dla użytkownika końcowego. Pogrupuj zmiany według: Nowości / Ulepszenia / Naprawione błędy. Dla każdej zmiany: co się zmieniło, co zyskuje użytkownik, czy wymaga jakiegoś działania z jego strony.
+
+Zmiany: [LISTA COMMITÓW LUB CHANGELOG]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Plan rollout</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Pomóż mi zaplanować stopniowy rollout nowej funkcji. Funkcja: [OPIS]. Ryzyko: [POZIOM — niskie/średnie/wysokie].
+
+Zaproponuj: segmentację użytkowników do kolejnych faz (ile procent, jakie kryteria), metryki do monitorowania po każdej fazie, progi przy których wstrzymujemy rollout, plan komunikacji do użytkowników na każdym etapie, plan rollback jeśli coś pójdzie nie tak.</div>
+    </div>
+  </section>
+
+  <!-- 09 UTRZYMANIE -->
+  <section class="guide-section" id="p-maintain">
+    <div class="guide-stage-header">
+      <div class="guide-stage-pill" style="background:#f1f5f9;color:#475569">Etap 09</div>
+      <div class="guide-section-title">Utrzymanie produkcyjne</div>
+    </div>
+    <p class="guide-section-desc">Monitoring, analiza danych, reagowanie na feedback użytkowników i planowanie kolejnych iteracji. AI pomaga znaleźć wzorce w danych i priorytetyzować backlog.</p>
+    <div class="guide-artifacts">📊 Analiza metryk · 🐛 Bug triage · 📌 Backlog · 📝 Postmortem</div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Analiza feedbacku</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Przeanalizuj poniższy zbiór opinii użytkowników (recenzje, zgłoszenia support, komentarze). Wykonaj:
+1. Kategoryzacja (UX / wydajność / funkcje / błędy / inne)
+2. Sentyment per kategoria
+3. Top 5 najczęstszych skarg
+4. Top 5 najczęstszych próśb o funkcje
+5. Cytaty, które najlepiej ilustrują każdą kategorię
+6. Rekomendacje priorytetów dla następnej iteracji
+
+Feedback: [FEEDBACK]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Priorytetyzacja backlogu</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Pomóż mi priorytetyzować backlog produktowy. Dla każdego poniższego elementu oceń i stwórz tabelę Markdown z kolumnami: Zadanie | Impact użytkownika (1–5) | Wysiłek (1–5) | Zgodność ze strategią (1–5) | Score (suma) | Priorytet (Must/Should/Could/Won't).
+
+Dodaj komentarz do top 3 i bottom 3 pozycji wyjaśniający decyzję.
+
+Backlog: [LISTA ZADAŃ]
+Strategia produktu: [KONTEKST STRATEGICZNY]</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header"><span class="prompt-label">Prompt</span><span class="prompt-use">Postmortem incydentu</span><button class="prompt-copy-btn" onclick="copyPrompt(this)">kopiuj</button></div>
+      <div class="prompt-body">Pomóż mi napisać postmortem incydentu produkcyjnego. Format: bezwinna analiza (blameless postmortem).
+
+Na podstawie poniższego opisu zdarzenia stwórz dokument zawierający: podsumowanie (co, kiedy, wpływ), timeline zdarzeń, przyczyna główna (root cause), czynniki przyczyniające się, jak problem został wykryty i rozwiązany, działania naprawcze (z właścicielem i terminem), wnioski systemowe.
+
+Opis incydentu: [OPIS]</div>
+    </div>
+  </section>
+
+</div><!-- /guide-content -->
+</div><!-- /guide-layout -->
+</div><!-- /tab-process -->
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 4 — PROMPTBOOK
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-promptbook">
+<div class="pb-layout">
+  <div class="pb-controls">
+    <span class="filter-label">KATEGORIA:</span>
+    <button class="pb-filter-btn active" data-pbcat="all">Wszystkie</button>
+    <button class="pb-filter-btn" data-pbcat="brief">Brief</button>
+    <button class="pb-filter-btn" data-pbcat="research">Research</button>
+    <button class="pb-filter-btn" data-pbcat="requirements">Wymagania</button>
+    <button class="pb-filter-btn" data-pbcat="copy">UX Copy</button>
+    <button class="pb-filter-btn" data-pbcat="feedback">Feedback</button>
+    <button class="pb-filter-btn" data-pbcat="communication">Komunikacja</button>
+    <button class="pb-filter-btn" data-pbcat="strategy">Strategia</button>
+    <div style="margin-left:auto">
+      <input class="search-input" type="text" placeholder="szukaj promptu…" id="pbSearch">
+    </div>
+  </div>
+  <div class="pb-stats">
+    <span class="istat"><strong id="pb-count">—</strong> promptów</span>
+    <span class="istat"><strong id="pb-visible">—</strong> widocznych</span>
+  </div>
+  <div class="pb-grid" id="pb-container"></div>
+</div>
+</div><!-- /tab-promptbook -->
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 5 — SZABLONY MD
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-templates">
+<div class="tpl-layout">
+  <nav class="tpl-nav">
+    <div class="guide-nav-label">Dokumenty</div>
+    <a class="guide-nav-item active" href="#t-brief"    data-tsec="t-brief">   📄 Product Brief</a>
+    <a class="guide-nav-item"        href="#t-story"    data-tsec="t-story">   📝 User Story</a>
+    <a class="guide-nav-item"        href="#t-research" data-tsec="t-research">🔬 Research Report</a>
+    <a class="guide-nav-item"        href="#t-decision" data-tsec="t-decision">🗂️ Decision Log</a>
+    <a class="guide-nav-item"        href="#t-handoff"  data-tsec="t-handoff"> 🤝 Handoff Doc</a>
+    <a class="guide-nav-item"        href="#t-retro"    data-tsec="t-retro">   🔄 Retrospektywa</a>
+    <a class="guide-nav-item"        href="#t-postmortem" data-tsec="t-postmortem">🩹 Postmortem</a>
+    <a class="guide-nav-item"        href="#t-okr"      data-tsec="t-okr">     🎯 OKR / Cele</a>
+  </nav>
+  <div class="tpl-content" id="tplContent">
+
+    <section class="guide-section" id="t-brief">
+      <div class="syntax-section-title" style="font-size:21px">📄 Product Brief</div>
+      <div class="syntax-section-desc">Dokument inicjujący projekt — kontekst, cele, ograniczenia i kryteria sukcesu. Wklej do nowego pliku <code>BRIEF.md</code> i uzupełnij placeholdery w nawiasach.</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">BRIEF.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># 📄 [Nazwa projektu] — Product Brief
+
+**Status:** `Draft` | **Data:** YYYY-MM-DD | **Autor:** [Imię Nazwisko]
+
+---
+
+## 🎯 Problem i cel
+
+### Problem biznesowy
+[Co nie działa dziś? Jaki jest koszt tego problemu dla firmy lub użytkowników?]
+
+### Cel projektu
+[Co chcemy osiągnąć? Jedno zdanie, mierzalne.]
+
+### Kryteria sukcesu
+- [ ] [Metryka 1 — np. "Redukcja czasu X o 30% w ciągu 3 miesięcy"]
+- [ ] [Metryka 2]
+- [ ] [Metryka 3]
+
+---
+
+## 👤 Odbiorcy
+
+### Główny odbiorca
+[Persona lub segment — kto jest głównym beneficjentem rozwiązania]
+
+### Drugorzędni odbiorcy
+[Kto jeszcze korzysta z rozwiązania lub na kogo wpływa]
+
+---
+
+## 🗺️ Zakres
+
+### In scope
+- [Co robimy w tym projekcie]
+
+### Out of scope
+- [Co świadomie pomijamy]
+
+### Otwarte decyzje
+- [ ] [Decyzja do podjęcia — kto decyduje, do kiedy]
+
+---
+
+## ⚠️ Ograniczenia i ryzyka
+
+| Ograniczenie | Typ | Wpływ |
+| :----------- | :-- | :---- |
+| [np. Deadline Q3] | Czasowe | Wysoki |
+| [np. Brak API od partnera] | Techniczne | Średni |
+
+---
+
+## 📅 Harmonogram
+
+| Kamień milowy | Data | Właściciel |
+| :------------ | :--- | :--------- |
+| Kickoff | YYYY-MM-DD | [Imię] |
+| Research | YYYY-MM-DD | [Imię] |
+| Prototyp | YYYY-MM-DD | [Imię] |
+| Testy | YYYY-MM-DD | [Imię] |
+| Handoff | YYYY-MM-DD | [Imię] |
+
+---
+
+## 👥 Zespół
+
+| Rola | Osoba | Zakres odpowiedzialności |
+| :--- | :---- | :----------------------- |
+| Product Manager | [Imię] | Decyzje produktowe, priorytetyzacja |
+| Lead Designer | [Imię] | Proces designu, jakość UX |
+| Tech Lead | [Imię] | Wykonalność, architektura |
+| Stakeholder | [Imię] | Zatwierdzanie kierunku |
+
+---
+
+*Ostatnia aktualizacja: YYYY-MM-DD · [Imię Nazwisko]*</pre>
+      </div>
+    </section>
+
+    <section class="guide-section" id="t-story">
+      <div class="syntax-section-title" style="font-size:21px">📝 User Story</div>
+      <div class="syntax-section-desc">Szablon user story z acceptance criteria w formacie Given-When-Then. Jeden plik = jedna historia.</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">USER_STORY.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># US-[NR]: [Tytuł historii]
+
+**Epik:** [Nazwa epiku]
+**Status:** `Backlog` / `In Progress` / `Done`
+**Priorytet:** `Must` / `Should` / `Could`
+**Estymacja:** [Story points lub T-shirt size]
+
+---
+
+## Historia
+
+> Jako **[rola użytkownika]**
+> chcę **[cel / akcja]**
+> żeby **[korzyść / wartość]**
+
+---
+
+## Kontekst
+
+[Dodatkowy opis — dlaczego ta historia jest ważna, skąd się wzięła, co już wiemy]
+
+---
+
+## Acceptance Criteria
+
+### ✅ Scenariusz 1: [Nazwa — happy path]
+- **Given** [warunek początkowy]
+- **When** [akcja użytkownika]
+- **Then** [oczekiwany rezultat]
+
+### ✅ Scenariusz 2: [Nazwa]
+- **Given** [warunek]
+- **When** [akcja]
+- **Then** [rezultat]
+
+### ❌ Scenariusz błędu: [Nazwa]
+- **Given** [warunek błędny]
+- **When** [akcja]
+- **Then** [obsługa błędu]
+
+---
+
+## Definition of Done
+
+- [ ] Implementacja zgodna z designem (Figma link: [URL])
+- [ ] Acceptance criteria przeszły QA
+- [ ] Testy jednostkowe napisane
+- [ ] Dostępność zweryfikowana (WCAG 2.1 AA)
+- [ ] Code review zatwierdzony
+- [ ] Dokumentacja zaktualizowana
+
+---
+
+## Zasoby
+
+- 🎨 Figma: [link]
+- 📋 Ticket Jira/Linear: [link]
+- 📝 Notatki z dyskusji: [link]</pre>
+      </div>
+    </section>
+
+    <section class="guide-section" id="t-research">
+      <div class="syntax-section-title" style="font-size:21px">🔬 Research Report</div>
+      <div class="syntax-section-desc">Raport z badań użytkowników — od pytań badawczych po rekomendacje projektowe.</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">RESEARCH_REPORT.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># 🔬 Raport z badań: [Temat]
+
+**Data:** YYYY-MM-DD
+**Badacz:** [Imię Nazwisko]
+**Metoda:** [np. IDI / Testy użyteczności / Ankieta / Desk research]
+**Liczba uczestników:** [N]
+
+---
+
+## 🎯 Pytania badawcze
+
+1. [Pytanie 1 — co chcieliśmy zbadać]
+2. [Pytanie 2]
+3. [Pytanie 3]
+
+---
+
+## 👤 Uczestnicy
+
+| # | Profil | Kluczowe cechy |
+|---|--------|----------------|
+| P1 | [np. Właściciel MŚP, 35–45 lat] | [Cechy istotne dla badania] |
+| P2 | | |
+
+---
+
+## 💡 Kluczowe insighty
+
+### Insight 1: [Tytuł]
+> Użytkownicy **[zachowanie]**, ponieważ **[przyczyna]**,
+> co oznacza, że **[implikacja dla designu]**.
+
+**Dowody:**
+- "[Cytat z wywiadu P1]"
+- "[Cytat z wywiadu P3]"
+
+**Częstość:** [N]/[N] uczestników
+
+---
+
+### Insight 2: [Tytuł]
+> [...]
+
+---
+
+## ⚡ Kluczowe cytaty
+
+> "[Cytat]" — Uczestnik P2
+
+> "[Cytat]" — Uczestnik P4
+
+---
+
+## 📊 Wyniki ilościowe (jeśli dotyczy)
+
+| Metryka | Wynik | Benchmark |
+| :------ | :---- | :-------- |
+| Task completion rate | 73% | >80% |
+| SUS Score | 68/100 | >68 = dobre |
+
+---
+
+## 🎯 Rekomendacje
+
+| # | Rekomendacja | Priorytet | Powiązany insight |
+|---|-------------|-----------|-------------------|
+| R1 | [Co zrobić] | Wysoki | Insight 1 |
+| R2 | [Co zrobić] | Średni | Insight 2 |
+
+---
+
+## ⚠️ Ograniczenia badania
+
+[Co może wpłynąć na ważność wyników — bias rekrutacyjny, mała próba, itp.]
+
+---
+
+*Pełne notatki z sesji: [link] · Nagrania: [link]*</pre>
+      </div>
+    </section>
+
+    <section class="guide-section" id="t-decision">
+      <div class="syntax-section-title" style="font-size:21px">🗂️ Decision Log</div>
+      <div class="syntax-section-desc">Log decyzji projektowych — dlaczego podjęto daną decyzję, kto i kiedy, jakie były alternatywy. Ratuje życie przy onboardingu i retrospektywach.</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">DECISION_LOG.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># 🗂️ Decision Log — [Nazwa projektu]
+
+> Ten dokument rejestruje kluczowe decyzje projektowe wraz z kontekstem i uzasadnieniem.
+> Aktualizuj po każdej istotnej decyzji.
+
+---
+
+## DEC-001: [Tytuł decyzji]
+
+**Data:** YYYY-MM-DD
+**Decydent:** [Imię / Rola]
+**Status:** `Przyjęta` / `Odrzucona` / `W trakcie` / `Zrewidowana`
+
+### Kontekst
+[Co nas skłoniło do podjęcia tej decyzji? Jaki problem rozwiązuje?]
+
+### Rozważane opcje
+
+| Opcja | Zalety | Wady |
+| :---- | :----- | :--- |
+| ✅ **[Wybrana opcja]** | [Zalety] | [Wady] |
+| [Opcja 2] | [Zalety] | [Wady] |
+| [Opcja 3] | [Zalety] | [Wady] |
+
+### Decyzja
+[Co zdecydowano i dlaczego — uzasadnienie, które przekona kogoś czytającego za 6 miesięcy]
+
+### Konsekwencje
+[Co ta decyzja uniemożliwia lub utrudnia? Jakie długi techniczne / projektowe zaciągamy?]
+
+---
+
+## DEC-002: [Tytuł]
+
+[...]
+
+---
+
+*Ostatnia aktualizacja: YYYY-MM-DD*</pre>
+      </div>
+    </section>
+
+    <section class="guide-section" id="t-handoff">
+      <div class="syntax-section-title" style="font-size:21px">🤝 Handoff Document</div>
+      <div class="syntax-section-desc">Przekazanie projektu do devsów — wszystko czego potrzebują bez dodatkowych pytań.</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">HANDOFF.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># 🤝 Handoff: [Nazwa funkcji / Ticket]
+
+**Data przekazania:** YYYY-MM-DD
+**Designer:** [Imię]
+**Dev Lead:** [Imię]
+**Figma:** [link do finalnego pliku]
+
+---
+
+## 🎯 Co i dlaczego
+
+[1–2 zdania — co budujemy i jaką potrzebę użytkownika to rozwiązuje]
+
+---
+
+## 🔗 Zasoby
+
+| Zasób | Link |
+| :---- | :--- |
+| Figma (final) | [link] |
+| Figma (flow overview) | [link] |
+| Prototyp interaktywny | [link] |
+| User stories | [link] |
+| Research (jeśli dotyczy) | [link] |
+
+---
+
+## 📱 Ekrany i stany
+
+### [Nazwa ekranu / widoku]
+
+| Stan | Opis | Figma frame |
+| :--- | :--- | :---------- |
+| Default | [Opis] | [link do frame] |
+| Loading | [Opis] | [link] |
+| Empty | [Opis] | [link] |
+| Error | [Opis] | [link] |
+| Success | [Opis] | [link] |
+
+---
+
+## 🧩 Komponenty
+
+| Komponent | Nowy / Istniejący | Zmiany | Figma |
+| :-------- | :---------------- | :----- | :---- |
+| [Nazwa] | Nowy | — | [link] |
+| [Nazwa] | Istniejący | [Co się zmieniło] | [link] |
+
+---
+
+## ♿ Dostępność
+
+- [ ] Kontrast kolorów: WCAG AA (4.5:1 dla tekstu)
+- [ ] Fokus klawiaturowy zdefiniowany dla wszystkich interaktywnych elementów
+- [ ] ARIA labels dla ikon i przycisków bez tekstu
+- [ ] Screen reader: kolejność odczytu zgodna z logiką ekranu
+
+---
+
+## ⚠️ Znane ograniczenia i edge cases
+
+- [Edge case 1 — jak powinien się zachować]
+- [Edge case 2]
+- [Co jest poza zakresem tego ticketu]
+
+---
+
+## ❓ Pytania i decyzje do podjęcia
+
+- [ ] [Pytanie — kto decyduje, do kiedy]
+
+---
+
+## 📜 Historia zmian
+
+| Data | Zmiana | Autor |
+| :--- | :----- | :---- |
+| YYYY-MM-DD | Pierwsza wersja | [Imię] |</pre>
+      </div>
+    </section>
+
+    <section class="guide-section" id="t-retro">
+      <div class="syntax-section-title" style="font-size:21px">🔄 Retrospektywa</div>
+      <div class="syntax-section-desc">Szablon retrospektywy sprintu lub projektu — zbiera wnioski zanim zespół przejdzie dalej.</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">RETRO.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># 🔄 Retrospektywa — [Sprint / Projekt / Data]
+
+**Data:** YYYY-MM-DD
+**Facylitator:** [Imię]
+**Uczestnicy:** [Lista]
+**Format:** [Start-Stop-Continue / 4Ls / Mad-Sad-Glad / inne]
+
+---
+
+## ✅ Co działało dobrze?
+
+- [Obserwacja 1]
+- [Obserwacja 2]
+
+## ❌ Co nie działało?
+
+- [Problem 1]
+- [Problem 2]
+
+## 💡 Co możemy poprawić?
+
+- [Pomysł 1]
+- [Pomysł 2]
+
+---
+
+## 🎯 Action items
+
+| Akcja | Właściciel | Termin | Status |
+| :---- | :--------- | :----- | :----- |
+| [Co robimy] | [Kto] | YYYY-MM-DD | `Do zrobienia` |
+
+---
+
+## 📊 Metryki sprintu (opcjonalne)
+
+| Metryka | Wartość | Cel | Ocena |
+| :------ | :------ | :-- | :---- |
+| Velocity | [SP] | [SP] | ✅ / ❌ |
+| Bug rate | [N] | [N] | ✅ / ❌ |
+
+---
+
+*Poprzednie retro action items: [link]*</pre>
+      </div>
+    </section>
+
+    <section class="guide-section" id="t-postmortem">
+      <div class="syntax-section-title" style="font-size:21px">🩹 Postmortem</div>
+      <div class="syntax-section-desc">Blameless postmortem — analiza incydentu skupiona na systemach, nie ludziach.</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">POSTMORTEM.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># 🩹 Postmortem: [Tytuł incydentu]
+
+**Data incydentu:** YYYY-MM-DD HH:MM
+**Severity:** `P0` / `P1` / `P2`
+**Czas do wykrycia:** [X minut/godzin]
+**Czas do rozwiązania:** [X minut/godzin]
+**Wpływ:** [Ilu użytkowników / Jaki % ruchu / Jakie funkcje]
+
+> ⚠️ Ten dokument stosuje podejście **blameless** — analizujemy systemy i procesy, nie wskazujemy winnych.
+
+---
+
+## 📋 Podsumowanie
+
+[2–3 zdania — co się stało, jaki był wpływ, jak zostało rozwiązane]
+
+---
+
+## ⏱️ Timeline
+
+| Czas | Zdarzenie |
+| :--- | :-------- |
+| HH:MM | [Co się wydarzyło] |
+| HH:MM | [Kto wykrył problem i jak] |
+| HH:MM | [Pierwsze działania] |
+| HH:MM | [Przełom / decyzja] |
+| HH:MM | [Rozwiązanie wdrożone] |
+| HH:MM | [Potwierdzenie normalizacji] |
+
+---
+
+## 🔍 Przyczyna główna (Root Cause)
+
+[Jedna rzecz, która gdyby była inna — incydent by nie wystąpił]
+
+### Czynniki przyczyniające się
+
+- [Czynnik 1 — np. brak monitoringu dla X]
+- [Czynnik 2 — np. nieaktualna dokumentacja procesu Y]
+- [Czynnik 3]
+
+---
+
+## ✅ Co zadziałało
+
+- [np. Alerty wykryły problem w ciągu 5 minut]
+- [np. Rollback był możliwy bez przerwy serwisu]
+
+---
+
+## 🎯 Action items
+
+| # | Akcja | Typ | Właściciel | Termin |
+|---|-------|-----|-----------|--------|
+| 1 | [Co robimy] | Zapobiegawcze | [Kto] | YYYY-MM-DD |
+| 2 | [Co robimy] | Detekcja | [Kto] | YYYY-MM-DD |
+| 3 | [Co robimy] | Proces | [Kto] | YYYY-MM-DD |
+
+---
+
+## 📚 Wnioski systemowe
+
+[Co ta analiza mówi nam o naszych procesach, narzędziach lub kulturze?]
+
+---
+
+*Autorzy: [Lista] · Przejrzane przez: [Lista] · Status: `Draft` / `Final`*</pre>
+      </div>
+    </section>
+
+    <section class="guide-section" id="t-okr">
+      <div class="syntax-section-title" style="font-size:21px">🎯 OKR / Cele kwartalne</div>
+      <div class="syntax-section-desc">Szablon celów kwartalnych w formacie OKR (Objectives and Key Results).</div>
+      <div class="syntax-block src">
+        <div class="syntax-block-label">OKR.md <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj cały plik</button></div>
+        <pre># 🎯 OKR — [Zespół / Produkt] — Q[N] YYYY
+
+**Właściciel:** [Imię / Rola]
+**Review:** [Data mid-quarter check-in]
+**Ocena końcowa:** [Data]
+
+---
+
+## Objective 1: [Ambitne, jakościowe sformułowanie celu]
+
+*Dlaczego to jest ważne: [1 zdanie uzasadnienia]*
+
+| Key Result | Cel | Aktualnie | Status |
+| :--------- | :-- | :-------- | :----- |
+| KR1.1: [Mierzalny rezultat] | [Liczba/%] | [Aktualnie] | 🟡 |
+| KR1.2: [Mierzalny rezultat] | [Liczba/%] | [Aktualnie] | 🔴 |
+| KR1.3: [Mierzalny rezultat] | [Liczba/%] | [Aktualnie] | 🟢 |
+
+**Inicjatywy:** [Co robimy, żeby osiągnąć te rezultaty]
+
+---
+
+## Objective 2: [Cel]
+
+| Key Result | Cel | Aktualnie | Status |
+| :--------- | :-- | :-------- | :----- |
+| KR2.1: | | | |
+| KR2.2: | | | |
+
+---
+
+## 📊 Podsumowanie kwartału
+
+| Objective | Ocena (0–1.0) | Komentarz |
+| :-------- | :------------ | :-------- |
+| O1 | 0.7 | [Co poszło dobrze, co nie] |
+| O2 | | |
+
+**Średnia:** [X.X] / 1.0
+
+> 💡 OKR na poziomie 0.6–0.7 są uważane za sukces — jeśli osiągasz 1.0, cele były za łatwe.
+
+---
+
+*Legenda statusu: 🟢 On track · 🟡 At risk · 🔴 Off track · ⚪ Nie startowało*</pre>
+      </div>
+    </section>
+
+  </div><!-- /tpl-content -->
+</div><!-- /tpl-layout -->
+</div><!-- /tab-templates -->
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 6 — KONTEKSTY SYSTEMOWE
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-contexts">
+<div class="guide-content" style="padding:36px 52px 80px;max-width:860px">
+
+  <div style="margin-bottom:32px">
+    <div class="syntax-section-title" style="font-size:24px;margin-bottom:8px">🧠 Konteksty systemowe</div>
+    <div class="syntax-section-desc" style="border:none;padding:0">Gotowe system prompty do wklejenia w Claude Projects, Custom Instructions lub inny mechanizm konfiguracji AI. Każdy kontekst nadaje modelowi konkretną "osobowość" i zakres odpowiedzialności — zamiast ogólnego asystenta dostajesz wyspecjalizowanego partnera do konkretnej roli.</div>
+  </div>
+
+  <div class="syntax-note" style="margin-bottom:32px">
+    <strong>Jak używać:</strong> Skopiuj system prompt i wklej go w: Claude → Projects → Project Instructions · ChatGPT → Customize ChatGPT → Custom Instructions · GitHub Copilot Chat → nie obsługuje, użyj jako pierwszej wiadomości
+  </div>
+
+  <div class="ctx-grid">
+
+    <div class="ctx-card">
+      <div class="ctx-card-header">
+        <div class="ctx-emoji">🎨</div>
+        <div>
+          <div class="ctx-name">Senior Product Designer</div>
+          <div class="ctx-desc">Krytyczny partner projektowy — zadaje trudne pytania, nie daje łatwych odpowiedzi</div>
+        </div>
+      </div>
+      <div class="syntax-block src" style="margin:0">
+        <div class="syntax-block-label">System prompt <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj</button></div>
+        <pre>Jesteś doświadczonym Senior Product Designerem z 10+ latami praktyki w produktach cyfrowych. Twoja rola to bycie wymagającym, konstruktywnym partnerem — nie asystentem, który potakuje.
+
+Kiedy oceniasz pomysły lub projekty:
+- Zawsze pytaj "skąd wiesz, że użytkownik tego potrzebuje?"
+- Wskazuj niespójności i luki w logice
+- Szukaj nierozwiązanych edge cases
+- Kwestionuj założenia, które nie są oparte na danych
+- Proponuj alternatywy, zanim dasz ostateczną ocenę
+
+Gdy piszesz lub pomagasz pisać dokumenty:
+- Używaj precyzyjnego języka product designu
+- Odróżniaj "co" od "dlaczego" i "jak"
+- Pytaj o grupę docelową zanim zaproponujesz rozwiązanie
+
+Nie mów "świetny pomysł" jeśli masz wątpliwości. Mów co widzisz, czego brakuje i co zrobiłbyś inaczej. Twoja wartość to uczciwa, oparta na doświadczeniu perspektywa — nie komplementy.</pre>
+      </div>
+    </div>
+
+    <div class="ctx-card">
+      <div class="ctx-card-header">
+        <div class="ctx-emoji">🔬</div>
+        <div>
+          <div class="ctx-name">User Researcher</div>
+          <div class="ctx-desc">Szuka dziur w założeniach i pyta o dowody empiryczne</div>
+        </div>
+      </div>
+      <div class="syntax-block src" style="margin:0">
+        <div class="syntax-block-label">System prompt <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj</button></div>
+        <pre>Jesteś doświadczonym User Researcherem z silnym zapleczem metodologicznym (IDI, testy użyteczności, badania ankietowe, desk research, analiza danych behawioralnych).
+
+Twoja główna rola to ochrona przed błędami myślenia opartego na założeniach zamiast danych. Konkretnie:
+
+- Gdy słyszysz "użytkownicy chcą X" — pytasz "skąd to wiesz? Ile osób? W jakim kontekście?"
+- Gdy widzisz personę — sprawdzasz czy jest oparta na danych czy wymyślona
+- Gdy ktoś proponuje rozwiązanie — cofasz do problemu i pytasz czy problem jest zwalidowany
+- Gdy ktoś pyta "co myślisz o tym designie?" — przypominasz, że Twoja opinia liczy się mniej niż opinia użytkownika
+
+Pomagasz projektować badania: dobierać metody, formułować pytania (unikając leading questions), interpretować wyniki bez nadinterpretacji.
+
+Nie spekulujesz o zachowaniu użytkowników — odróżniasz to co wiesz od tego co zakładamy.</pre>
+      </div>
+    </div>
+
+    <div class="ctx-card">
+      <div class="ctx-card-header">
+        <div class="ctx-emoji">⚙️</div>
+        <div>
+          <div class="ctx-name">Tech Lead / Dev Advocate</div>
+          <div class="ctx-desc">Ocenia wykonalność, wskazuje dług techniczny i ryzyko implementacji</div>
+        </div>
+      </div>
+      <div class="syntax-block src" style="margin:0">
+        <div class="syntax-block-label">System prompt <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj</button></div>
+        <pre>Jesteś Tech Leadem z doświadczeniem w budowaniu produktów webowych i mobilnych. Twoja rola to bycie głosem realizmu technicznego w procesie projektowym.
+
+Gdy oceniasz design lub wymagania:
+- Szacujesz złożoność implementacji (trivial / medium / hard / very hard)
+- Wskazujesz co będzie działać inaczej na mobilnym vs desktop
+- Identyfikujesz miejsca gdzie design ignoruje ograniczenia techniczne
+- Pytasz o skalowalność — "co jeśli to ma obsłużyć 10x więcej danych?"
+- Sygnalizujesz gdzie decyzja projektowa tworzy dług techniczny
+
+Używasz języka dostępnego dla designerów — unikasz żargonu bez wyjaśnienia. Gdy coś jest technicznie trudne, proponujesz alternatywę o podobnym efekcie UX ale prostszej implementacji.
+
+Nie mówisz "nie da się" — mówisz "to zajmie X tygodni i ma następujące konsekwencje".</pre>
+      </div>
+    </div>
+
+    <div class="ctx-card">
+      <div class="ctx-card-header">
+        <div class="ctx-emoji">💼</div>
+        <div>
+          <div class="ctx-name">Stakeholder / C-level</div>
+          <div class="ctx-desc">Patrzy przez pryzmat biznesu, ROI i ryzyka reputacyjnego</div>
+        </div>
+      </div>
+      <div class="syntax-block src" style="margin:0">
+        <div class="syntax-block-label">System prompt <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj</button></div>
+        <pre>Jesteś doświadczonym decydentem biznesowym (CPO, CEO lub VP Product) z perspektywą zorientowaną na wyniki biznesowe, a nie detale UX.
+
+Gdy oceniasz propozycje projektowe:
+- Pytasz "jaki to ma wpływ na przychód, retencję lub koszty?"
+- Kwestionujesz priorytetyzację — "dlaczego TO, a nie X?"
+- Zwracasz uwagę na ryzyko reputacyjne i prawne
+- Myślisz o konkurencji i oknie czasowym — "czy zdążymy zanim zrobi to ktoś inny?"
+- Pytasz o metryki sukcesu — "skąd będziemy wiedzieć że to zadziałało?"
+
+Nie interesujesz się detalami wizualnymi — interesuje Cię czy rozwiązanie rozwiązuje właściwy problem dla właściwego segmentu w rozsądnym czasie i budżecie.
+
+Mów wprost. Jeśli coś nie ma sensu biznesowego — powiedz to.</pre>
+      </div>
+    </div>
+
+    <div class="ctx-card">
+      <div class="ctx-card-header">
+        <div class="ctx-emoji">♿</div>
+        <div>
+          <div class="ctx-name">Accessibility Specialist</div>
+          <div class="ctx-desc">Audytuje dostępność i reprezentuje użytkowników z niepełnosprawnościami</div>
+        </div>
+      </div>
+      <div class="syntax-block src" style="margin:0">
+        <div class="syntax-block-label">System prompt <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj</button></div>
+        <pre>Jesteś specjalistą ds. dostępności cyfrowej (WCAG 2.1/2.2, ARIA, dostępność mobilna). Reprezentujesz perspektywę użytkowników z różnymi niepełnosprawnościami: wzrokowymi, słuchowymi, motorycznymi i poznawczymi.
+
+Gdy oceniasz design lub wymagania:
+- Sprawdzasz każdy element pod kątem standardów WCAG (poziom AA minimum)
+- Myślisz o nawigacji klawiaturą i fokusie
+- Weryfikujesz kontrast kolorów (4.5:1 dla tekstu normalnego, 3:1 dla dużego)
+- Pytasz o alternatywy tekstowe dla elementów wizualnych
+- Wskazujesz problemy z kolejnością czytania przez screen reader
+- Sprawdzasz czy formularze mają właściwe etykiety i obsługę błędów
+
+Nie traktujesz dostępności jako "nice to have" — to wymóg prawny w wielu jurysdykcjach i kwestia inkluzji. Podajesz konkretne referencje do standardów WCAG gdy wskazujesz problemy.</pre>
+      </div>
+    </div>
+
+    <div class="ctx-card">
+      <div class="ctx-card-header">
+        <div class="ctx-emoji">✍️</div>
+        <div>
+          <div class="ctx-name">UX Writer / Content Strategist</div>
+          <div class="ctx-desc">Ocenia klarowność języka i spójność głosu marki</div>
+        </div>
+      </div>
+      <div class="syntax-block src" style="margin:0">
+        <div class="syntax-block-label">System prompt <button class="copy-src-btn" onclick="copyBlock(this)">kopiuj</button></div>
+        <pre>Jesteś UX Writerem i Content Strategist z doświadczeniem w produktach cyfrowych. Twoja rola to dbanie o to, żeby słowa w interfejsie były jasne, spójne i zgodne z głosem marki.
+
+Gdy oceniasz treści UI:
+- Sprawdzasz czy etykiety, nagłówki i komunikaty są jednoznaczne
+- Identyfikujesz żargon techniczny który użytkownik może nie rozumieć
+- Szukasz niespójności w terminologii (ten sam concept, różne nazwy)
+- Oceniasz czy komunikaty błędów mówią co zrobić, nie tylko że coś się nie udało
+- Sprawdzasz czy microcopy prowadzi użytkownika, a nie tylko go informuje
+
+Gdy piszesz treści:
+- Priorytet: klarowność > zwięzłość > elegancja (w tej kolejności)
+- Piszesz w 2. osobie (Ty, Twój) chyba że kontekst wymaga inaczej
+- Unikasz strony biernej i nominalizacji
+- Zawsze proponujesz 2–3 warianty żeby dać wybór</pre>
+      </div>
+    </div>
+
+  </div><!-- /ctx-grid -->
+</div>
+</div><!-- /tab-contexts -->
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 7 — KIEDY NIE AI
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-limits">
+<div class="guide-content" style="padding:36px 52px 80px;max-width:800px">
+
+  <div style="margin-bottom:32px">
+    <div class="syntax-section-title" style="font-size:24px;margin-bottom:8px">⚠️ Kiedy nie używać AI</div>
+    <div class="syntax-section-desc" style="border:none;padding:0">Szczera lista sytuacji, w których AI szkodzi zamiast pomagać. Nie dlatego że AI jest złe — ale dlatego że każde narzędzie ma swój zakres zastosowania.</div>
+  </div>
+
+  <div class="limits-grid">
+
+    <div class="limit-card limit-hard">
+      <div class="limit-icon">🚫</div>
+      <div class="limit-title">Nigdy nie zastąpisz rozmowy z użytkownikiem</div>
+      <div class="limit-body">AI może symulować użytkownika, ale nie zastąpi prawdziwej obserwacji. Modele językowe odpowiadają jak "przeciętny człowiek z internetu" — nie jak Twój konkretny użytkownik z jego kontekstem, emocjami i otoczeniem. Syntetyczny research to brak researchu z etykietą researchu.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> AI może przygotować pytania i analizować notatki. Rozmowę przeprowadza człowiek.</div>
+    </div>
+
+    <div class="limit-card limit-hard">
+      <div class="limit-icon">🚫</div>
+      <div class="limit-title">Decyzje z konsekwencjami prawnymi lub etycznymi</div>
+      <div class="limit-body">AI nie zna aktualnego prawa Twojej jurysdykcji, nie ma dostępu do najnowszych regulacji i nie ponosi odpowiedzialności za błąd. RODO, dyrektywy dostępności, prawo pracy, umowy — to wymaga prawnika, nie modelu językowego.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> AI może pomóc sformułować pytanie do prawnika. Odpowiedź prawna pochodzi od prawnika.</div>
+    </div>
+
+    <div class="limit-card limit-warn">
+      <div class="limit-icon">⚠️</div>
+      <div class="limit-title">Fakty o konkretnych danych Twojej firmy</div>
+      <div class="limit-body">Model nie zna Twojego NPS, retention rate, churn, wyników testów A/B ani road mapy. Gdy pytasz o "typowe" metryki branżowe — dostajesz uśrednione dane z internetu, które mogą nie mieć związku z Twoim kontekstem.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> Dostarczaj dane z systemu. Nie pytaj AI o dane — pytaj o interpretację danych które sam podajesz.</div>
+    </div>
+
+    <div class="limit-card limit-warn">
+      <div class="limit-icon">⚠️</div>
+      <div class="limit-title">Walidacja pomysłów przez "AI jako użytkownik"</div>
+      <div class="limit-body">Pytanie AI "czy użytkownicy polubią tę funkcję?" daje fałszywe poczucie walidacji. AI odpowiada na podstawie tego co jest popularne w tekstach z internetu, nie na podstawie Twojego segmentu. To confirmation bias w skali.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> AI może wskazać potencjalne problemy z pomysłem. Nie może potwierdzić że pomysł zadziała.</div>
+    </div>
+
+    <div class="limit-card limit-warn">
+      <div class="limit-icon">⚠️</div>
+      <div class="limit-title">Ocena jakości własnego designu bez kontekstu</div>
+      <div class="limit-body">AI oceni design na podstawie ogólnych zasad UX z internetu. Nie zna: celów biznesowych, grupy docelowej, ograniczeń technicznych, historii produktu ani poprzednich decyzji. Taka ocena jest tak dobra jak opinia przypadkowej osoby bez briefu.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> Podawaj maksymalny kontekst. Im mniej kontekstu — tym mniej warta ocena.</div>
+    </div>
+
+    <div class="limit-card limit-caution">
+      <div class="limit-icon">💡</div>
+      <div class="limit-title">Gdy AI odpowiada pewnie, a Ty tego nie weryfikujesz</div>
+      <div class="limit-body">Modele językowe są zaprojektowane żeby brzmieć pewnie — nawet gdy się mylą. Halucynacje dotyczące statystyk, nazw firm, dat, cytatów i specyfiki narzędzi są powszechne i nie są poprzedzone ostrzeżeniem. Pewność tonu ≠ poprawność faktu.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> Każdy konkretny fakt, statystykę lub cytat z odpowiedzi AI weryfikuj w źródle pierwotnym.</div>
+    </div>
+
+    <div class="limit-card limit-caution">
+      <div class="limit-icon">💡</div>
+      <div class="limit-title">Kreatywność jako substytut rozumienia problemu</div>
+      <div class="limit-body">Generowanie 20 pomysłów w 30 sekund jest kuszące, ale pomysły bez głębokiego rozumienia problemu są bezwartościowe. AI może wyprodukować dużo słów — ale nie zastąpi czasu spędzonego na rozumieniu dlaczego coś jest problemem.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> Używaj AI do ideacji po — nie zamiast — etapu rozumienia problemu.</div>
+    </div>
+
+    <div class="limit-card limit-caution">
+      <div class="limit-icon">💡</div>
+      <div class="limit-title">Automatyzacja decyzji które powinny być ludzkie</div>
+      <div class="limit-body">Priorytetyzacja, wybór kierunku produktu, decyzje o tym kogo słuchać i kogo nie — to wymaga ludzkiej odpowiedzialności i kontekstu organizacyjnego. AI może pomóc ustrukturyzować myślenie, ale nie może (i nie powinno) decydować za Ciebie.</div>
+      <div class="limit-rule"><strong>Zasada:</strong> AI dostarcza perspektyw i struktury. Decyzja i odpowiedzialność pozostaje po stronie człowieka.</div>
+    </div>
+
+  </div><!-- /limits-grid -->
+
+  <div class="syntax-tip" style="margin-top:32px">
+    <strong>Dobry test:</strong> Przed użyciem AI zapytaj siebie — "czy dostarczam wystarczający kontekst żeby AI mogło dać mi użyteczną odpowiedź, czy oczekuję że AI zastąpi moje myślenie?" Pierwsze jest narzędziem. Drugie jest ryzykiem.
+  </div>
+
+</div>
+</div><!-- /tab-limits -->
 
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -1342,6 +3038,23 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.add('active');
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
   });
+});
+
+// ═══════════════════════════════════════════════════════════
+// START PAGE — card navigation
+// ═══════════════════════════════════════════════════════════
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector('[data-tab="' + tabId + '"]');
+  if (btn) btn.classList.add('active');
+  const panel = document.getElementById('tab-' + tabId);
+  if (panel) panel.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+document.querySelectorAll('.start-card[data-goto]').forEach(card => {
+  card.addEventListener('click', () => switchTab(card.dataset.goto));
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1613,6 +3326,7 @@ function applyFilters() {
   if(onlyPopular)        f=f.filter(i=>i.popular);
   if(currentSearch)      f=f.filter(i=>
     i.name.toLowerCase().includes(currentSearch)||
+    (i.en && i.en.toLowerCase().includes(currentSearch))||
     i.desc.toLowerCase().includes(currentSearch)||
     i.roles.some(r=>r.toLowerCase().includes(currentSearch))||
     i.emoji.includes(currentSearch)
@@ -1636,6 +3350,390 @@ document.getElementById('popCheckbox').addEventListener('change', function() {
 searchInput.addEventListener('input',e=>{currentSearch=e.target.value.toLowerCase();applyFilters();});
 
 applyFilters();
+
+// ═══════════════════════════════════════════════════════════
+// PROCESS NAV (AI w procesie)
+// ═══════════════════════════════════════════════════════════
+const processContent = document.getElementById('processContent');
+if (processContent) {
+  const pNavItems = document.querySelectorAll('.guide-nav-item[data-psec]');
+  processContent.addEventListener('scroll', () => {
+    const secs = processContent.querySelectorAll('.guide-section');
+    let cur = '';
+    secs.forEach(s => { if (processContent.scrollTop >= s.offsetTop - 60) cur = s.id; });
+    pNavItems.forEach(i => i.classList.toggle('active', i.dataset.psec === cur));
+  });
+  pNavItems.forEach(item => {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      const t = processContent.querySelector('#' + item.dataset.psec);
+      if (t) t.scrollIntoView({ behavior:'smooth' });
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// TEMPLATE NAV
+// ═══════════════════════════════════════════════════════════
+const tplContent = document.getElementById('tplContent');
+if (tplContent) {
+  const tNavItems = document.querySelectorAll('.guide-nav-item[data-tsec]');
+  tplContent.addEventListener('scroll', () => {
+    const secs = tplContent.querySelectorAll('.guide-section');
+    let cur = '';
+    secs.forEach(s => { if (tplContent.scrollTop >= s.offsetTop - 60) cur = s.id; });
+    tNavItems.forEach(i => i.classList.toggle('active', i.dataset.tsec === cur));
+  });
+  tNavItems.forEach(item => {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      const t = tplContent.querySelector('#' + item.dataset.tsec);
+      if (t) t.scrollIntoView({ behavior:'smooth' });
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// COPY HELPERS
+// ═══════════════════════════════════════════════════════════
+function copyPrompt(btn) {
+  const body = btn.closest('.prompt-card').querySelector('.prompt-body');
+  navigator.clipboard.writeText(body.textContent.trim()).catch(()=>{});
+  const orig = btn.textContent;
+  btn.textContent = 'skopiowano!';
+  setTimeout(() => btn.textContent = orig, 1800);
+}
+
+function copyBlock(btn) {
+  const pre = btn.closest('.syntax-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent.trim()).catch(()=>{});
+  const orig = btn.textContent;
+  btn.textContent = 'skopiowano!';
+  setTimeout(() => btn.textContent = orig, 1800);
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROMPTBOOK
+// ═══════════════════════════════════════════════════════════
+const prompts = [
+  { cat:'brief', title:'Analiza briefu projektowego', desc:'Rozbija brief na fakty, założenia, ryzyka i pytania badawcze.', tags:['brief','discovery'], body:`Przeanalizuj poniższy brief projektowy. Zidentyfikuj:
+1. Główny problem biznesowy (1-2 zdania)
+2. Założenia - które są faktem vs. które wymagają weryfikacji
+3. Grupę docelową - co wiemy, czego nie wiemy
+4. Ryzyka i obszary niejasności
+5. Pytania, które zadałby doświadczony badacz UX przed startem projektu
+
+Brief: [WKLEJ BRIEF]` },
+
+  { cat:'brief', title:'Scope projektu (In / Out / Open)', desc:'Tworzy strukturę zakresu projektu z otwartymi decyzjami.', tags:['brief','scope'], body:`Pomóż mi sformułować zakres projektu. Na podstawie opisu stwórz trzy listy:
+- In scope: co robimy w tym projekcie
+- Out of scope: co świadomie pomijamy i dlaczego
+- Otwarte decyzje: rzeczy wymagające ustalenia z klientem
+
+Opis projektu: [OPIS]` },
+
+  { cat:'brief', title:'Mapa założeń (tabela Markdown)', desc:'Kategoryzuje założenia według pewności i sposobu weryfikacji.', tags:['brief','assumptions'], body:`Na podstawie notatek ze spotkania kickoff stwórz mapę założeń w tabeli Markdown.
+Kolumny: Założenie | Kategoria (biznesowe / użytkownik / techniczne) | Pewność (wysoka / średnia / niska) | Sposób weryfikacji.
+
+Notatki: [WKLEJ NOTATKI]` },
+
+  { cat:'research', title:'Scenariusz wywiadu IDI', desc:'Pełny scenariusz wywiadu z rozgrzewką, pytaniami głównymi i zamknięciem.', tags:['research','interview'], body:`Stwórz scenariusz wywiadu pogłębionego (IDI). Cel: [CEL]. Grupa: [OPIS GRUPY].
+
+Uwzględnij:
+- Rozgrzewkę (3-4 pytania otwierające)
+- Sekcję główną (8-10 pytań, bez pytań sugestywnych)
+- Pytania o obejścia (workarounds) i frustracje
+- Zamknięcie
+Każde pytanie opatrz wskazówką dla moderatora w nawiasie.` },
+
+  { cat:'research', title:'Synteza wywiadów', desc:'Identyfikuje tematy, cytaty i insighty z transkrypcji.', tags:['research','synthesis'], body:`Poniżej masz transkrypcje [N] wywiadów z użytkownikami. Przeprowadź syntezę:
+1. Powtarzające się tematy (minimum 3 wystąpienia)
+2. Kluczowe cytaty ilustrujące każdy temat
+3. Napięcia i sprzeczności między respondentami
+4. 3-5 insightów w formacie: "Użytkownicy [zachowanie], ponieważ [przyczyna], co oznacza, że [implikacja dla designu]"
+
+Transkrypcje: [WKLEJ TRANSKRYPCJE]` },
+
+  { cat:'research', title:'Persona na podstawie danych', desc:'Tworzy personę opartą na insightach bez stereotypów.', tags:['research','persona'], body:`Na podstawie insightów badawczych stwórz [N] person w formacie Markdown.
+Każda persona: imię i wiek, kontekst życiowy, główny cel w relacji z produktem, frustracje, obejścia których używa dziś, cytat charakteryzujący sposób myślenia, poziom cyfrowej dojrzałości.
+
+Unikaj stereotypów. Oprzyj każdy element na konkretnych danych.
+
+Insighty: [WKLEJ INSIGHTY]` },
+
+  { cat:'research', title:'Analiza feedbacku użytkowników', desc:'Kategoryzuje opinie, wyciąga top skargi i prośby o funkcje.', tags:['research','feedback'], body:`Przeanalizuj zbiór opinii użytkowników (recenzje, support, komentarze):
+1. Kategoryzacja (UX / wydajność / funkcje / błędy / inne)
+2. Sentyment per kategoria
+3. Top 5 najczęstszych skarg
+4. Top 5 najczęstszych próśb o funkcje
+5. Cytaty ilustrujące każdą kategorię
+6. Rekomendacje priorytetów dla następnej iteracji
+
+Feedback: [FEEDBACK]` },
+
+  { cat:'research', title:'Benchmarking funkcjonalny (cross-branżowy)', desc:'Analizuje jak dana funkcjonalność jest rozwiązana w różnych branżach — klucz to mechanizm, nie sektor.', tags:['research','benchmarking','competitive'], body:`Przeprowadź benchmarking funkcjonalny dla poniższej funkcjonalności.
+
+Funkcjonalność: [OPISZ MECHANIZM — np. "formularz rezerwacji terminu", "onboarding nowego użytkownika", "wyszukiwarka z filtrowaniem", "koszyk zakupowy", "powiadomienia o statusie"]
+
+## Zasada analizy
+Szukaj SZEROKO — nie analizuj tylko bezpośredniej konkurencji ani jednej branży. Klucz to mechanizm, nie kontekst biznesowy. Ten sam problem (np. "umów wizytę") jest rozwiązywany w dziesiątkach różnych branż.
+
+## Branże i konteksty do przeszukania
+
+Zaproponuj i przeanalizuj min. 8 różnych kontekstów z różnych branż, np.:
+
+**Sektor usług osobistych**
+- Barber / salon fryzjerski (Booksy, Fresha)
+- Spa i masaże (Mindbody, Vagaro)
+- Fotograf, trener personalny
+
+**Sektor zdrowia**
+- Przychodnia / lekarz (Docplanner, Zocdoc)
+- Dentysta, fizjoterapeuta
+- Weterynarz
+
+**Sektor finansowy**
+- Bank (spotkanie z doradcą)
+- Ubezpieczenia, notariusz
+
+**Transport i mobilność**
+- Test drive w salonie samochodowym
+- Serwis samochodowy (myjnia, mechanik)
+- Wypożyczalnia sprzętu
+
+**Edukacja i coaching**
+- Korepetycje (Superprof)
+- Szkolenia korporacyjne
+- Konsultacje z coachem / mentorem
+
+**Gastronomia i rozrywka**
+- Rezerwacja stolika (OpenTable, TheFork)
+- Escape room, kino, wycieczka z przewodnikiem
+
+**Sektor publiczny**
+- Urząd (e-rząd, Obywatel)
+- Konsulat, ambasada
+- Biblioteka publiczna
+
+**B2B / enterprise**
+- Demo produktu SaaS
+- Konsultacja prawna, podatkowa
+- Spotkanie z rekruterem
+
+---
+
+## Format analizy dla każdego przypadku
+
+Dla każdego przeanalizowanego kontekstu opisz:
+
+1. **Produkt / usługa** — nazwa, URL jeśli znany
+2. **Mechanizm wejścia** — jak użytkownik inicjuje rezerwację (CTA, flow, punkt wejścia)
+3. **Kroki procesu** — liczba kroków, co jest wymagane na każdym etapie
+4. **Dane zbierane** — jakich informacji wymaga system i dlaczego
+5. **Obsługa konfliktów** — co się dzieje przy braku dostępności, podwójnej rezerwacji, anulowaniu
+6. **Potwierdzenie i przypomnienia** — jak system komunikuje status
+7. **Wyróżnik UX** — co robią lepiej lub inaczej niż standard
+8. **Słabość** — co jest problematyczne lub nieoczywiste
+
+---
+
+## Synteza
+
+Po przeanalizowaniu wszystkich przypadków:
+
+**Wspólne wzorce** — co pojawia się wszędzie (konwencje, których użytkownicy oczekują)
+**Nieoczywiste rozwiązania** — rozwiązania z jednej branży, które mogłyby przenieść się do [TWÓJ KONTEKST]
+**Luki** — czego żaden z przebadanych produktów nie robi dobrze
+**Rekomendacje** — top 3 insighty do zastosowania w projektowanym rozwiązaniu
+
+---
+
+Twój kontekst projektowy: [OPISZ PRODUKT I UŻYTKOWNIKA]` },
+
+  { cat:'requirements', title:'Weryfikacja wymagań', desc:'Wskazuje sprzeczności, niejasności i brakujące wymagania.', tags:['requirements','quality'], body:`Przeanalizuj listę wymagań projektowych. Wskaż:
+1. Wymagania wzajemnie sprzeczne
+2. Wymagania niejasne lub niemierzalne
+3. Wymagania, które brzmią jak rozwiązanie, nie jak problem
+4. Brakujące wymagania typowe dla tego typu produktu
+5. Przeformułowanie każdego problematycznego punktu
+
+Wymagania: [WYMAGANIA]` },
+
+  { cat:'requirements', title:'Acceptance criteria (Given-When-Then)', desc:'Pisze AC z happy path, alternatywami i scenariuszami błędów.', tags:['requirements','AC'], body:`Na podstawie user story napisz acceptance criteria w formacie Given-When-Then:
+- Scenariusz główny (happy path)
+- Minimum 3 scenariusze alternatywne
+- Scenariusze błędów
+- Wymagania dotyczące wydajności jeśli istotne
+- Wymagania dostępności
+
+User story: [USER STORY]` },
+
+  { cat:'requirements', title:'Edge cases dla user flow', desc:'Analizuje flow pod kątem scenariuszy brzegowych.', tags:['requirements','edge cases'], body:`Przeanalizuj user flow pod kątem edge cases. Dla każdego punktu decyzyjnego wskaż co się stanie gdy:
+- Użytkownik ma złe lub brakujące dane
+- Połączenie internetowe jest wolne lub zrywa się
+- Użytkownik wraca do poprzedniego kroku
+- Sesja wygasa w środku procesu
+- Dane zmieniają się w trakcie wypełniania formularza
+
+Flow: [OPIS FLOW]` },
+
+  { cat:'requirements', title:'Priorytetyzacja backlogu', desc:'Ocenia zadania i tworzy priorytetowaną tabelę MoSCoW.', tags:['requirements','backlog'], body:`Pomóż mi priorytetyzować backlog. Dla każdego elementu stwórz tabelę Markdown:
+Zadanie | Impact użytkownika (1-5) | Wysiłek (1-5) | Zgodność ze strategią (1-5) | Score | Priorytet (Must/Should/Could/Wont)
+
+Dodaj komentarz do top 3 i bottom 3 pozycji.
+
+Backlog: [LISTA ZADAŃ]
+Strategia: [KONTEKST]` },
+
+  { cat:'copy', title:'Treści UX (3 warianty)', desc:'Pisze nagłówki, CTA, błędy i empty states w trzech długościach.', tags:['copy','microcopy'], body:`Napisz treści UX dla poniższych elementów. Ton: [TON].
+Dla każdego elementu podaj 3 warianty (krótki / standardowy / rozbudowany):
+- Nagłówek strony
+- Opis / podnagłówek
+- Etykiety przycisków CTA
+- Komunikaty błędów (walidacja formularza)
+- Empty state (gdy brak danych)
+- Komunikat sukcesu
+
+Kontekst: [KONTEKST PRODUKTU]` },
+
+  { cat:'copy', title:'Komunikaty błędów', desc:'Pisze pomocne komunikaty - nie tylko co się stało, ale co zrobić.', tags:['copy','errors'], body:`Napisz komunikaty błędów dla poniższych scenariuszy. Każdy komunikat powinien:
+- Wyjaśnić co się stało (bez technicznego żargonu)
+- Zaproponować rozwiązanie lub następny krok
+- Być napisany w tonie produktu: [TON]
+- Mieć maksymalnie 2 zdania
+
+Scenariusze błędów: [LISTA SCENARIUSZY]` },
+
+  { cat:'copy', title:'Release notes dla użytkownika', desc:'Tłumaczy techniczne zmiany na język korzyści dla użytkownika.', tags:['copy','release'], body:`Napisz release notes dla wersji [NUMER] produktu [NAZWA]. Ton: [TON].
+
+Na podstawie listy zmian technicznych napisz release notes dla użytkownika końcowego.
+Pogrupuj: Nowości / Ulepszenia / Naprawione błędy.
+Dla każdej zmiany: co się zmieniło, co zyskuje użytkownik, czy wymaga działania z jego strony.
+
+Zmiany: [LISTA COMMITÓW LUB CHANGELOG]` },
+
+  { cat:'feedback', title:'Analiza notatek z testów użyteczności', desc:'Priorytetuje problemy według severity i tworzy listę rekomendacji.', tags:['feedback','usability'], body:`Masz surowe notatki z [N] sesji testów użyteczności. Przeprowadź analizę:
+1. Problemy użyteczności pogrupowane według częstości
+2. Severity każdego problemu (krytyczny / poważny / kosmetyczny)
+3. Powtarzające się cytaty i momenty zaskoczenia
+4. Oddziel problemy prototypu od problemów finalnego produktu
+5. Priorytetowana lista rekomendacji projektowych
+
+Notatki: [NOTATKI]` },
+
+  { cat:'communication', title:'Podsumowanie dla stakeholdera', desc:'Przekłada wyniki researchu lub designu na język biznesowy.', tags:['communication','stakeholder'], body:`Przekształć wyniki [researchu / analizy / testów] w podsumowanie dla stakeholdera biznesowego.
+
+Zasady:
+- Zacznij od wniosku, nie od metodologii
+- Każdy insight powiąż z implikacją biznesową
+- Unikaj żargonu UX
+- Zakończ rekomendacją i propozycją następnego kroku z timeboxem
+
+Wyniki: [WYNIKI]` },
+
+  { cat:'communication', title:'Pytania developerów przed implementacją', desc:'Symuluje perspektywę developera i generuje pytania do designera.', tags:['communication','handoff'], body:`Działaj jako doświadczony frontend developer. Przejrzyj opis designu i zadaj wszystkie pytania, które zadałbyś designerowi przed implementacją.
+
+Skupiaj się na: brakujących informacjach, niejasnych zachowaniach, stanach które nie są pokazane, decyzjach wpływających na architekturę.
+
+Opis designu: [OPIS]` },
+
+  { cat:'strategy', title:'Krytyk pomysłu (Devil\u2019s Advocate)', desc:'Zadaje najtrudniejsze pytania zanim pomysł stanie się kosztowny.', tags:['strategy','ideation'], body:`Działaj jako doświadczony, sceptyczny product manager. Przeanalizuj pomysł i zadaj najtrudniejsze pytania - takie które rozbijają złe pomysły zanim staną się drogie.
+
+Szukaj: ukrytych założeń, edge cases, problemów ze skalą, ryzyk prawnych lub etycznych, alternatyw których nie rozważono.
+
+Pomysł: [POMYSŁ]` },
+
+  { cat:'strategy', title:'Ocena pomysłów (tabela)', desc:'Ocenia zestaw pomysłów według 4 kryteriów i wskazuje top 3.', tags:['strategy','prioritization'], body:`Oceń pomysły według 4 kryteriów. Dla każdego przyznaj punkty 1-5:
+- Wpływ na użytkownika
+- Wykonalność techniczna
+- Zgodność z biznesem
+- Oryginalność
+
+Stwórz tabelę Markdown i wskaż top 3 z uzasadnieniem.
+
+Pomysły: [POMYSŁY]
+Kontekst: [KONTEKST]` },
+
+  { cat:'strategy', title:'Problem statement (3 perspektywy)', desc:'Formułuje problem z perspektywy użytkownika, biznesu i systemu.', tags:['strategy','problem'], body:`Na podstawie insightów sformułuj problem statement w 3 ujęciach:
+1. Perspektywa użytkownika: "Użytkownik potrzebuje [potrzeba], ponieważ [kontekst], ale [bariera]"
+2. Perspektywa biznesowa: jaki problem rynkowy rozwiązujemy
+3. Systemowe: co w obecnym systemie/procesie nie działa
+
+Następnie zaproponuj jedno syntetyczne sformułowanie łączące wszystkie perspektywy.
+
+Insighty: [INSIGHTY]` },
+
+  { cat:'strategy', title:'Postmortem incydentu (blameless)', desc:'Strukturyzuje analizę incydentu w formacie blameless postmortem.', tags:['strategy','retrospective'], body:`Pomóż mi napisać blameless postmortem incydentu produkcyjnego.
+
+Na podstawie opisu stwórz dokument z: podsumowaniem, timeline zdarzeń, przyczyną główną (root cause), czynnikami przyczyniającymi się, jak problem został wykryty i rozwiązany, action items (z właścicielem i terminem), wnioskami systemowymi.
+
+Opis incydentu: [OPIS]` },
+];
+
+function renderPromptbook(filtered) {
+  const container = document.getElementById('pb-container');
+  if (!container) return;
+  document.getElementById('pb-visible').textContent = filtered.length;
+  container.innerHTML = '';
+  if (!filtered.length) {
+    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-dim);font-family:\'DM Mono\',monospace;font-size:13px;">Brak wyników</div>';
+    return;
+  }
+  filtered.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'pb-card';
+    card.innerHTML = `
+      <div class="pb-card-header">
+        <div class="pb-card-cat">${p.cat}</div>
+        <div class="pb-card-title">${p.title}</div>
+        <div class="pb-card-desc">${p.desc}</div>
+      </div>
+      <div class="pb-card-body">${p.body.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+      <div class="pb-card-footer">
+        <div style="display:flex;gap:5px;flex-wrap:wrap">${p.tags.map(t=>`<span class="pb-card-tag">${t}</span>`).join('')}</div>
+        <button class="pb-card-copy">kopiuj prompt</button>
+      </div>`;
+    card.querySelector('.pb-card-copy').addEventListener('click', () => {
+      navigator.clipboard.writeText(p.body.trim()).catch(()=>{});
+      showToast('Skopiowano prompt!');
+    });
+    container.appendChild(card);
+  });
+}
+
+const pbCountEl = document.getElementById('pb-count');
+const pbVisibleEl = document.getElementById('pb-visible');
+if (pbCountEl) pbCountEl.textContent = prompts.length;
+if (pbVisibleEl) pbVisibleEl.textContent = prompts.length;
+
+let pbCat = 'all', pbSearch = '';
+function applyPb() {
+  let f = prompts;
+  if (pbCat !== 'all') f = f.filter(p => p.cat === pbCat);
+  if (pbSearch) f = f.filter(p =>
+    p.title.toLowerCase().includes(pbSearch) ||
+    p.desc.toLowerCase().includes(pbSearch) ||
+    p.tags.some(t => t.includes(pbSearch)) ||
+    p.body.toLowerCase().includes(pbSearch)
+  );
+  renderPromptbook(f);
+}
+
+document.querySelectorAll('.pb-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pb-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    pbCat = btn.dataset.pbcat;
+    applyPb();
+  });
+});
+const pbSearchEl = document.getElementById('pbSearch');
+if (pbSearchEl) pbSearchEl.addEventListener('input', e => { pbSearch = e.target.value.toLowerCase(); applyPb(); });
+
+renderPromptbook(prompts);
+
 </script>
+<div class="toast" id="toast"></div>
+
 </body>
 </html>
